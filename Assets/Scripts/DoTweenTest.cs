@@ -8,7 +8,7 @@ public class DoTweenTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -16,7 +16,7 @@ public class DoTweenTest : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            transform.DOMove(Vector3.up, 0.1f);
+            transform.Translate(Vector3.forward * 100 * Time.deltaTime);
         }
     }
 }

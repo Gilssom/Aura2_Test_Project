@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Attack();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            transform.Translate(Vector3.forward * 100 * Time.deltaTime);
+        }
     }
 
     private void FixedUpdate()
