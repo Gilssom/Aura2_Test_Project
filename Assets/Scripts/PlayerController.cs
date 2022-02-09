@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private WeaponTest _Weapon;
+
     private Animator _Animator;
     private PlayerInputSystem _playerInput;
     private Rigidbody _Rigid;
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _Weapon = GetComponentInChildren<WeaponTest>();
+
         _Animator = GetComponent<Animator>();
         _Rigid = GetComponent<Rigidbody>();
         _Collider = GetComponent<CapsuleCollider>();
@@ -123,6 +127,11 @@ public class PlayerController : MonoBehaviour
             transform.DOMove(transform.position + transform.forward * AttackMovePower, AttackMoveTime).SetEase(Ease.InQuad);
             _SpringArm.transform.DOMove(_SpringArm.transform.position + _SpringArm.transform.forward * 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
         }
+    }
+
+    void AttackFalse()
+    {
+        _Weapon.AttackEnd();
     }
 
     void Combopossible()
