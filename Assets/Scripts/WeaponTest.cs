@@ -6,12 +6,9 @@ public class WeaponTest : MonoBehaviour
 {
     private PlayerController _Player;
 
-    public enum Type { Shield, Sword }
-    public Type _WeaponType;
-
     private BoxCollider _AttackCol;
 
-    public float _AttackDmg;
+    public int _AttackDmg;
 
     void Start()
     {
@@ -24,23 +21,5 @@ public class WeaponTest : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void AttackStart()
-    {
-        //if (_WeaponType == Type.Shield)
-        //{
-        //    _AttackCol.enabled = true;
-        //}
-
-        //if (_WeaponType == Type.Sword)
-        //{
-        //    _AttackCol.enabled = true;
-        //}
-    }
-
-    public void AttackEnd()
-    {
-        _AttackCol.enabled = false;
     }
 }

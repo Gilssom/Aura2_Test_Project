@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     public float _Strength;
 
+    public GameObject[] _WeaponArray;
+
     void Start()
     {
         _Weapon = GetComponentInChildren<WeaponTest>();
@@ -124,14 +126,25 @@ public class PlayerController : MonoBehaviour
     {
         if (movement.x == 0 && movement.y == 0)
         {
-            transform.DOMove(transform.position + transform.forward * AttackMovePower, AttackMoveTime).SetEase(Ease.InQuad);
+            //transform.DOMove(transform.position + transform.forward * AttackMovePower, AttackMoveTime).SetEase(Ease.InQuad);
             _SpringArm.transform.DOMove(_SpringArm.transform.position + _SpringArm.transform.forward * 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
         }
     }
 
+    void ShieldAttackTrue()
+    {
+        _WeaponArray[0].GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void SwordAttackTrue()
+    {
+        _WeaponArray[1].GetComponent<BoxCollider>().enabled = true;
+    }
+
     void AttackFalse()
     {
-        _Weapon.AttackEnd();
+        _WeaponArray[0].GetComponent<BoxCollider>().enabled = false;
+        _WeaponArray[1].GetComponent<BoxCollider>().enabled = false;
     }
 
     void Combopossible()

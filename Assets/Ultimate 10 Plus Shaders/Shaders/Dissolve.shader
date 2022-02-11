@@ -37,6 +37,11 @@ Shader "Ultimate 10+ Shaders/Dissolve"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _NoiseTex ("Noise", 2D) = "white" {}
 
+        _BumpTex("Normal Tex", 2D) = "bump" {}
+        _MeTTex("Metallic Tex", 2D) = "black" {}
+        _AOTex("AO Tex", 2D) = "white" {}
+        _AOP("AO Power", Range(0, 1)) = 1
+
         _Cutoff ("Cut off", Range(0, 1)) = 0.25
         _EdgeWidth ("Edge Width", Range(0, 1)) = 0.05
         [HDR] _EdgeColor ("Edge Color", Color) = (1,1,1,1)
@@ -61,6 +66,9 @@ Shader "Ultimate 10+ Shaders/Dissolve"
 
         sampler2D _MainTex;
         sampler2D _NoiseTex;
+        sampler2D _MeTTex;
+        sampler2D _AOTex;
+        sampler2D _BumpTex;
 
         half _Cutoff;
         half _EdgeWidth;
@@ -70,9 +78,11 @@ Shader "Ultimate 10+ Shaders/Dissolve"
 
         struct Input
         {
-            float2 uv_MainTex;
+            float2 uv_MainTex, uv_BumpTex, uv_MeTTex, uv_AOTex;
             float2 uv_NoiseTex;
         };
+
+        float _AOP;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -86,8 +96,15 @@ Shader "Ultimate 10+ Shaders/Dissolve"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             pixel = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            float4 m = tex2D(_MeTTex, IN.uv_MainTex);
+            float4 b = tex2D(_BumpTex, IN.uv_MainTex);
+            float4 a = tex2D(_AOTex, IN.uv_MainTex);
 
             o.Albedo = pixel.rgb;
+            o.Normal = UnpackNormal(b);
+            o.Metallic = m.r;
+            o.Smoothness = m.a;
+            o.Occlusion = a.r + _AOP;
 
             noisePixel = tex2D (_NoiseTex, IN.uv_NoiseTex);
 

@@ -9,11 +9,23 @@ public class MonsterTest : MonoBehaviour
     public enum Type { A, B, C}
     public Type _enemyType;
 
+    public enum CurrentState { idle, trace, attack, dead}
+    public CurrentState curState = CurrentState.idle;
+
     public int _MaxHp;
     public int _Hp;
 
     private MeshRenderer _meshRenderer;
     private SkinnedMeshRenderer _skinmeshRenderer;
+    private CapsuleCollider _CapsuleCol;
+    private Rigidbody _Rigid;
+    private Transform _transform;
+    private Transform _Playertransform;
+    private NavMeshAgent _navAgent;
+    private Animator _anim;
+
+    public float trastDis = 15;
+    public float attackDis = 1.5f;
 
     public float Speed = default;
 
@@ -23,21 +35,107 @@ public class MonsterTest : MonoBehaviour
 
     private bool isDeath = false;
 
-    private Animator _anim;
+    public float _rotSpeed;
+
+    bool isIdle;
+
 
     void Start()
     {
         _skinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _anim = GetComponent<Animator>();
+        _CapsuleCol = GetComponent<CapsuleCollider>();
+        _Rigid = GetComponent<Rigidbody>();
+        _transform = GetComponent<Transform>();
+        _navAgent = this.gameObject.GetComponent<NavMeshAgent>();
+        _Playertransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
+        // 바로 추적
+        //_navAgent.destination = _Playertransform.position;
+
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.CheckStateForAction());
     }
 
     void Update()
     {
-        if(_Hp <= 0)
+        if (_Hp <= 0)
         {
             _anim.SetTrigger("Death");
             Death();
         }
+    }
+
+    void LookPlayer()
+    {
+        Vector3 dir = _Playertransform.position - this.transform.position;
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotSpeed);
+    }
+
+    IEnumerator CheckState()
+    {
+        while(!isDeath)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            float Dis = Vector3.Distance(_Playertransform.position, _transform.position);
+
+            if (Dis <= attackDis)
+            {
+                curState = CurrentState.attack;
+            }
+            else if (Dis <= trastDis)
+            {
+                curState = CurrentState.trace;
+            }
+            else
+            {
+                curState = CurrentState.idle;
+            }
+        }
+    }
+
+    IEnumerator CheckStateForAction()
+    {
+        while(!isDeath)
+        {
+            switch (curState)
+            {
+                case CurrentState.idle:
+                    _navAgent.speed = 0;
+                    _navAgent.Stop();
+                    _anim.SetBool("isTrace", false);
+                    break;
+                case CurrentState.trace:
+                    _navAgent.speed = 2;           
+                    _Rigid.isKinematic = false;          
+                    _navAgent.destination = _Playertransform.position;
+                    _navAgent.Resume();
+                    LookPlayer();
+                    _anim.SetBool("isAttack", false);
+                    _anim.SetBool("isTrace", true);                
+                    break;
+                case CurrentState.attack:
+                    _navAgent.speed = 0;
+                    _Rigid.isKinematic = true;
+                    LookPlayer();
+                    _anim.SetBool("isTrace", false);
+                    _anim.SetBool("isAttack", true);
+                    break;
+            }
+
+            yield return null;
+        }
+    }
+
+    void IdleCheck()
+    {
+        isIdle = true;
+    }
+
+    void IdleEndCheck()
+    {
+        isIdle = false;
     }
 
     void DeathAnimCheak()
@@ -45,8 +143,22 @@ public class MonsterTest : MonoBehaviour
         isDeath = true;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Weapon")
+        {
+            WeaponTest Weapon = other.GetComponent<WeaponTest>();
+
+            _Hp -= Weapon._AttackDmg;
+        }
+    }
+
     void Death()
     {
+        StopAllCoroutines();
+        gameObject.layer = 12;
+        _navAgent.enabled = false;
+
         switch (_enemyType)
         {
             case Type.A:
