@@ -14,6 +14,7 @@ public class MonsterTest : MonoBehaviour
 
     public int _MaxHp;
     public int _Hp;
+    public int _AttackDmg;
 
     private MeshRenderer _meshRenderer;
     private SkinnedMeshRenderer _skinmeshRenderer;
@@ -23,6 +24,12 @@ public class MonsterTest : MonoBehaviour
     private Transform _Playertransform;
     private NavMeshAgent _navAgent;
     private Animator _anim;
+
+    [SerializeField] Transform[] _WayPoints = null;
+    public int m_count;
+
+    public GameObject _RightAttack;
+    public GameObject _LeftAttack;
 
     public float trastDis = 15;
     public float attackDis = 1.5f;
@@ -39,6 +46,20 @@ public class MonsterTest : MonoBehaviour
 
     bool isIdle;
 
+    void MoveToNextWayPoint()
+    {
+        if (_navAgent.velocity == Vector3.zero)
+        {
+            _anim.SetBool("isPatrol", true);
+            _navAgent.speed = 0.5f;
+            _navAgent.SetDestination(_WayPoints[m_count++].position);
+
+            if (m_count >= _WayPoints.Length)
+            {
+                m_count = 0;
+            }
+        }
+    }
 
     void Start()
     {
@@ -52,6 +73,8 @@ public class MonsterTest : MonoBehaviour
 
         // 바로 추적
         //_navAgent.destination = _Playertransform.position;
+
+        InvokeRepeating("MoveToNextWayPoint", 2f, 2f);
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
@@ -102,16 +125,17 @@ public class MonsterTest : MonoBehaviour
             switch (curState)
             {
                 case CurrentState.idle:
-                    _navAgent.speed = 0;
-                    _navAgent.Stop();
+                    //_navAgent.speed = 0;
+                    //_navAgent.Stop();
                     _anim.SetBool("isTrace", false);
                     break;
                 case CurrentState.trace:
-                    _navAgent.speed = 2;           
+                    _navAgent.speed = 5;      
                     _Rigid.isKinematic = false;          
                     _navAgent.destination = _Playertransform.position;
                     _navAgent.Resume();
                     LookPlayer();
+                    _anim.SetBool("isPatrol", false);
                     _anim.SetBool("isAttack", false);
                     _anim.SetBool("isTrace", true);                
                     break;
@@ -119,6 +143,7 @@ public class MonsterTest : MonoBehaviour
                     _navAgent.speed = 0;
                     _Rigid.isKinematic = true;
                     LookPlayer();
+                    _anim.SetBool("isPatrol", false);
                     _anim.SetBool("isTrace", false);
                     _anim.SetBool("isAttack", true);
                     break;
@@ -128,14 +153,16 @@ public class MonsterTest : MonoBehaviour
         }
     }
 
-    void IdleCheck()
+    void RightAttack()
     {
-        isIdle = true;
+        _LeftAttack.GetComponent<BoxCollider>().enabled = false;
+        _RightAttack.GetComponent<BoxCollider>().enabled = true;
     }
 
-    void IdleEndCheck()
+    void LeftAttack()
     {
-        isIdle = false;
+        _RightAttack.GetComponent<BoxCollider>().enabled = false;
+        _LeftAttack.GetComponent<BoxCollider>().enabled = true;
     }
 
     void DeathAnimCheak()

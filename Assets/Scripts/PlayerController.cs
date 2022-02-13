@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _Rigid;
     private CapsuleCollider _Collider;
 
+    public MonsterTest _Monster;
+
     private Vector3 moveDirection = Vector3.zero;
     Vector2 movement = new Vector2();
 
@@ -20,6 +22,9 @@ public class PlayerController : MonoBehaviour
     public float MaxSpeed = 10;
     public float AttackMovePower = default;
     public float AttackMoveTime = default;
+
+    public int _MaxHP;
+    public int _CurHP;
 
     public int comboStep = 0;
     public bool isAttackReady = true;
@@ -44,6 +49,8 @@ public class PlayerController : MonoBehaviour
         _Animator = GetComponent<Animator>();
         _Rigid = GetComponent<Rigidbody>();
         _Collider = GetComponent<CapsuleCollider>();
+
+        _CurHP = _MaxHP;
     }
 
     void Update()
@@ -163,5 +170,19 @@ public class PlayerController : MonoBehaviour
         ComboPossible = false;
         isAttackReady = true;
         comboStep = 0;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "MonsterWeapon")
+        {
+            _CurHP -= _Monster._AttackDmg;
+            OnDamage();
+        }
+    }
+
+    void OnDamage()
+    {
+        _SpringArm.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);
     }
 }
