@@ -41,6 +41,7 @@ public class MonsterTest : MonoBehaviour
     public float Cutoff = default;
 
     private bool isDeath = false;
+    private bool isNotNav = false;
 
     public float _rotSpeed;
 
@@ -82,6 +83,14 @@ public class MonsterTest : MonoBehaviour
 
     void Update()
     {
+        if(!isNotNav)
+        {
+            if (_navAgent.remainingDistance <= 0.2f)
+            {
+                _anim.SetBool("isPatrol", false);
+            }
+        }
+
         if (_Hp <= 0)
         {
             _anim.SetTrigger("Death");
@@ -183,8 +192,10 @@ public class MonsterTest : MonoBehaviour
     void Death()
     {
         StopAllCoroutines();
+        CancelInvoke();
         gameObject.layer = 12;
         _navAgent.enabled = false;
+        isNotNav = true;
 
         switch (_enemyType)
         {
