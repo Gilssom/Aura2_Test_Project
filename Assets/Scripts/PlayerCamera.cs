@@ -13,7 +13,12 @@ public class PlayerCamera : MonoBehaviour
 	private Vector3 _cameraVelocity;
 	Vector2 controllRotation;
 
-	private void LateUpdate()
+    private void Start()
+    {
+		DontDestroyOnLoad(this);
+    }
+
+    private void LateUpdate()
 	{
 		SetPosition(Target.transform.position);
 		Vector2 CameraInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));

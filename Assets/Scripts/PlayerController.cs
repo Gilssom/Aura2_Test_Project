@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager _Gamemanager;
     private WeaponTest _Weapon;
 
     private Animator _Animator;
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] _WeaponArray;
 
+    public bool isPortal = false;
+
     void Start()
     {
         _Weapon = GetComponentInChildren<WeaponTest>();
@@ -51,13 +54,18 @@ public class PlayerController : MonoBehaviour
         _Collider = GetComponent<CapsuleCollider>();
 
         _CurHP = _MaxHP;
+
+        DontDestroyOnLoad(this);
     }
 
     void Update()
     {
-        GetInput();
-        Move();
-        Attack();
+        if(!isPortal)
+        {
+            GetInput();
+            Move();
+            Attack();
+        }
     }
 
     private void FixedUpdate()
@@ -178,6 +186,12 @@ public class PlayerController : MonoBehaviour
         {
             _CurHP -= _Monster._AttackDmg;
             OnDamage();
+        }
+
+        if(other.tag == "Portal")
+        {
+            isPortal = true;
+            _Gamemanager.InStartFadeAnim();
         }
     }
 
