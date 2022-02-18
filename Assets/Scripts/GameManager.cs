@@ -38,15 +38,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.F))
-        //{
-        //    OutStartFadeAnim();
-        //}
 
-        //if (Input.GetKeyDown(KeyCode.G))
-        //{
-        //    InStartFadeAnim();
-        //}
     }
 
     public void OutStartFadeAnim()

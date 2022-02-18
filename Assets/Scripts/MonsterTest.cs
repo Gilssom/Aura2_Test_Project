@@ -187,6 +187,13 @@ public class MonsterTest : MonoBehaviour
 
             _Hp -= Weapon._AttackDmg;
         }
+
+        if(other.tag == "Missile")
+        {
+            BazierMissile Missile = other.GetComponent<BazierMissile>();
+
+            _Hp -= Missile.m_Dmg;
+        }
     }
 
     void Death()
