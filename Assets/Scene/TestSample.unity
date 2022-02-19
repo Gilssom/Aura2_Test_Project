@@ -526,6 +526,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &774905696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
+  m_Name: New Aura Base Settings
+  m_EditorClassIdentifier: 
+  useDensity: 1
+  density: 0.25
+  useScattering: 1
+  scattering: 0.5
+  useAmbientLighting: 1
+  ambientLightingStrength: 1
+  useColor: 0
+  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
+  colorStrength: 1
+  useTint: 0
+  tint: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  tintStrength: 1
+  useExtinction: 0
+  extinction: 0.75
 --- !u!1 &820094007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,7 +1409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frustumSettings:
-    baseSettings: {fileID: 0}
+    baseSettings: {fileID: 774905696}
     qualitySettings: {fileID: 1491323838}
 --- !u!114 &1832909761
 MonoBehaviour:
@@ -1539,6 +1565,22 @@ PrefabInstance:
       propertyPath: _Target
       value: 
       objectReference: {fileID: 387616575}
+    - target: {fileID: 2013232785, guid: 917e00053cb499241a1d42e2b2716532, type: 3}
+      propertyPath: m_interval
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013232785, guid: 917e00053cb499241a1d42e2b2716532, type: 3}
+      propertyPath: m_EnemyCheckDis
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013232785, guid: 917e00053cb499241a1d42e2b2716532, type: 3}
+      propertyPath: m_intervalReset
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013232785, guid: 917e00053cb499241a1d42e2b2716532, type: 3}
+      propertyPath: m_shotCountAllinterval
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1136994913350202544, guid: 917e00053cb499241a1d42e2b2716532, type: 3}
       propertyPath: m_RootOrder
       value: 6

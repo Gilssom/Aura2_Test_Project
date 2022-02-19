@@ -6,6 +6,8 @@ public class BazierMissile : MonoBehaviour
 {
     Vector3[] m_points = new Vector3[4]; // 베지어 곡선 함수
 
+    public ParticleSystem m_Particle;
+
     private float m_timerMax = 0;
     private float m_timerCurrent = 0;
     private float m_speed;
@@ -44,7 +46,7 @@ public class BazierMissile : MonoBehaviour
     {
         if (m_timerCurrent > m_timerMax)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.5f);
             //return;
         }
 
@@ -95,6 +97,7 @@ public class BazierMissile : MonoBehaviour
     {
         if(collision.tag == "Monster")
         {
+            m_Particle.Play();
             Destroy(gameObject, 0.35f); // 한쪽에 Trigger 체크하는 것과 Rigidbody 컴포넌트 추가 잊지 말기.
         }
     }
