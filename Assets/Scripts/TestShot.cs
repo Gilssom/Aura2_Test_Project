@@ -5,21 +5,29 @@ using System.Linq;
 
 public class TestShot : MonoBehaviour
 {
+    private TestSceneMonsterText m_Monster;
+
     public GameObject _MissilePrefab; // 미사일
+    public GameObject _SkillMissile; // 스킬 미사일
     public GameObject _Target; // 타겟
 
     public float m_Speed = 2; // 미사일속도
-    public float m_distanceStart = 6f; // 시작지점 기준으로 꺾이는 정도
+    public float m_distanceStart = 8f; // 시작지점 기준으로 꺾이는 정도
     public float m_distanceEnd = 3f; // 도착지점 기준으로 꺾이는 정도
+
+    public float m_SkillSpeed; // 미사일속도
+    public float m_SkilldistanceStart; // 시작지점 기준으로 꺾이는 정도
+    public float m_SkilldistanceEnd; // 도착지점 기준으로 꺾이는 정도
 
     public float m_EnemyCheckDis; // 플레이어와 적과의 거리를 체크하는 최소한의 거리
 
-    public int m_shotCount = 6; // 총 미사일 갯수
-    public float m_interval; // 미사일 발사 주기
-    public float m_intervalReset; // 미사일 발사 주기 초기값
-    public int m_shotCountAllinterval = 2; // 한번에 발사할 미사일 갯수
+    public int m_shotCount = 12; // 총 미사일 갯수
+    public float m_interval = 0.7f; // 미사일 발사 주기
+    public float m_intervalReset = 0.7f; // 미사일 발사 주기 초기값
+    public int m_shotCountAllinterval = 3; // 한번에 발사할 미사일 갯수
 
-    public bool m_DoShot = false;
+    bool m_DoShot = false;
+    bool m_RSkill = false;
 
     private GameObject FindNearObjByTag(string tag)
     {
@@ -36,12 +44,24 @@ public class TestShot : MonoBehaviour
 
         _Target = neareastObject;
 
+        //if(neareastObject)
+        //{
+        //    m_Monster.OutLineCheck();
+        //}
+
         return neareastObject;
+    }
+
+    private void Start()
+    {
+        m_Monster = _Target.GetComponent<TestSceneMonsterText>();
     }
 
     void Update()
     {
         FindNearObjByTag("Monster");
+
+        //_Target.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0);
 
         float Dis = Vector3.Distance(_Target.transform.position, transform.position);
 
@@ -55,6 +75,17 @@ public class TestShot : MonoBehaviour
             if (_Target)
             {
                 StartCoroutine(CreateMissile());
+            }
+            else
+                return;
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (_Target && !m_RSkill)
+            {
+                m_RSkill = true;
+                StartCoroutine(SkillMissile());
             }
             else
                 return;
@@ -88,5 +119,14 @@ public class TestShot : MonoBehaviour
         yield return null;
         m_DoShot = false;
         m_interval = m_intervalReset;
+    }
+
+    IEnumerator SkillMissile()
+    {
+        GameObject missile = Instantiate(_SkillMissile);
+        missile.GetComponent<BazierMissile>().Init(this.gameObject.transform, _Target.transform, m_SkillSpeed, m_SkilldistanceStart, m_SkilldistanceEnd);
+        yield return new WaitForSeconds(5f);
+        m_RSkill = false;
+        yield return null;
     }
 }

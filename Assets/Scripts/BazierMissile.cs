@@ -46,7 +46,7 @@ public class BazierMissile : MonoBehaviour
     {
         if (m_timerCurrent > m_timerMax)
         {
-            Destroy(gameObject, 0.5f);
+            //Destroy(gameObject, 0.5f);
             //return;
         }
 
@@ -57,8 +57,12 @@ public class BazierMissile : MonoBehaviour
         transform.position = new Vector3(
             CubicBezierCurve(m_points[0].x, m_points[1].x, m_points[2].x, m_points[3].x),
             CubicBezierCurve(m_points[0].y, m_points[1].y, m_points[2].y, m_points[3].y),
-            CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
-        );
+            CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z));
+
+        if (!m_Particle)
+        {
+            Destroy(gameObject); // 한쪽에 Trigger 체크하는 것과 Rigidbody 컴포넌트 추가 잊지 말기.
+        }
     }
 
     /// <summary>
@@ -98,7 +102,6 @@ public class BazierMissile : MonoBehaviour
         if(collision.tag == "Monster")
         {
             m_Particle.Play();
-            Destroy(gameObject, 0.35f); // 한쪽에 Trigger 체크하는 것과 Rigidbody 컴포넌트 추가 잊지 말기.
         }
     }
 }
