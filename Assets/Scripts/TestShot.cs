@@ -27,6 +27,7 @@ public class TestShot : MonoBehaviour
     public int m_shotCountAllinterval = 3; // 한번에 발사할 미사일 갯수
 
     bool m_DoShot = false;
+    [SerializeField]
     bool m_RSkill = false;
 
     private GameObject FindNearObjByTag(string tag)
@@ -44,30 +45,27 @@ public class TestShot : MonoBehaviour
 
         _Target = neareastObject;
 
-        //if(neareastObject)
-        //{
-        //    m_Monster.OutLineCheck();
-        //}
-
         return neareastObject;
     }
 
     private void Start()
     {
-        m_Monster = _Target.GetComponent<TestSceneMonsterText>();
+        m_Monster = GameObject.FindWithTag("Monster").GetComponent<TestSceneMonsterText>();
     }
 
     void Update()
     {
         FindNearObjByTag("Monster");
 
-        //_Target.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0);
-
         float Dis = Vector3.Distance(_Target.transform.position, transform.position);
 
-        if(Dis >= m_EnemyCheckDis)
+        if (Dis >= m_EnemyCheckDis && !m_DoShot)
         {
             _Target = null;
+        }
+        else
+        {
+            _Target.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0.05f);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
