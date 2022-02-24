@@ -24,6 +24,7 @@ public class SelectCameraMove : MonoBehaviour
         {
             Debug.Log("FirstPlayer Select");
             transform.DOMove(m_FirstPos, 2f);
+            transform.DORotate(new Vector3(0, -28.194f, 0), 2f);
         }
         else if (Num == 2)
         {
@@ -34,6 +35,7 @@ public class SelectCameraMove : MonoBehaviour
         {
             Debug.Log("ThirdPlayer Select");
             transform.DOMove(m_ThridPos, 2f);
+            transform.DORotate(new Vector3(0, 41.299f, 0), 2f);
         }
         else
             return;
@@ -43,8 +45,13 @@ public class SelectCameraMove : MonoBehaviour
     {
         Debug.Log("BackButton Select");
         transform.DOMove(m_ResetPos, 2f);
+        transform.DORotate(new Vector3(0, 0, 0), 2f);
         m_Select.m_Selecting = false;
         m_Select.m_CharacterName.text = "Character Select";
         m_Select.m_InputIndex = 0;
+        m_Select.m_FirstAnim.SetBool("Select", false);
+        m_Select.m_SecondAnim.SetBool("Select", false);
+        m_Select.m_ThirdAnim.SetBool("Select", false);
+        m_Select.m_CharacterInfo.SetActive(false);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class MonsterTest : MonoBehaviour
@@ -16,6 +17,9 @@ public class MonsterTest : MonoBehaviour
     public int _Hp;
     public int _AttackDmg;
 
+    public GameObject m_HealthBar;
+    public Slider m_Slider;
+
     private MeshRenderer _meshRenderer;
     private SkinnedMeshRenderer _skinmeshRenderer;
     private CapsuleCollider _CapsuleCol;
@@ -24,6 +28,8 @@ public class MonsterTest : MonoBehaviour
     private Transform _Playertransform;
     private NavMeshAgent _navAgent;
     private Animator _anim;
+
+    public GameObject m_Base;
 
     [SerializeField] Transform[] _WayPoints = null;
     public int m_count;
@@ -66,11 +72,15 @@ public class MonsterTest : MonoBehaviour
     {
         _skinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _anim = GetComponent<Animator>();
-        _CapsuleCol = GetComponent<CapsuleCollider>();
+        _CapsuleCol = GetComponentInChildren<CapsuleCollider>();
         _Rigid = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
         _navAgent = this.gameObject.GetComponent<NavMeshAgent>();
         _Playertransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
+        m_Slider.value = CulHealth();
+        m_Slider.maxValue = _MaxHp;
+        m_HealthBar.SetActive(false);
 
         // 바로 추적
         //_navAgent.destination = _Playertransform.position;
@@ -89,6 +99,13 @@ public class MonsterTest : MonoBehaviour
             {
                 _anim.SetBool("isPatrol", false);
             }
+        }
+
+        m_Slider.value = CulHealth();
+
+        if(_Hp < _MaxHp)
+        {
+            m_HealthBar.SetActive(true);
         }
 
         if (_Hp <= 0)
@@ -196,11 +213,17 @@ public class MonsterTest : MonoBehaviour
         }
     }
 
+    int CulHealth()
+    {
+        return _Hp;
+    }
+
     void Death()
     {
         StopAllCoroutines();
         CancelInvoke();
-        gameObject.layer = 12;
+        m_Base.layer = 12;
+        m_Base.tag = "Untagged";
         _navAgent.enabled = false;
         isNotNav = true;
 

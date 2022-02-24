@@ -892,15 +892,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _MissilePrefab: {fileID: 5258011384841043206, guid: aa99cd467ac6de348bf4028a95d36fd6, type: 3}
+  _SkillMissile: {fileID: 4820047710538828072, guid: 01d247f7895723a49932e099c4628a0d, type: 3}
   _Target: {fileID: 0}
   m_Speed: 2
   m_distanceStart: 8
   m_distanceEnd: 3
+  m_SkillSpeed: 4
+  m_SkilldistanceStart: 6
+  m_SkilldistanceEnd: 2
+  m_EnemyCheckDis: 8
   m_shotCount: 12
-  m_interval: 0.15
+  m_interval: 0.7
+  m_intervalReset: 0.7
   m_shotCountAllinterval: 3
-  colls: []
-  nearRadius: 0
+  m_RSkill: 0
 --- !u!1 &3760671342223812027
 GameObject:
   m_ObjectHideFlags: 0

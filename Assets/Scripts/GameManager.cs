@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public Transform SecondStartPos;
 
+    public int m_SceneNum;
+
     float _Start;
     float _End;
     float _Time = 0f;
@@ -31,8 +33,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        _PlayerPos = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        if(m_SceneNum > 0)
+        {
+            _Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            _PlayerPos = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        }
+
         _FadeBG = GameObject.FindWithTag("FadeImage").GetComponent<Image>();
     }
     
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
 
         _Start = 1f;
         _End = 0f;
+        m_SceneNum++;
 
         StartCoroutine("FadeOutPlay");
     }
@@ -114,12 +121,19 @@ public class GameManager : MonoBehaviour
 
         isPlaying = false;
 
-        NextField(1);
+        NextField(m_SceneNum);
     }
 
     void NextField(int FieldNum)
     {
-        if(FieldNum == 1)
+        if (FieldNum == 0)
+        {
+            SceneManager.LoadScene("DoTweenSample");
+            //_Player.isPortal = false;
+            //_PlayerPos.transform.position = SecondStartPos.transform.position;
+            OutStartFadeAnim();
+        }
+        if (FieldNum == 1)
         {
             SceneManager.LoadScene("SecondScene");
             _Player.isPortal = false;

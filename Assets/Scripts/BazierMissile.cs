@@ -11,6 +11,7 @@ public class BazierMissile : MonoBehaviour
     private float m_timerMax = 0;
     private float m_timerCurrent = 0;
     private float m_speed;
+    public bool m_Attack = false;
 
     public int m_Dmg;
 
@@ -44,10 +45,9 @@ public class BazierMissile : MonoBehaviour
 
     void Update()
     {
-        if (m_timerCurrent > m_timerMax)
+        if (!m_Attack && m_timerCurrent > m_timerMax)
         {
-            //Destroy(gameObject, 0.5f);
-            //return;
+            Destroy(gameObject, 0.5f);
         }
 
         // 경과 시간 계산.
@@ -101,6 +101,7 @@ public class BazierMissile : MonoBehaviour
     {
         if(collision.tag == "Monster")
         {
+            m_Attack = true;
             m_Particle.Play();
         }
     }

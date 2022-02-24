@@ -57,15 +57,18 @@ public class TestShot : MonoBehaviour
     {
         FindNearObjByTag("Monster");
 
-        float Dis = Vector3.Distance(_Target.transform.position, transform.position);
-
-        if (Dis >= m_EnemyCheckDis && !m_DoShot)
+        if (_Target)
         {
-            _Target = null;
-        }
-        else
-        {
-            _Target.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0.05f);
+            float Dis = Vector3.Distance(_Target.transform.position, transform.position);
+            
+            if (Dis >= m_EnemyCheckDis && !m_DoShot)
+            {
+                _Target = null;
+            }
+            else
+            {
+                //_Target.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0.05f);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
