@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
     private PlayerController _Player;
     private Image _FadeBG;
 
+    public GameObject m_PickPlayer;
     private Transform _PlayerPos;
 
+    public Transform FirstStartPos;
     public Transform SecondStartPos;
 
     public int m_SceneNum;
@@ -33,6 +35,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if(m_SceneNum == 0)
+        {
+            GameObject obj = Resources.Load("SwordWarrior") as GameObject;
+            Debug.Log(obj);
+
+            m_PickPlayer = obj;
+            _PlayerPos = obj.transform;
+        }
+
+        if(m_SceneNum == 1)
+        {
+            Instantiate(m_PickPlayer);
+        }
+
         if(m_SceneNum > 0)
         {
             _Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
@@ -43,6 +59,11 @@ public class GameManager : MonoBehaviour
     }
     
     void Update()
+    {
+
+    }
+
+    public void CheckPlayer(GameObject Player)
     {
 
     }
@@ -130,7 +151,7 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("DoTweenSample");
             //_Player.isPortal = false;
-            //_PlayerPos.transform.position = SecondStartPos.transform.position;
+            //_PlayerPos.transform.position = FirstStartPos.transform.position;
             OutStartFadeAnim();
         }
         if (FieldNum == 1)

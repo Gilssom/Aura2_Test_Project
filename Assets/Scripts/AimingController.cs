@@ -20,7 +20,8 @@ public class AimingController : MonoBehaviour
         private void Start()
         {
             _aiming = GetComponent<Aiming>();
-            //_playerInput = GetComponent<PlayerInput>();
+        //_playerInput = GetComponent<PlayerInput>();
+        _springArm = GameObject.Find("SpringArm").GetComponent<SpringArm>();
 
             OnStateChanged();
         }

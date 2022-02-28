@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameManager _Gamemanager;
+    private GameManager _Gamemanager;
     private WeaponTest _Weapon;
 
     private Animator _Animator;
@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _Rigid;
     private CapsuleCollider _Collider;
 
-    public MonsterTest _Monster;
+    private MonsterTest _Monster;
 
     private Vector3 moveDirection = Vector3.zero;
     Vector2 movement = new Vector2();
@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _Monster = GameObject.FindWithTag("Monster").GetComponent<MonsterTest>();
+        _Gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _SpringArm = GameObject.FindWithTag("SpringArm");
         _Weapon = GetComponentInChildren<WeaponTest>();
 
         _Animator = GetComponent<Animator>();
