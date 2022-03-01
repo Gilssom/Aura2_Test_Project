@@ -14,7 +14,10 @@ public class PlayerCamera : MonoBehaviour
 	Vector2 controllRotation;
 
     private void Start()
-    {
+	{
+		Debug.Log("PlayerCheck");
+		//Target = GameObject.Find("SwordWarrior_2").GetComponent<Transform>();
+		Target = GameManager.Instance.m_Player.transform;
 		DontDestroyOnLoad(this);
     }
 

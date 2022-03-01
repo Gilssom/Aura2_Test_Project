@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028377, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -857,7 +857,7 @@ RectTransform:
   m_Children:
   - {fileID: 251780744}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1108,6 +1108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FadeTime: 2
   _UICanvas: {fileID: 466950710}
+  _Player: {fileID: 0}
+  m_PickPlayer: {fileID: 0}
   FirstStartPos: {fileID: 1319826888315027315, guid: f5b9bc97619fc4d41bd3c58503f04c74, type: 3}
   SecondStartPos: {fileID: 7960132844093366546, guid: 5351c8d79cd77164b835a51cf78b69ab, type: 3}
   m_SceneNum: 0
@@ -1335,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400060, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400060, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}
       propertyPath: m_LocalPosition.x

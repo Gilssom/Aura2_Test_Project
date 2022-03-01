@@ -10,13 +10,15 @@ public class GameManager : MonoBehaviour
 
     public Canvas _UICanvas;
 
+    [SerializeField]
     private PlayerController _Player;
     private Image _FadeBG;
 
-    public GameObject m_PickPlayer;
+    public MonsterTest m_Monster;
+    
+    [SerializeField]
     private Transform _PlayerPos;
-
-    public Transform FirstStartPos;
+    
     public Transform SecondStartPos;
 
     public int m_SceneNum;
@@ -25,47 +27,70 @@ public class GameManager : MonoBehaviour
     float _End;
     float _Time = 0f;
 
+    public GameObject m_Player;
+    public int PlayerIndex; 
     public bool isPlaying = false;
+
+    private static GameManager m_instance;
+    // ½Ì±ÛÅæ
+    public static GameManager Instance
+    {
+        get
+        {
+            if(!m_instance)
+            {
+                m_instance = FindObjectOfType(typeof(GameManager)) as GameManager;
+
+                if (m_instance == null)
+                    Debug.Log("No Singletone Obj");
+            }
+            return m_instance;
+        }
+    }
 
     private void Awake()
     {
+        if(m_instance == null)
+        {
+            m_instance = this;
+        }
+        else if(m_instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(_UICanvas);
     }
 
     void Start()
     {
-        if(m_SceneNum == 0)
-        {
-            GameObject obj = Resources.Load("SwordWarrior") as GameObject;
-            Debug.Log(obj);
-
-            m_PickPlayer = obj;
-            _PlayerPos = obj.transform;
-        }
-
-        if(m_SceneNum == 1)
-        {
-            Instantiate(m_PickPlayer);
-        }
-
-        if(m_SceneNum > 0)
-        {
-            _Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            _PlayerPos = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        }
-
         _FadeBG = GameObject.FindWithTag("FadeImage").GetComponent<Image>();
     }
-    
-    void Update()
-    {
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;        
     }
 
-    public void CheckPlayer(GameObject Player)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("SceneChange");
+        if (m_SceneNum != 0)
+        {
+            Debug.Log("Check");
+            //_Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            _Player = m_Player.GetComponent<PlayerController>();
+            _PlayerPos = m_Player.GetComponent<Transform>();
 
+            m_Monster = GameObject.FindWithTag("Monster").GetComponentInParent<MonsterTest>();
+            _Player._Monster = m_Monster;
+        }
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void OutStartFadeAnim()
@@ -150,8 +175,6 @@ public class GameManager : MonoBehaviour
         if (FieldNum == 0)
         {
             SceneManager.LoadScene("DoTweenSample");
-            //_Player.isPortal = false;
-            //_PlayerPos.transform.position = FirstStartPos.transform.position;
             OutStartFadeAnim();
         }
         if (FieldNum == 1)

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
     private GameManager _Gamemanager;
     private WeaponTest _Weapon;
 
@@ -13,7 +14,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _Rigid;
     private CapsuleCollider _Collider;
 
-    private MonsterTest _Monster;
+    [SerializeField]
+    public MonsterTest _Monster;
 
     private Vector3 moveDirection = Vector3.zero;
     Vector2 movement = new Vector2();
@@ -45,18 +47,29 @@ public class PlayerController : MonoBehaviour
 
     public bool isPortal = false;
 
-    void Start()
+    public int PlayerNum;
+
+    void Awake()
     {
-        _Monster = GameObject.FindWithTag("Monster").GetComponent<MonsterTest>();
+        //_Monster = GameManager.Instance.m_Monster;
         _Gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _SpringArm = GameObject.FindWithTag("SpringArm");
         _Weapon = GetComponentInChildren<WeaponTest>();
-
         _Animator = GetComponent<Animator>();
         _Rigid = GetComponent<Rigidbody>();
-        _Collider = GetComponent<CapsuleCollider>();
+        _Collider = GetComponent<CapsuleCollider>(); 
 
         _CurHP = _MaxHP;
+
+        if (_Gamemanager.PlayerIndex != PlayerNum)
+        {
+            Debug.Log("None");
+            Destroy(gameObject);
+        }
+        else if(_Gamemanager.PlayerIndex == PlayerNum)
+        {
+            GameManager.Instance.m_Player = this.gameObject;
+        }
 
         DontDestroyOnLoad(this);
     }

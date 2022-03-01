@@ -5,8 +5,6 @@ using System.Linq;
 
 public class TestShot : MonoBehaviour
 {
-    private TestSceneMonsterText m_Monster;
-
     public GameObject _MissilePrefab; // 미사일
     public GameObject _SkillMissile; // 스킬 미사일
     public GameObject _Target; // 타겟
@@ -50,7 +48,7 @@ public class TestShot : MonoBehaviour
 
     private void Start()
     {
-        m_Monster = GameObject.FindWithTag("Monster").GetComponent<TestSceneMonsterText>();
+
     }
 
     void Update()

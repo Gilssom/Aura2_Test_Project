@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour
 {
+    private GameObject m_Player;
+
     public Animator m_FirstAnim;
     public Animator m_SecondAnim;
     public Animator m_ThirdAnim;
@@ -22,6 +24,7 @@ public class CharacterSelect : MonoBehaviour
     
     void Start()
     {
+        m_Player = GameObject.FindWithTag("Player");
         m_StartButton.interactable = false;
         m_CharacterInfo.SetActive(false);
     }
@@ -67,6 +70,8 @@ public class CharacterSelect : MonoBehaviour
                 }
             }
         }
+
+        m_manager.PlayerIndex = m_InputIndex;
 
         if (m_Selecting)
         {
