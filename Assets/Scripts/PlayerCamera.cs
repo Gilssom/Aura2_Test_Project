@@ -17,7 +17,10 @@ public class PlayerCamera : MonoBehaviour
 	{
 		Debug.Log("PlayerCheck");
 		//Target = GameObject.Find("SwordWarrior_2").GetComponent<Transform>();
-		Target = GameManager.Instance.m_Player.transform;
+		if(!Target)
+		{
+			Target = GameManager.Instance.m_Player.transform;
+		}
 		DontDestroyOnLoad(this);
     }
 
