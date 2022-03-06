@@ -6,8 +6,12 @@ public class ArtChanController : MonoBehaviour
 {
     private Animator _Animator;
     private Transform characterBody;
+    private Rigidbody m_Rigid;
 
     public Transform cameraArm;
+
+    private CapsuleCollider m_Coll;
+    public Transform m_YAxisColl;
 
     private Vector3 moveDirection = Vector3.zero;
     Vector2 movement = new Vector2();
@@ -15,7 +19,9 @@ public class ArtChanController : MonoBehaviour
     public float Speed;
     public float MinSpeed = 2;
     public float MaxSpeed = 10;
+    public float ParryingSpeed = 0.5f;
     public float gravity = 10;
+    public float JumpPower;
 
     private bool isRun = false;
 
@@ -25,20 +31,32 @@ public class ArtChanController : MonoBehaviour
 
     float HAxis;
     float VAxis;
+    bool Run;
 
     public BoxCollider m_FirstArea;
     public BoxCollider m_SecondArea;
     public BoxCollider m_FinalArea;
 
     public float m_SkillStack;
+    public float m_SkillMaxStack = 3;
     public float m_StackTime;
+    public bool m_SkillEnable;
 
     public bool m_AttackStacking;
+
+    bool m_FinalAttack;
+    [SerializeField]
+    bool isJumping;
+    bool isMoving;
+
+    public bool isParrying;
 
     void Awake()
     {
         _Animator = GetComponent<Animator>();
         characterBody = GetComponent<Transform>();
+        m_Rigid = GetComponent<Rigidbody>();
+        m_Coll = GetComponentInChildren<CapsuleCollider>();
     }
 
     void Start()
@@ -46,6 +64,9 @@ public class ArtChanController : MonoBehaviour
         m_FirstArea.enabled = false;
         m_SecondArea.enabled = false;
         m_FinalArea.enabled = false;
+        m_FinalAttack = false;
+
+        m_SkillEnable = false;
 
         m_SkillStack = 0;
         m_StackTime = 1;
@@ -54,8 +75,19 @@ public class ArtChanController : MonoBehaviour
     void Update()
     {
         GetInput();
-        Move();
+        if(!m_FinalAttack)
+        {
+            Move();
+        }
         Attack();
+        Parrying();
+        QSkill();
+
+        if (Input.GetButtonDown("Jump") && !isJumping)
+        {
+            isJumping = true;
+            Jump();
+        }
 
         if(m_AttackStacking)
         {
@@ -72,12 +104,32 @@ public class ArtChanController : MonoBehaviour
                 }
             }
         }
+
+        //m_Coll.transform.position = m_YAxisColl.transform.position;
     }
 
     void GetInput()
     {
         HAxis = Input.GetAxis("Horizontal");
         VAxis = Input.GetAxis("Vertical");
+        Run = Input.GetButton("Parrying");
+
+        if (!Run || HAxis == 0 && VAxis == 0)
+        {
+            isMoving = false;
+            isRun = false;
+            _Animator.SetBool("isRun", false);
+            Speed = MinSpeed;
+        }
+        else
+            isMoving = true;
+
+        if (Input.GetMouseButton(1))
+        {
+            isParrying = true;
+        }
+        else
+            isParrying = false;
     }
 
     void Move()
@@ -95,22 +147,29 @@ public class ArtChanController : MonoBehaviour
             characterBody.forward = moveDir;
 
             transform.position += moveDir * Time.deltaTime * Speed;
-
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
+            if (Run && isMoving && !isParrying)
             {
                 isRun = true;
                 _Animator.SetBool("isRun", true);
                 Speed = MaxSpeed;
             }
-            else
-            {
-                isRun = false;
-                _Animator.SetBool("isRun", false);
-                Speed = MinSpeed;
-            }
+            //if (!isMoving)
+            //{
+            //    isRun = false;
+            //    _Animator.SetBool("isRun", false);
+            //    Speed = MinSpeed;
+            //}
         }
 
         _Animator.SetBool("isWalk", isMove);
+    }
+
+    void Jump()
+    {
+        _Animator.SetTrigger("DoJump");
+        m_Rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+
+        isJumping = false;
     }
 
     void Attack()
@@ -122,6 +181,7 @@ public class ArtChanController : MonoBehaviour
             _Animator.SetTrigger("Attack");
             comboStep = 1;
             isAttackReady = false;
+            m_FinalAttack = true;
             return;
         }
 
@@ -129,6 +189,7 @@ public class ArtChanController : MonoBehaviour
         {
             if (ComboPossible && Input.GetMouseButtonDown(0))
             {
+                m_FinalAttack = true;
                 ComboPossible = false;
                 comboStep += 1;
             }
@@ -139,15 +200,33 @@ public class ArtChanController : MonoBehaviour
     {
         m_StackTime = 1;
         m_AttackStacking = true;
-        float MaxStack = 3;
-        if (m_SkillStack < MaxStack)
+        if (m_SkillStack < m_SkillMaxStack)
         {
             m_SkillStack++;
         }
+    }
 
-        else if(m_SkillStack == MaxStack)
+    void QSkill()
+    {
+        if (m_SkillStack == m_SkillMaxStack)
         {
-            Debug.Log("Skill Enable True");
+            m_SkillEnable = true;
+        }
+        else
+            m_SkillEnable = false;
+    }
+
+    void Parrying()
+    {
+        if (isParrying)
+        {
+            _Animator.SetBool("isParrying", true);
+            Speed = ParryingSpeed;
+        }
+        else if (!isParrying && !isRun)
+        {
+            _Animator.SetBool("isParrying", false);
+            Speed = MinSpeed;
         }
     }
 
@@ -173,6 +252,7 @@ public class ArtChanController : MonoBehaviour
         _Animator.ResetTrigger("FinalAttack");
         ComboPossible = false;
         isAttackReady = true;
+        m_FinalAttack = false;
         comboStep = 0;
     }
 
