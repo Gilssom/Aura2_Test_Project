@@ -5,6 +5,8 @@ using System.Linq;
 
 public class TestShot : MonoBehaviour
 {
+    private ArtChanController m_Player;
+
     public GameObject _MissilePrefab; // 미사일
     public GameObject _SkillMissile; // 스킬 미사일
     public GameObject _Target; // 타겟
@@ -46,9 +48,9 @@ public class TestShot : MonoBehaviour
         return neareastObject;
     }
 
-    private void Start()
+    private void Awake()
     {
-
+        m_Player = GetComponent<ArtChanController>();
     }
 
     void Update()
@@ -69,16 +71,6 @@ public class TestShot : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (_Target)
-            {
-                StartCoroutine(CreateMissile());
-            }
-            else
-                return;
-        }
-
         if(Input.GetKeyDown(KeyCode.R))
         {
             if (_Target && !m_RSkill)
@@ -96,10 +88,21 @@ public class TestShot : MonoBehaviour
         }
     }
 
+    public void MissileSkill()
+    {
+        if (_Target)
+        {
+            StartCoroutine(CreateMissile());
+        }
+        else
+            return;
+    }
+
     // 총 12발 발사 
     IEnumerator CreateMissile()
     {
         m_DoShot = true;
+        m_Player.m_SkillStack = m_Player.m_SkillMinStack;
         int ShotCount = m_shotCount;
         while(ShotCount > 0)
         {

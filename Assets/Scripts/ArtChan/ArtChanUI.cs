@@ -19,7 +19,8 @@ public class ArtChanUI : MonoBehaviour
         m_Text.text = "Skill Stack :: " + m_Player.m_SkillStack + "\n" +
             "Stack Time :: " + m_Player.m_StackTime.ToString("F1") + "\n" +
             "Q Skill Enable :: " + m_Player.m_SkillEnable + "\n" +
-            "Parrying ::" + m_Player.isParrying;
+            "Parrying ::" + m_Player.isParrying + "\n" +
+            "Skill Number ::" + m_Player.m_SkillNum;
 
     }
 }

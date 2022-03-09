@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ArtChanController : MonoBehaviour
 {
     private Animator _Animator;
     private Transform characterBody;
     private Rigidbody m_Rigid;
+    private TestShot m_MissileSkill;
 
     public Transform cameraArm;
+
+    public Camera m_Camera;
 
     private CapsuleCollider m_Coll;
     public Transform m_YAxisColl;
@@ -37,10 +41,15 @@ public class ArtChanController : MonoBehaviour
     public BoxCollider m_SecondArea;
     public BoxCollider m_FinalArea;
 
+    public GameObject m_LaserBullet;
+    public Transform m_Skill_1Pos;
+
     public float m_SkillStack;
+    public float m_SkillMinStack = 0;
     public float m_SkillMaxStack = 3;
     public float m_StackTime;
     public bool m_SkillEnable;
+    bool DoSkill;
 
     public bool m_AttackStacking;
 
@@ -48,8 +57,18 @@ public class ArtChanController : MonoBehaviour
     [SerializeField]
     bool isJumping;
     bool isMoving;
+    [SerializeField]
+    bool isAttack;
 
     public bool isParrying;
+
+    bool isGrounded;
+    public LayerMask Ground;
+
+    public ParticleSystem m_SkillStartEff;
+    public float m_Skill_1Vec;
+
+    public float m_SkillNum;
 
     void Awake()
     {
@@ -57,6 +76,7 @@ public class ArtChanController : MonoBehaviour
         characterBody = GetComponent<Transform>();
         m_Rigid = GetComponent<Rigidbody>();
         m_Coll = GetComponentInChildren<CapsuleCollider>();
+        m_MissileSkill = GetComponent<TestShot>();
     }
 
     void Start()
@@ -70,22 +90,23 @@ public class ArtChanController : MonoBehaviour
 
         m_SkillStack = 0;
         m_StackTime = 1;
+        m_SkillNum = 1;
     }
 
     void Update()
     {
         GetInput();
-        if(!m_FinalAttack)
+        if(!m_FinalAttack && !DoSkill)
         {
             Move();
         }
         Attack();
         Parrying();
         QSkill();
+        GroundCheck();
 
-        if (Input.GetButtonDown("Jump") && !isJumping)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            isJumping = true;
             Jump();
         }
 
@@ -127,6 +148,14 @@ public class ArtChanController : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             isParrying = true;
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayhit;
+            if (Physics.Raycast(ray, out rayhit, 100))
+            {
+                Vector3 nextVec = rayhit.point - transform.position;
+                nextVec.y = 0;
+                transform.LookAt(transform.position + nextVec);
+            }
         }
         else
             isParrying = false;
@@ -144,7 +173,8 @@ public class ArtChanController : MonoBehaviour
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
-            characterBody.forward = moveDir;
+            if(!isParrying)
+                characterBody.forward = moveDir;
 
             transform.position += moveDir * Time.deltaTime * Speed;
             if (Run && isMoving && !isParrying)
@@ -168,12 +198,36 @@ public class ArtChanController : MonoBehaviour
     {
         _Animator.SetTrigger("DoJump");
         m_Rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+    }
 
-        isJumping = false;
+    void GroundCheck()
+    {
+        RaycastHit hit;
+
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 0.2f, Ground))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 
     void Attack()
     {
+        if(Input.GetMouseButtonDown(0) && !isRun && !isAttack)
+        {
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayhit;
+            if (Physics.Raycast(ray, out rayhit, 100))
+            {
+                Vector3 nextVec = rayhit.point - transform.position;
+                nextVec.y = 0;
+                transform.LookAt(transform.position + nextVec);
+            }
+        }
+
         if (Input.GetMouseButtonDown(0) && comboStep == 0 && !isRun)
         {
             _Animator.SetBool("isWalk", false);
@@ -206,16 +260,65 @@ public class ArtChanController : MonoBehaviour
         }
     }
 
+    public void SkillChange()
+    {
+        if(m_SkillNum == 1)
+        {
+            m_SkillNum = 2;
+        }
+        else if(m_SkillNum == 2)
+        {
+            m_SkillNum = 1;
+        }
+    }
+
+
     void QSkill()
     {
         if (m_SkillStack == m_SkillMaxStack)
         {
             m_SkillEnable = true;
+            if (Input.GetKeyDown(KeyCode.Q) && !isAttack)
+            {
+                if(m_SkillNum == 1)
+                {
+                    StartCoroutine(QSkillUse());
+                }
+                else if(m_SkillNum == 2)
+                {
+                    m_MissileSkill.MissileSkill();
+                }
+            }
         }
         else
             m_SkillEnable = false;
+            return;
     }
 
+    IEnumerator QSkillUse()
+    {
+        DoSkill = true;
+        m_SkillStartEff.Play();
+        m_SkillStack = m_SkillMinStack;
+        yield return new WaitForSeconds(1);
+        GameObject Skill_1 = Instantiate(m_LaserBullet);
+        Skill_1.transform.position = m_Skill_1Pos.transform.position;
+        Skill_1.transform.DOMove(transform.forward * m_Skill_1Vec, 0.5f);
+        Destroy(Skill_1, 1);
+        yield return new WaitForSeconds(0.3f);
+        DoSkill = false;
+        yield return null;
+    }
+
+    void AttackCheck()
+    {
+        isAttack = true;
+    }
+
+    void Attackfalse()
+    {
+        isAttack = false;
+    }
     void Parrying()
     {
         if (isParrying)
@@ -246,6 +349,7 @@ public class ArtChanController : MonoBehaviour
             _Animator.SetTrigger("FinalAttack");
         }
     }
+    
     void ComboReset()
     {
         _Animator.ResetTrigger("SecondAttack");
@@ -253,6 +357,7 @@ public class ArtChanController : MonoBehaviour
         ComboPossible = false;
         isAttackReady = true;
         m_FinalAttack = false;
+        isAttack = false;
         comboStep = 0;
     }
 
