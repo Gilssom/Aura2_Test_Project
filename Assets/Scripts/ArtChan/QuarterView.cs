@@ -9,6 +9,6 @@ public class QuarterView : MonoBehaviour
 
     void Update()
     {
-        transform.position = m_Target.position + m_offset;   
+        transform.position = m_Target.position + m_offset;
     }
 }

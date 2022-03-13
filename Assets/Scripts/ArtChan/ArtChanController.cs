@@ -9,6 +9,7 @@ public class ArtChanController : MonoBehaviour
     private Transform characterBody;
     private Rigidbody m_Rigid;
     private TestShot m_MissileSkill;
+    private NearItemCheck m_NearItem;
 
     public Transform cameraArm;
 
@@ -70,6 +71,8 @@ public class ArtChanController : MonoBehaviour
 
     public float m_SkillNum;
 
+    public bool m_ItemPickup;
+
     void Awake()
     {
         _Animator = GetComponent<Animator>();
@@ -77,6 +80,7 @@ public class ArtChanController : MonoBehaviour
         m_Rigid = GetComponent<Rigidbody>();
         m_Coll = GetComponentInChildren<CapsuleCollider>();
         m_MissileSkill = GetComponent<TestShot>();
+        m_NearItem = GetComponent<NearItemCheck>();
     }
 
     void Start()
@@ -104,6 +108,8 @@ public class ArtChanController : MonoBehaviour
         Parrying();
         QSkill();
         GroundCheck();
+        ItemUse();
+        HitDamage();
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -211,6 +217,36 @@ public class ArtChanController : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+    }
+
+    void ItemUse()
+    {
+        var Item = m_NearItem.m_NearItem;
+
+        if (Item)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                if(Item.name == "Pitch")
+                {
+                    PlayerStats.Instance.Heal(1);
+                }
+                else if (Item.name == "Flower")
+                {
+                    PlayerStats.Instance.AddHealth();
+                }
+                Debug.Log(Item.name + "À» È¹µæÇÏ¿´½À´Ï´Ù");
+                Destroy(Item);
+            }
+        }
+    }
+
+    void HitDamage()
+    {
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            PlayerStats.Instance.TakeDamage(0.5f);
         }
     }
 
