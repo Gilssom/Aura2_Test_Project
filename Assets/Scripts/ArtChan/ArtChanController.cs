@@ -10,10 +10,12 @@ public class ArtChanController : MonoBehaviour
     private Rigidbody m_Rigid;
     private TestShot m_MissileSkill;
     private NearItemCheck m_NearItem;
+    private AT_GameManager m_Manager;
 
     public Transform cameraArm;
 
     public Camera m_Camera;
+    public Transform m_QuestCamPos;
 
     private CapsuleCollider m_Coll;
     public Transform m_YAxisColl;
@@ -72,6 +74,8 @@ public class ArtChanController : MonoBehaviour
     public float m_SkillNum;
 
     public bool m_ItemPickup;
+    [SerializeField]
+    GameObject scanObject;
 
     void Awake()
     {
@@ -81,6 +85,7 @@ public class ArtChanController : MonoBehaviour
         m_Coll = GetComponentInChildren<CapsuleCollider>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
+        m_Manager = GameObject.Find("GameManager").GetComponent<AT_GameManager>();
     }
 
     void Start()
@@ -100,18 +105,22 @@ public class ArtChanController : MonoBehaviour
     void Update()
     {
         GetInput();
-        if(!m_FinalAttack && !DoSkill)
+        if(!m_FinalAttack && !DoSkill && !m_Manager.isAction)
         {
             Move();
         }
-        Attack();
-        Parrying();
-        QSkill();
+        if (!m_Manager.isAction)
+        {
+            Attack();
+            Parrying();
+            QSkill();
+        }
         GroundCheck();
         ItemUse();
         HitDamage();
+        Talk();
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !m_Manager.isAction)
         {
             Jump();
         }
@@ -131,8 +140,32 @@ public class ArtChanController : MonoBehaviour
                 }
             }
         }
+    }
 
-        //m_Coll.transform.position = m_YAxisColl.transform.position;
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Object")
+        {
+            scanObject = other.gameObject;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Object")
+        {
+            scanObject = null;
+        }
+    }
+
+    void Talk()
+    {
+        if (scanObject != null && Input.GetKeyDown(KeyCode.E))
+        {
+            _Animator.SetBool("isRun", false);
+            _Animator.SetBool("isWalk", false);
+            m_Manager.Action(scanObject);
+        }
     }
 
     void GetInput()
@@ -189,12 +222,6 @@ public class ArtChanController : MonoBehaviour
                 _Animator.SetBool("isRun", true);
                 Speed = MaxSpeed;
             }
-            //if (!isMoving)
-            //{
-            //    isRun = false;
-            //    _Animator.SetBool("isRun", false);
-            //    Speed = MinSpeed;
-            //}
         }
 
         _Animator.SetBool("isWalk", isMove);
