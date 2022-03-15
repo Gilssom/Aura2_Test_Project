@@ -10,18 +10,13 @@ public class ArtChanController : MonoBehaviour
     private Rigidbody m_Rigid;
     private TestShot m_MissileSkill;
     private NearItemCheck m_NearItem;
-    private AT_GameManager m_Manager;
 
     public Transform cameraArm;
 
     public Camera m_Camera;
-    public Transform m_QuestCamPos;
 
     private CapsuleCollider m_Coll;
     public Transform m_YAxisColl;
-
-    private Vector3 moveDirection = Vector3.zero;
-    Vector2 movement = new Vector2();
 
     public float Speed;
     public float MinSpeed = 2;
@@ -85,7 +80,6 @@ public class ArtChanController : MonoBehaviour
         m_Coll = GetComponentInChildren<CapsuleCollider>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
-        m_Manager = GameObject.Find("GameManager").GetComponent<AT_GameManager>();
     }
 
     void Start()
@@ -105,11 +99,11 @@ public class ArtChanController : MonoBehaviour
     void Update()
     {
         GetInput();
-        if(!m_FinalAttack && !DoSkill && !m_Manager.isAction)
+        if(!m_FinalAttack && !DoSkill && !AT_GameManager.Instance.isAction)
         {
             Move();
         }
-        if (!m_Manager.isAction)
+        if (!AT_GameManager.Instance.isAction)
         {
             Attack();
             Parrying();
@@ -118,9 +112,13 @@ public class ArtChanController : MonoBehaviour
         GroundCheck();
         ItemUse();
         HitDamage();
-        Talk();
 
-        if (Input.GetButtonDown("Jump") && isGrounded && !m_Manager.isAction)
+        if(scanObject != null && Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(TalkStart());
+        }
+
+        if (Input.GetButtonDown("Jump") && isGrounded && !AT_GameManager.Instance.isAction)
         {
             Jump();
         }
@@ -158,14 +156,17 @@ public class ArtChanController : MonoBehaviour
         }
     }
 
-    void Talk()
+    IEnumerator TalkStart()
     {
-        if (scanObject != null && Input.GetKeyDown(KeyCode.E))
-        {
-            _Animator.SetBool("isRun", false);
-            _Animator.SetBool("isWalk", false);
-            m_Manager.Action(scanObject);
-        }
+        AT_GameManager.Instance.InStartFadeAnim();
+        yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
+        AT_GameManager.Instance.OutStartFadeAnim();
+        transform.LookAt(scanObject.transform.position);
+        scanObject.transform.LookAt(transform);
+        AT_GameManager.Instance.Action(scanObject);
+        _Animator.SetBool("isRun", false);
+        _Animator.SetBool("isWalk", false);
+        yield return null;
     }
 
     void GetInput()
