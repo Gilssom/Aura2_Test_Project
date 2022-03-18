@@ -37,6 +37,8 @@ public class ArtChanController : MonoBehaviour
     float HAxis;
     float VAxis;
     bool Run;
+    [SerializeField]
+    float Wheel;
 
     public BoxCollider m_FirstArea;
     public BoxCollider m_SecondArea;
@@ -116,8 +118,9 @@ public class ArtChanController : MonoBehaviour
         GroundCheck();
         ItemUse();
         HitDamage();
+        MouseWheel();
 
-        if(scanObject != null && Input.GetKeyDown(KeyCode.E))
+        if (scanObject != null && Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(TalkStart());
         }
@@ -234,6 +237,19 @@ public class ArtChanController : MonoBehaviour
         }
         else
             isParrying = false;
+    }
+
+    void MouseWheel()
+    {
+        Wheel = Input.GetAxis("Mouse ScrollWheel");
+        if(Wheel > 0 && m_SkillNum < 2)
+        {
+            m_SkillNum++;
+        }
+        else if(Wheel < 0 && m_SkillNum > 1)
+        {
+            m_SkillNum--;
+        }     
     }
 
     void Move()

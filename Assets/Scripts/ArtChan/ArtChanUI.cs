@@ -11,6 +11,11 @@ public class ArtChanUI : MonoBehaviour
     public Text m_Text;
     public Text m_ItemNameText;
 
+    public Image m_Skill1Img;
+    public Image m_Skill2Img;
+
+    public Sprite[] m_SkillIcon;
+
     private void Awake()
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<ArtChanController>();
@@ -29,5 +34,23 @@ public class ArtChanUI : MonoBehaviour
             m_ItemNameText.text = m_ItemCS.m_NearItem.name + " »πµÊ«œ±‚ (E)";
         else
             m_ItemNameText.text = null;
+
+        SkillImageChange();
+    }
+
+    void SkillImageChange()
+    {
+        float SkillNum = m_Player.m_SkillNum;
+
+        if (SkillNum == 1)
+        {
+            m_Skill1Img.sprite = m_SkillIcon[0];
+            m_Skill2Img.sprite = m_SkillIcon[1];
+        }
+        else if (SkillNum == 2)
+        {
+            m_Skill1Img.sprite = m_SkillIcon[1];
+            m_Skill2Img.sprite = m_SkillIcon[0];
+        }
     }
 }
