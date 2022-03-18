@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Aura2API;
 
 public class AT_GameManager : MonoBehaviour
 {
     public float FadeTime;  // Fade 효과 재생시간
 
+    public QuestManager m_QuestManager;
+    public TalkManager m_TalkManager;
     public GameObject m_TalkPanel;
     public Text m_TalkText;
     public GameObject m_ScanObject;
     public bool isAction;
     public Camera m_MainCamera;
     public Camera m_QuestCam;
+
+    public int talkIndex;
 
     float _Start;
     float _End;
@@ -23,6 +28,10 @@ public class AT_GameManager : MonoBehaviour
     private Image _FadeBG;
     [SerializeField]
     bool isPlaying = false;
+    [SerializeField]
+    public bool isAuraFalse;
+
+    public AuraVolume BoxVolume;
 
     private static AT_GameManager m_instance;
     // 싱글톤
@@ -59,28 +68,60 @@ public class AT_GameManager : MonoBehaviour
     void Start()
     {
         _FadeBG = GameObject.Find("FadeImage").GetComponent<Image>();
+        Debug.Log(m_QuestManager.CheckQuest());
+    }
+
+    void Update()
+    {
+        if(isAuraFalse && BoxVolume.densityInjection.strength > 0)
+        {
+            BoxVolume.densityInjection.strength -= Time.deltaTime * 5;
+        }
     }
 
     public void Action(GameObject scanObj)
     {
-        // 대화창에서 나왔을때
-        if (isAction) 
-        {
-            m_QuestCam.gameObject.SetActive(false);
-            m_MainCamera.gameObject.SetActive(true);       
-            isAction = false;
-        }
-        // 대화창에 진입했을때
-        else
-        {
-            m_MainCamera.gameObject.SetActive(false);
-            m_QuestCam.gameObject.SetActive(true);
-            isAction = true;
-            m_ScanObject = scanObj;
-            m_TalkText.text = "이것은 " + scanObj.name + " 이다.";
-        }
+        m_MainCamera.gameObject.SetActive(false);         
+        m_QuestCam.gameObject.SetActive(true);        
+        m_ScanObject = scanObj;
+        ObjData objData = m_ScanObject.GetComponent<ObjData>();
+        Talk(objData.id, objData.isNpc);
 
         m_TalkPanel.SetActive(isAction); // isAction 상태에 따라 대화창이 껏다 켜졌다 함
+    }
+
+    void Talk(int id, bool isNpc)
+    {
+        // 퀘스트 매니저를 변수로 생성 후 , 퀘스트번호 를 가져옴
+        int QuestTalkIndex = m_QuestManager.GetQuestTalkIndex(id);
+
+        string talkData = m_TalkManager.GetTalk(id + QuestTalkIndex, talkIndex); // 퀘스트번호 + Npc Id = 퀘스트 대화 데이터 Id
+
+        // 대화 종료
+        if(talkData == null)
+        {
+            m_QuestCam.gameObject.SetActive(false);
+            m_MainCamera.gameObject.SetActive(true);
+            isAction = false;
+            talkIndex = 0;
+            Debug.Log(m_QuestManager.CheckQuest(id));
+            return; 
+            // void 함수에서 return 은 강제종료 역할
+        }
+        
+        // Npc 일 경우
+        if(isNpc)
+        {
+            m_TalkText.text = talkData;
+        }
+        // Npc 가 아닐 경우
+        else
+        {
+            m_TalkText.text = talkData;
+        }
+
+        isAction = true;
+        talkIndex++;
     }
 
     public void OutStartFadeAnim()

@@ -14,6 +14,9 @@ public class ArtChanController : MonoBehaviour
     public Transform cameraArm;
 
     public Camera m_Camera;
+    public Camera m_MazeCam;
+
+    public Transform m_MazeStartPos;
 
     private CapsuleCollider m_Coll;
     public Transform m_YAxisColl;
@@ -59,6 +62,7 @@ public class ArtChanController : MonoBehaviour
     bool isAttack;
 
     public bool isParrying;
+    bool isMazePlay;
 
     bool isGrounded;
     public LayerMask Ground;
@@ -103,7 +107,7 @@ public class ArtChanController : MonoBehaviour
         {
             Move();
         }
-        if (!AT_GameManager.Instance.isAction)
+        if (!AT_GameManager.Instance.isAction && !isMazePlay)
         {
             Attack();
             Parrying();
@@ -148,6 +152,23 @@ public class ArtChanController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "FirstGate")
+        {
+            AT_GameManager.Instance.isAuraFalse = true;
+        }
+        if(other.tag == "FirstPortal")
+        {
+            isMazePlay = true;
+            StartCoroutine(MazeStart());
+            // 페이드인 페이드아웃 하고 나서
+            // 메인 카메라 끄고 >> 미로 카메라 켜기
+            // 플레이어 포지션 >> 미로 시작 포지션으로 옮기기
+            // bool 값 하나 주어서 공격 막기
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if (other.tag == "Object")
@@ -158,14 +179,28 @@ public class ArtChanController : MonoBehaviour
 
     IEnumerator TalkStart()
     {
-        AT_GameManager.Instance.InStartFadeAnim();
-        yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
-        AT_GameManager.Instance.OutStartFadeAnim();
+        if (!AT_GameManager.Instance.isAction)
+        {
+            AT_GameManager.Instance.InStartFadeAnim();
+            yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
+            AT_GameManager.Instance.OutStartFadeAnim();
+        }
         transform.LookAt(scanObject.transform.position);
         scanObject.transform.LookAt(transform);
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
         _Animator.SetBool("isWalk", false);
+        yield return null;
+    }
+
+    IEnumerator MazeStart()
+    {
+        AT_GameManager.Instance.InStartFadeAnim();
+        yield return new WaitForSeconds(3);
+        m_Camera.gameObject.SetActive(false);
+        m_MazeCam.gameObject.SetActive(true);
+        transform.position = m_MazeStartPos.transform.position;
+        AT_GameManager.Instance.OutStartFadeAnim();
         yield return null;
     }
 
@@ -185,7 +220,7 @@ public class ArtChanController : MonoBehaviour
         else
             isMoving = true;
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !isMazePlay)
         {
             isParrying = true;
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
