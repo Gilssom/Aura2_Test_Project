@@ -5,7 +5,7 @@ using System.Linq;
 
 public class NearItemCheck : MonoBehaviour
 {
-    private ArtChanController m_Player;
+    private BariController m_Player;
 
     [SerializeField]
     public GameObject m_NearItem;
@@ -32,7 +32,7 @@ public class NearItemCheck : MonoBehaviour
 
     private void Awake()
     {
-        m_Player = GetComponent<ArtChanController>();
+        m_Player = GetComponent<BariController>();
     }
 
     void Update()

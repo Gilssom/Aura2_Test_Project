@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TestShot : MonoBehaviour
 {
-    private ArtChanController m_Player;
+    private BariController m_Player;
 
     public GameObject _MissilePrefab; // 미사일
     public GameObject _SkillMissile; // 스킬 미사일
@@ -50,7 +50,7 @@ public class TestShot : MonoBehaviour
 
     private void Awake()
     {
-        m_Player = GetComponent<ArtChanController>();
+        m_Player = GetComponent<BariController>();
     }
 
     void Update()

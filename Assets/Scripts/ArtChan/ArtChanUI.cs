@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ArtChanUI : MonoBehaviour
 {
-    private ArtChanController m_Player;
+    private BariController m_Player;
     private NearItemCheck m_ItemCS;
 
     public Text m_Text;
@@ -18,7 +18,7 @@ public class ArtChanUI : MonoBehaviour
 
     private void Awake()
     {
-        m_Player = GameObject.FindWithTag("Player").GetComponent<ArtChanController>();
+        m_Player = GameObject.FindWithTag("Player").GetComponent<BariController>();
         m_ItemCS = GameObject.FindWithTag("Player").GetComponent<NearItemCheck>();
     }
 
