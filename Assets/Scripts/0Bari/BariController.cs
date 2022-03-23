@@ -67,6 +67,7 @@ public class BariController : MonoBehaviour
 
     public bool isParrying;
     bool isMazePlay;
+    bool isFading;
 
     bool isGrounded;
     public LayerMask Ground;
@@ -110,7 +111,7 @@ public class BariController : MonoBehaviour
     void Update()
     {
         GetInput();
-        if (!m_FinalAttack && !DoSkill && !AT_GameManager.Instance.isAction)
+        if (!m_FinalAttack && !DoSkill && !AT_GameManager.Instance.isAction && !isFading)
         {
             Move();
         }
@@ -150,12 +151,18 @@ public class BariController : MonoBehaviour
         }
         if (other.tag == "FirstPortal")
         {
-            isMazePlay = true;
-            StartCoroutine(MazeStart());
+            StartCoroutine(MazeStart(0));
             // 페이드인 페이드아웃 하고 나서
             // 메인 카메라 끄고 >> 미로 카메라 켜기
             // 플레이어 포지션 >> 미로 시작 포지션으로 옮기기
             // bool 값 하나 주어서 공격 막기
+        }
+        if(other.tag == "SecondPortal")
+            StartCoroutine(MazeStart(1));
+        if (other.tag == "MazeDeathObj")
+        {
+            Debug.Log("Death");
+            transform.position = m_MazeStartPos.transform.position;
         }
     }
 
@@ -186,15 +193,19 @@ public class BariController : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator MazeStart()
+    IEnumerator MazeStart(int StageNum)
     {
+        isFading = true;
         m_Light.shadowStrength = 0;
         AT_GameManager.Instance.InStartFadeAnim();
         yield return new WaitForSeconds(3);
+        MazeManager.Instance.StageCtrl(StageNum);
         m_Camera.gameObject.SetActive(false);
         m_MazeCam.gameObject.SetActive(true);
         transform.position = m_MazeStartPos.transform.position;
         AT_GameManager.Instance.OutStartFadeAnim();
+        isFading = false;
+        AT_GameManager.Instance.MazeStageIn(StageNum);
         yield return null;
     }
 

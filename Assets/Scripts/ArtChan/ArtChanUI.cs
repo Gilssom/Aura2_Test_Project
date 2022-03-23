@@ -14,6 +14,8 @@ public class ArtChanUI : MonoBehaviour
     public Image m_Skill1Img;
     public Image m_Skill2Img;
 
+    public GameObject m_MazePanel;
+
     public Sprite[] m_SkillIcon;
 
     private void Awake()
@@ -36,6 +38,11 @@ public class ArtChanUI : MonoBehaviour
             m_ItemNameText.text = null;
 
         SkillImageChange();
+        
+        if (AT_GameManager.Instance.isMazePlaying)
+        {
+            m_MazePanel.SetActive(true);
+        }
     }
 
     void SkillImageChange()
