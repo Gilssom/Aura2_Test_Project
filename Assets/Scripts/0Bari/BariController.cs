@@ -20,9 +20,6 @@ public class BariController : MonoBehaviour
 
     public Transform m_MazeStartPos;
 
-    private CapsuleCollider m_Coll;
-    public Transform m_YAxisColl;
-
     public float Speed;
     public float MinSpeed = 2;
     public float MaxSpeed = 10;
@@ -89,7 +86,6 @@ public class BariController : MonoBehaviour
         _Animator = GetComponent<Animator>();
         characterBody = GetComponent<Transform>();
         m_Rigid = GetComponent<Rigidbody>();
-        m_Coll = GetComponentInChildren<CapsuleCollider>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
     }
