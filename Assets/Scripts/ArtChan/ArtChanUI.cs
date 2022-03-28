@@ -18,6 +18,8 @@ public class ArtChanUI : MonoBehaviour
 
     public Sprite[] m_SkillIcon;
 
+    public Image m_KeyIcon;
+
     private void Awake()
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<BariController>();
@@ -43,6 +45,10 @@ public class ArtChanUI : MonoBehaviour
         {
             m_MazePanel.SetActive(true);
         }
+
+        Color keycolor = m_KeyIcon.color;
+        keycolor.a = 1;
+        Debug.Log(keycolor);           
     }
 
     void SkillImageChange()

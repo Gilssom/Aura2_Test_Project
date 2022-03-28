@@ -11,9 +11,13 @@ public class MazeController : MonoBehaviour
     public float m_MoveSpeed;
 
     Vector3 m_CurPos;
-    float m_Zdelta = 5.0f; // 좌우로 이동 가능한 최대값
-    float m_Xdelta = 18.0f;
+    float m_Zdelta = 7; // 좌우로 이동 가능한 최대값
+    float m_Xdelta = 18;
     public bool isXmoving;
+
+    public bool isStop;
+
+    public bool isStopSpin;
 
     void Start()
     {
@@ -23,6 +27,16 @@ public class MazeController : MonoBehaviour
     void Update()
     {
         MazeObjController();
+
+        int Angles = (int)transform.rotation.eulerAngles.y;
+
+        if(isStopSpin)
+        {
+            if (Angles % 90 == 0 && !isStop)
+            {
+                StartCoroutine(StopSpinWall());
+            }
+        }
     }
 
     void MazeObjController()
@@ -32,8 +46,6 @@ public class MazeController : MonoBehaviour
             case Type.Hall:
                 break;
             case Type.SpinWall:
-                //transform.DORotate(new Vector3(0, -360, 0), m_MoveSpeed, RotateMode.FastBeyond360).
-                //    SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear); // 360도로 무한회전
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
                 break;
             case Type.MoveWall:
@@ -51,14 +63,20 @@ public class MazeController : MonoBehaviour
                 transform.position = v;
                 break;
             case Type.StopSpinWall:
-                StartCoroutine(StopSpinWall());
-            break;
+                transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
+                break;
         }   
     }
 
     IEnumerator StopSpinWall()
     {
-        transform.DORotate(new Vector3(0, 0, 360), m_MoveSpeed, RotateMode.FastBeyond360);
+        Debug.Log("Check");
+        isStop = true;
+        m_MoveSpeed = 0;
+        yield return new WaitForSeconds(1);
+        m_MoveSpeed = 40;
+        yield return new WaitForSeconds(0.3f);
+        isStop = false;
         yield return null;
     }
 }

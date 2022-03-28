@@ -37,7 +37,11 @@ public class MazeManager : MonoBehaviour
 
     public void StageCtrl(int StageNum)
     {
-        if(StageNum != 0)
+        if(StageNum == 0)
+        {
+            m_Stage[StageNum].SetActive(true);
+        }
+        else if(StageNum != 0)
         {
             m_Stage[StageNum - 1].SetActive(false);
             m_Stage[StageNum].SetActive(true);

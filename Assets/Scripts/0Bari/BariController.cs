@@ -81,6 +81,8 @@ public class BariController : MonoBehaviour
 
     public Light m_Light;
 
+    public bool m_UseMazeKey;
+
     void Awake()
     {
         _Animator = GetComponent<Animator>();
@@ -153,8 +155,21 @@ public class BariController : MonoBehaviour
             // 플레이어 포지션 >> 미로 시작 포지션으로 옮기기
             // bool 값 하나 주어서 공격 막기
         }
-        if(other.tag == "SecondPortal")
+
+        if(other.tag == "MazeFirstPortal")
             StartCoroutine(MazeStart(1));
+        else if (other.tag == "MazeSecondPortal")
+            StartCoroutine(MazeStart(2));
+        else if (other.tag == "MazeThirdPortal")
+            StartCoroutine(MazeStart(3));
+        else if (other.tag == "MazeFinalPortal")
+        {
+            if (m_UseMazeKey)
+                Debug.Log("미로 탈출 성공");
+            else
+                Debug.Log("열쇠가 필요합니다.");
+        }
+
         if (other.tag == "MazeDeathObj")
         {
             Debug.Log("Death");
@@ -195,6 +210,7 @@ public class BariController : MonoBehaviour
         m_Light.shadowStrength = 0;
         AT_GameManager.Instance.InStartFadeAnim();
         yield return new WaitForSeconds(3);
+        m_Light.color = Color.white;
         MazeManager.Instance.StageCtrl(StageNum);
         m_Camera.gameObject.SetActive(false);
         m_MazeCam.gameObject.SetActive(true);
@@ -305,14 +321,13 @@ public class BariController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Item.name == "Pitch")
-                {
-                    PlayerStats.Instance.Heal(1);
-                }
-                else if (Item.name == "Flower")
-                {
-                    PlayerStats.Instance.AddHealth();
-                }
+                if (Item.name == "Pitch")            
+                    PlayerStats.Instance.Heal(1);              
+                else if (Item.name == "Flower")              
+                    PlayerStats.Instance.AddHealth();              
+                else if (Item.name == "MazeKey")
+                    m_UseMazeKey = true;
+
                 Debug.Log(Item.name + "을 획득하였습니다");
                 Destroy(Item);
             }

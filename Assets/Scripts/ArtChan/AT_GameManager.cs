@@ -16,7 +16,7 @@ public class AT_GameManager : MonoBehaviour
     public bool isAction;
     public Camera m_MainCamera;
     public Camera m_QuestCam;
-    public MazeController[] m_MazeCtrl;
+    public GameObject[] m_MazeCtrl;
 
     public int talkIndex;
 
@@ -131,13 +131,7 @@ public class AT_GameManager : MonoBehaviour
     {
         isMazePlaying = true;
 
-        if (StageNum == 1)
-        {
-            m_MazeCtrl[StageNum].GetComponent<MazeController>().enabled = true;
-            m_MazeCtrl[StageNum + 1].GetComponent<MazeController>().enabled = true;
-        }
-
-        m_MazeCtrl[StageNum].GetComponent<MazeController>().enabled = true;
+        //m_MazeCtrl[StageNum].GetComponent<MazeController>().enabled = true;
     }
 
     public void OutStartFadeAnim()
