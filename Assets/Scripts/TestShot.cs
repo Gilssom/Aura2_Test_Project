@@ -11,9 +11,9 @@ public class TestShot : MonoBehaviour
     public GameObject _SkillMissile; // 스킬 미사일
     public GameObject _Target; // 타겟
 
-    public float m_Speed = 2; // 미사일속도
+    public float m_Speed = 3; // 미사일속도
     public float m_distanceStart = 8f; // 시작지점 기준으로 꺾이는 정도
-    public float m_distanceEnd = 3f; // 도착지점 기준으로 꺾이는 정도
+    public float m_distanceEnd = 5f; // 도착지점 기준으로 꺾이는 정도
 
     public float m_SkillSpeed; // 미사일속도
     public float m_SkilldistanceStart; // 시작지점 기준으로 꺾이는 정도

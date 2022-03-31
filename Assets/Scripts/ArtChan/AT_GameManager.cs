@@ -17,6 +17,7 @@ public class AT_GameManager : MonoBehaviour
     public Camera m_MainCamera;
     public Camera m_QuestCam;
     public GameObject[] m_MazeCtrl;
+ 
 
     public int talkIndex;
 

@@ -46,9 +46,12 @@ public class ArtChanUI : MonoBehaviour
             m_MazePanel.SetActive(true);
         }
 
-        Color keycolor = m_KeyIcon.color;
-        keycolor.a = 1;
-        Debug.Log(keycolor);           
+        if(m_Player.m_UseMazeKey)
+        {
+            Color color = m_KeyIcon.color;
+            color.a = 1.0f;
+            m_KeyIcon.color = color;
+        }
     }
 
     void SkillImageChange()

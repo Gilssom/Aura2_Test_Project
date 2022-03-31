@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class QuestManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class QuestManager : MonoBehaviour
     public int QuestActionIndex; // 퀘스트 대화순서 변수 생성
     public GameObject[] QuestObject; // 퀘스트 오브젝트를 저장할 변수 생성
     public BoxCollider FirstGate;
+
+    public PlayableDirector m_PlayableDirector;
+    public Camera m_CinemaCam;
 
     // 퀘스트 데이터를 저장할 Dictionary 변수 생성
     Dictionary<int, QuestData> QuestList;
@@ -74,6 +78,11 @@ public class QuestManager : MonoBehaviour
                     QuestObject[0].SetActive(true);
                 break;
             case 20:
+                if(QuestActionIndex == 1)
+                {
+                    m_CinemaCam.gameObject.SetActive(true);
+                    m_PlayableDirector.Play();
+                }
                 if (QuestActionIndex == 2)
                 {
                     FirstGate.isTrigger = true;
@@ -81,5 +90,10 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void SetCamera()
+    {
+        m_CinemaCam.gameObject.SetActive(false);
     }
 }
