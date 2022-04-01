@@ -51,7 +51,7 @@ public class BariController : MonoBehaviour
     public float m_SkillMaxStack = 3;
     public float m_StackTime;
     public bool m_SkillEnable;
-    bool DoSkill;
+    public bool DoSkill;
 
     public bool m_AttackStacking;
 
@@ -365,7 +365,7 @@ public class BariController : MonoBehaviour
     }
 
 
-    void QSkill()
+    void QSkill()       
     {
         if (m_SkillStack == m_SkillMaxStack)
         {
@@ -374,7 +374,7 @@ public class BariController : MonoBehaviour
             {
                 if (m_SkillNum == 1)
                 {
-                    StartCoroutine(QSkillUse());
+                    StartCoroutine(BariSkillManager.Instance.WinterIceStun());
                 }
                 else if (m_SkillNum == 2)
                 {
@@ -385,21 +385,5 @@ public class BariController : MonoBehaviour
         else
             m_SkillEnable = false;
         return;
-    }
-
-    IEnumerator QSkillUse()
-    {
-        DoSkill = true;
-        m_SkillStartEff.Play();
-        m_SkillStack = m_SkillMinStack;
-        yield return new WaitForSeconds(1);
-        GameObject Skill_1 = Instantiate(m_LaserBullet);
-        Skill_1.transform.SetParent(m_Skill_1Pos.transform);
-        Skill_1.transform.position = m_Skill_1Pos.transform.position;
-        Skill_1.transform.DOMoveZ(m_Skill_1Vec, 0.5f);
-        Destroy(Skill_1, 1);
-        yield return new WaitForSeconds(0.3f);
-        DoSkill = false;
-        yield return null;
     }
 }

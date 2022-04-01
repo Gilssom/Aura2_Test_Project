@@ -88,7 +88,7 @@ public class TestShot : MonoBehaviour
         }
     }
 
-    public void MissileSkill()
+    public void MissileSkill()          // °Ü¿ï - ´«µ¢ÀÌ ³­»ç
     {
         if (_Target)
         {
