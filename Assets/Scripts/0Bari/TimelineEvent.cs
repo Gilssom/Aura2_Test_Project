@@ -8,6 +8,7 @@ public class TimelineEvent : MonoBehaviour
     public Light m_ShiningNpc;
     public Light m_ShiningHelpers;
     public ParticleSystem m_YellowEffect;
+    public Camera m_CineCam;
 
     public void NpcShining()
     {
@@ -22,5 +23,10 @@ public class TimelineEvent : MonoBehaviour
     public void YellowEff()
     {
         m_YellowEffect.Play();
+    }
+
+    public void CinemachineOff()
+    {
+        m_CineCam.gameObject.SetActive(false);
     }
 }

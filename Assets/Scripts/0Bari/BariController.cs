@@ -21,7 +21,7 @@ public class BariController : MonoBehaviour
     public Transform m_MazeStartPos;
 
     public float Speed;
-    public float MinSpeed = 2;
+    public float MinSpeed = 7;
     public float MaxSpeed = 10;
     public float ParryingSpeed = 0.5f;
     public float gravity = 10;

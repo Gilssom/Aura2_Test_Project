@@ -5,15 +5,19 @@ using DG.Tweening;
 
 public class MazeController : MonoBehaviour
 {
-    public enum Type { Hall, SpinWall, MoveWall, StopSpinWall }
+    public enum Type { Hall, SpinWall, MoveWall, StopSpinWall, SpinSphere }
     public Type m_MazeObjectType;
 
     public float m_MoveSpeed;
 
     Vector3 m_CurPos;
-    float m_Zdelta = 7; // 좌우로 이동 가능한 최대값
-    float m_Xdelta = 18;
+    public float m_Zdelta; // 좌우로 이동 가능한 최대값
+    public float m_Xdelta;
     public bool isXmoving;
+    public bool isMinusZWall;
+
+    public bool isSphereRight;
+    public bool isSphereLeft;
 
     public bool isStop;
 
@@ -55,15 +59,22 @@ public class MazeController : MonoBehaviour
                     m_MoveSpeed = 1;
                     v.x += m_Xdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }
-                else
+                else if(isMinusZWall)
                 {
-                    m_MoveSpeed = 2.3f;
+                    m_MoveSpeed = -1.3f;
                     v.z += m_Zdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }             
+                else
+                {
+                    m_MoveSpeed = 1.3f;
+                    v.z += m_Zdelta * Mathf.Sin(Time.time * m_MoveSpeed);
+                }
                 transform.position = v;
                 break;
             case Type.StopSpinWall:
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
+                break;
+            case Type.SpinSphere:
                 break;
         }   
     }
