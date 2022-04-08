@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class MazeController : MonoBehaviour
 {
-    public enum Type { Hall, SpinWall, MoveWall, StopSpinWall, SpinSphere }
+    public enum Type { Hall, SpinWall, MoveWall, StopSpinWall, StopTurn }
     public Type m_MazeObjectType;
 
     public float m_MoveSpeed;
@@ -16,15 +16,19 @@ public class MazeController : MonoBehaviour
     public bool isXmoving;
     public bool isMinusZWall;
 
-    public bool isSphereRight;
-    public bool isSphereLeft;
+    public bool isStopTurn;
+
+    [SerializeField]
+    Transform[] m_TurnPos;
+
+    int m_TurnNum = 0;
 
     public bool isStop;
 
     public bool isStopSpin;
 
     void Start()
-    {
+    {  
         m_CurPos = transform.position;
     }
 
@@ -56,7 +60,6 @@ public class MazeController : MonoBehaviour
                 Vector3 v = m_CurPos;
                 if(isXmoving)
                 {
-                    m_MoveSpeed = 1;
                     v.x += m_Xdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }
                 else if(isMinusZWall)
@@ -74,7 +77,15 @@ public class MazeController : MonoBehaviour
             case Type.StopSpinWall:
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
                 break;
-            case Type.SpinSphere:
+            case Type.StopTurn:
+                transform.position = Vector3.MoveTowards
+                    (transform.position, m_TurnPos[m_TurnNum].transform.position, m_MoveSpeed * Time.deltaTime);
+
+                if (transform.position == m_TurnPos[m_TurnNum].transform.position)
+                    m_TurnNum++;
+
+                if (m_TurnNum == m_TurnPos.Length)
+                    m_TurnNum = 0;
                 break;
         }   
     }
