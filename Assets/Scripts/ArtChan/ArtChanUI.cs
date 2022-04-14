@@ -32,7 +32,9 @@ public class ArtChanUI : MonoBehaviour
             "Stack Time :: " + m_Player.m_StackTime.ToString("F1") + "\n" +
             "Q Skill Enable :: " + m_Player.m_SkillEnable + "\n" +
             "Parrying ::" + m_Player.isParrying + "\n" +
-            "Skill Number ::" + m_Player.m_SkillNum;
+            "Skill Number ::" + m_Player.m_SkillNum + "\n" +
+            "Tport Count ::" + m_Player.m_TportCount + "\n" +
+            "Tport AddTime ::" + m_Player.m_TportAddTime.ToString("F1");
 
         if (m_ItemCS.m_NearItem)
             m_ItemNameText.text = m_ItemCS.m_NearItem.name + " »πµÊ«œ±‚ (E)";
@@ -66,7 +68,17 @@ public class ArtChanUI : MonoBehaviour
         else if (SkillNum == 2)
         {
             m_Skill1Img.sprite = m_SkillIcon[1];
-            m_Skill2Img.sprite = m_SkillIcon[0];
+            m_Skill2Img.sprite = m_SkillIcon[2];
+        }
+        else if(SkillNum == 3)
+        {
+            m_Skill1Img.sprite = m_SkillIcon[2];
+            m_Skill2Img.sprite = m_SkillIcon[3];
+        }
+        else if (SkillNum == 4)
+        {
+            m_Skill1Img.sprite = m_SkillIcon[3];
+            m_Skill2Img.sprite = m_SkillIcon[2];
         }
     }
 }

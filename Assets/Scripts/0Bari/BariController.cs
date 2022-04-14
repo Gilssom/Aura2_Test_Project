@@ -21,13 +21,10 @@ public class BariController : MonoBehaviour
     public Transform m_MazeStartPos;
 
     public float Speed;
-    public float MinSpeed = 7;
-    public float MaxSpeed = 10;
+    public float MinSpeed;
+    public float MaxSpeed;
     public float ParryingSpeed = 0.5f;
-    public float gravity = 10;
     public float JumpPower;
-
-    private bool isRun = false;
 
     public int comboStep = 0;
     public bool isAttackReady = true;
@@ -35,7 +32,6 @@ public class BariController : MonoBehaviour
 
     float HAxis;
     float VAxis;
-    bool Run;
     [SerializeField]
     float Wheel;
 
@@ -43,22 +39,17 @@ public class BariController : MonoBehaviour
     //public BoxCollider m_SecondArea;
     //public BoxCollider m_FinalArea;
 
-    public GameObject m_LaserBullet;
-    public Transform m_Skill_1Pos;
-
     public float m_SkillStack;
     public float m_SkillMinStack = 0;
     public float m_SkillMaxStack = 3;
     public float m_StackTime;
     public bool m_SkillEnable;
     public bool DoSkill;
+    public bool DoSpringBuff;
 
     public bool m_AttackStacking;
 
     bool m_FinalAttack;
-    [SerializeField]
-    bool isJumping;
-    bool isMoving;
     [SerializeField]
     bool isAttack;
 
@@ -68,9 +59,6 @@ public class BariController : MonoBehaviour
 
     bool isGrounded;
     public LayerMask Ground;
-
-    public ParticleSystem m_SkillStartEff;
-    public float m_Skill_1Vec;
 
     public float m_SkillNum;
 
@@ -82,6 +70,11 @@ public class BariController : MonoBehaviour
     public Light m_Light;
 
     public bool m_UseMazeKey;
+
+    public GameObject m_TeleportEff;
+    bool m_TportEnable;
+    public float m_TportCount;
+    public float m_TportAddTime;
 
     void Awake()
     {
@@ -104,6 +97,8 @@ public class BariController : MonoBehaviour
         m_SkillStack = 0;
         m_StackTime = 1;
         m_SkillNum = 1;
+        m_TportCount = 3;
+        m_TportAddTime = 5;
     }
 
     void Update()
@@ -131,6 +126,8 @@ public class BariController : MonoBehaviour
         {
             Jump();
         }
+
+        SpringBuff();
     }
 
     void OnTriggerStay(Collider other)
@@ -225,17 +222,12 @@ public class BariController : MonoBehaviour
     {
         HAxis = Input.GetAxis("Horizontal");
         VAxis = Input.GetAxis("Vertical");
-        Run = Input.GetButton("Parrying");
 
-        if (!Run || HAxis == 0 && VAxis == 0)
+        if (HAxis == 0 && VAxis == 0)
         {
-            isMoving = false;
-            isRun = false;
             _Animator.SetBool("isRun", false);
             Speed = MinSpeed;
         }
-        else
-            isMoving = true;
 
         //if (Input.GetMouseButton(1) && !isMazePlay)
         //{
@@ -251,12 +243,42 @@ public class BariController : MonoBehaviour
         //}
         //else
         //    isParrying = false;
+
+        if(m_TportCount < 3 && m_TportAddTime >= 0)
+        {
+            m_TportAddTime -= Time.deltaTime;
+
+            if (m_TportAddTime <= 0)
+            {
+                m_TportAddTime = 5;
+
+                if (m_TportAddTime == 5 && m_TportCount < 3)
+                    m_TportCount += 1;
+            }
+        }
+
+        if(m_TportCount > 0)
+        {
+            m_TportEnable = true;
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && m_TportEnable)
+            {
+                Vector3 Pos = this.transform.position;
+                GameObject Teleport = Instantiate(m_TeleportEff, this.transform.forward +
+                    new Vector3(Pos.x, Pos.y + 0.7f, Pos.z), this.transform.rotation);
+                this.transform.DOMove(transform.position + transform.forward * 5, 0.2f);
+                Destroy(Teleport, 2f);
+                m_TportCount -= 1;
+            }
+        }
+        else
+            m_TportEnable = false;
     }
 
     void MouseWheel()
     {
         Wheel = Input.GetAxis("Mouse ScrollWheel");
-        if (Wheel > 0 && m_SkillNum < 2)
+        if (Wheel > 0 && m_SkillNum < 4)
         {
             m_SkillNum++;
         }
@@ -282,12 +304,6 @@ public class BariController : MonoBehaviour
                 characterBody.forward = moveDir;
 
             transform.position += moveDir * Time.deltaTime * Speed;
-            if (Run && isMoving && !isParrying)
-            {
-                isRun = true;
-                _Animator.SetBool("isRun", true);
-                Speed = MaxSpeed;
-            }
         }
 
         _Animator.SetBool("isWalk", isMove);
@@ -295,7 +311,6 @@ public class BariController : MonoBehaviour
 
     void Jump()
     {
-        //_Animator.SetTrigger("DoJump");
         m_Rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
     }
 
@@ -364,7 +379,6 @@ public class BariController : MonoBehaviour
         }
     }
 
-
     void QSkill()       
     {
         if (m_SkillStack == m_SkillMaxStack)
@@ -380,10 +394,32 @@ public class BariController : MonoBehaviour
                 {
                     m_MissileSkill.MissileSkill();
                 }
+                else if(m_SkillNum == 3)
+                {
+                    StartCoroutine(BariSkillManager.Instance.SummerLaser());
+                }
+                else if(m_SkillNum == 4)
+                {
+                    StartCoroutine(BariSkillManager.Instance.SpringSkill());
+                }
             }
         }
         else
             m_SkillEnable = false;
         return;
+    }
+
+    void SpringBuff()
+    {
+        if (DoSpringBuff)
+        {
+            Speed = MaxSpeed;
+            _Animator.SetFloat("WalkSpeed", 3);
+        }
+        else
+        {
+            Speed = MinSpeed;
+            _Animator.SetFloat("WalkSpeed", 2);
+        }
     }
 }

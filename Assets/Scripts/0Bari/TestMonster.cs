@@ -10,5 +10,10 @@ public class TestMonster : MonoBehaviour
         {
             Debug.Log("Monster Dmg Check");
         }
+
+        if (other.tag == "SummerLaser")
+        {
+            Debug.Log("Monster Dmg Check");
+        }
     }
 }
