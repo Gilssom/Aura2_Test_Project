@@ -15,6 +15,7 @@ public class ArtChanUI : MonoBehaviour
     public Image m_Skill2Img;
 
     public GameObject m_MazePanel;
+    public GameObject m_SkillPanel;
 
     public Sprite[] m_SkillIcon;
 
@@ -45,8 +46,15 @@ public class ArtChanUI : MonoBehaviour
         
         if (AT_GameManager.Instance.isMazePlaying)
         {
-            m_MazePanel.SetActive(true);
+            if (!m_Player.isMazePlay)
+                m_SkillPanel.SetActive(true);
+            else
+            {
+                m_SkillPanel.SetActive(false);
+                m_MazePanel.SetActive(true);
+            }
         }
+
 
         if(m_Player.m_UseMazeKey)
         {

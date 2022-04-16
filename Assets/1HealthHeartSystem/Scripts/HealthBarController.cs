@@ -13,6 +13,11 @@ public class HealthBarController : MonoBehaviour
     public Transform heartsParent;
     public GameObject heartContainerPrefab;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     private void Start()
     {
         // Should I use lists? Maybe :)

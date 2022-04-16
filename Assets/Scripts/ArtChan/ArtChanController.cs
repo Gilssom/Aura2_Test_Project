@@ -157,10 +157,6 @@ public class ArtChanController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "FirstGate")
-        {
-            AT_GameManager.Instance.isAuraFalse = true;
-        }
         if(other.tag == "FirstPortal")
         {
             isMazePlay = true;
@@ -184,9 +180,9 @@ public class ArtChanController : MonoBehaviour
     {
         if (!AT_GameManager.Instance.isAction)
         {
-            AT_GameManager.Instance.InStartFadeAnim();
-            yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
-            AT_GameManager.Instance.OutStartFadeAnim();
+            //AT_GameManager.Instance.InStartFadeAnim();
+            //yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
+            //AT_GameManager.Instance.OutStartFadeAnim();
         }
         transform.LookAt(scanObject.transform.position);
         scanObject.transform.LookAt(transform);
@@ -198,12 +194,12 @@ public class ArtChanController : MonoBehaviour
 
     IEnumerator MazeStart()
     {
-        AT_GameManager.Instance.InStartFadeAnim();
+        //AT_GameManager.Instance.InStartFadeAnim();
         yield return new WaitForSeconds(3);
         m_Camera.gameObject.SetActive(false);
         m_MazeCam.gameObject.SetActive(true);
         transform.position = m_MazeStartPos.transform.position;
-        AT_GameManager.Instance.OutStartFadeAnim();
+        //AT_GameManager.Instance.OutStartFadeAnim();
         yield return null;
     }
 

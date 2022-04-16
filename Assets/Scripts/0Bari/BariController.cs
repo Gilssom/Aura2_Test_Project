@@ -15,8 +15,8 @@ public class BariController : MonoBehaviour
 
     public Camera m_Camera;
     public Camera m_MazeCam;
-
-    public Vector3 m_QuestCamPos;
+    public Camera m_MazeQuaterCam;
+    public GameObject m_MazeGround;
 
     public Transform m_MazeStartPos;
 
@@ -54,8 +54,8 @@ public class BariController : MonoBehaviour
     bool isAttack;
 
     public bool isParrying;
-    bool isMazePlay;
-    bool isFading;
+    public bool isMazePlay;
+    public bool isFading;
 
     bool isGrounded;
     public LayerMask Ground;
@@ -68,6 +68,7 @@ public class BariController : MonoBehaviour
     private Vector3 ObjPosition;
 
     public Light m_Light;
+    public Light m_MazeLigth;
 
     public bool m_UseMazeKey;
 
@@ -83,6 +84,8 @@ public class BariController : MonoBehaviour
         m_Rigid = GetComponent<Rigidbody>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
+
+        DontDestroyOnLoad(this);
     }
 
     void Start()
@@ -140,31 +143,31 @@ public class BariController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "FirstGate")
-        {
-            AT_GameManager.Instance.isAuraFalse = true;
-        }
         if (other.tag == "FirstPortal")
-        {
             StartCoroutine(MazeStart(0));
-            // 페이드인 페이드아웃 하고 나서
-            // 메인 카메라 끄고 >> 미로 카메라 켜기
-            // 플레이어 포지션 >> 미로 시작 포지션으로 옮기기
-            // bool 값 하나 주어서 공격 막기
-        }
-
-        if(other.tag == "MazeFirstPortal")
+        else if(other.tag == "MazeFirstPortal")
             StartCoroutine(MazeStart(1));
         else if (other.tag == "MazeSecondPortal")
             StartCoroutine(MazeStart(2));
-        else if (other.tag == "MazeThirdPortal")
+        else if(other.tag == "MazeBonusInPortal")
             StartCoroutine(MazeStart(3));
+        else if (other.tag == "MazeBossPortal")
+            StartCoroutine(MazeStart(4));
+        else if (other.tag == "MazeBonusOutPortal")
+            StartCoroutine(MazeStart(5));
+        else if (other.tag == "MazeThirdPortal")
+            StartCoroutine(MazeStart(6));
         else if (other.tag == "MazeFinalPortal")
         {
             if (m_UseMazeKey)
-                Debug.Log("미로 탈출 성공");
+                StartCoroutine(MazeStart(7));
             else
                 Debug.Log("열쇠가 필요합니다.");
+        }
+        else if (other.tag == "MazeExitPortal")
+        {
+            isFading = true;
+            AT_GameManager.Instance.InStartFadeAnim(2, true);
         }
 
         if (other.tag == "MazeDeathObj")
@@ -188,9 +191,9 @@ public class BariController : MonoBehaviour
 
         if (!AT_GameManager.Instance.isAction)
         {
-            AT_GameManager.Instance.InStartFadeAnim();
-            yield return new WaitForSeconds(AT_GameManager.Instance.FadeTime);
-            AT_GameManager.Instance.OutStartFadeAnim();
+            AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
+            yield return new WaitForSeconds(0.2f);
+            AT_GameManager.Instance.OutStartFadeAnim(0.2f);
         }
         transform.LookAt(ObjPosition);
         scanObject.transform.LookAt(new Vector3(transform.position.x, scanObject.transform.position.y, transform.position.z));
@@ -204,17 +207,32 @@ public class BariController : MonoBehaviour
     IEnumerator MazeStart(int StageNum)
     {
         isFading = true;
-        m_Light.shadowStrength = 0;
-        AT_GameManager.Instance.InStartFadeAnim();
+        AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
+        AT_GameManager.Instance.isMazePlaying = true;
         yield return new WaitForSeconds(3);
-        m_Light.color = Color.white;
         MazeManager.Instance.StageCtrl(StageNum);
         m_Camera.gameObject.SetActive(false);
-        m_MazeCam.gameObject.SetActive(true);
+        if (StageNum == 0 || StageNum == 5)
+        {
+            m_Light.gameObject.SetActive(false);
+            m_MazeLigth.gameObject.SetActive(true);
+            isMazePlay = true;
+            m_MazeQuaterCam.gameObject.SetActive(false);
+            m_MazeGround.gameObject.SetActive(true);
+            m_MazeCam.gameObject.SetActive(true);
+        }
+        else if (StageNum == 2 || StageNum == 7)
+        {
+            m_MazeLigth.gameObject.SetActive(false);
+            m_Light.gameObject.SetActive(true);
+            isMazePlay = false;
+            m_MazeCam.gameObject.SetActive(false);
+            m_MazeGround.gameObject.SetActive(false);
+            m_MazeQuaterCam.gameObject.SetActive(true);
+        }
         transform.position = m_MazeStartPos.transform.position;
-        AT_GameManager.Instance.OutStartFadeAnim();
+        AT_GameManager.Instance.OutStartFadeAnim(0.2f);
         isFading = false;
-        AT_GameManager.Instance.MazeStageIn(StageNum);
         yield return null;
     }
 
@@ -261,7 +279,7 @@ public class BariController : MonoBehaviour
         {
             m_TportEnable = true;
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && m_TportEnable)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && m_TportEnable && !isMazePlay)
             {
                 Vector3 Pos = this.transform.position;
                 GameObject Teleport = Instantiate(m_TeleportEff, this.transform.forward +

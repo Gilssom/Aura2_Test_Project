@@ -92,7 +92,6 @@ public class MazeController : MonoBehaviour
 
     IEnumerator StopSpinWall()
     {
-        Debug.Log("Check");
         isStop = true;
         m_MoveSpeed = 0;
         yield return new WaitForSeconds(1);
