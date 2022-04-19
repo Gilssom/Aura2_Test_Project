@@ -111,7 +111,8 @@ public class TestShot : MonoBehaviour
                 if(ShotCount > 0)
                 {
                     GameObject missile = Instantiate(_MissilePrefab);
-                    missile.GetComponent<BazierMissile>().Init(this.gameObject.transform, _Target.transform, m_Speed, m_distanceStart, m_distanceEnd);
+                    missile.GetComponent<BazierMissile>().Init(this.gameObject.transform, 
+                        _Target.transform, m_Speed, m_distanceStart, m_distanceEnd);
 
                     ShotCount--;
                 }
@@ -126,7 +127,8 @@ public class TestShot : MonoBehaviour
     IEnumerator SkillMissile()
     {
         GameObject missile = Instantiate(_SkillMissile);
-        missile.GetComponent<BazierMissile>().Init(this.gameObject.transform, _Target.transform, m_SkillSpeed, m_SkilldistanceStart, m_SkilldistanceEnd);
+        missile.GetComponent<BazierMissile>().Init(this.gameObject.transform, 
+            _Target.transform, m_SkillSpeed, m_SkilldistanceStart, m_SkilldistanceEnd);
         yield return new WaitForSeconds(5f);
         m_RSkill = false;
         yield return null;

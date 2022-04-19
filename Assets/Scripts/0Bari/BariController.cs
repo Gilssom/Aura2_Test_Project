@@ -308,11 +308,16 @@ public class BariController : MonoBehaviour
 
     void Move()
     {
-        Vector2 moveInput = new Vector2(HAxis, VAxis);
+        //Vector2 moveInput = new Vector2(HAxis, VAxis);
+        Vector3 moveVec = new Vector3(HAxis, 0, VAxis).normalized;
 
-        bool isMove = moveInput.magnitude != 0;
+        //bool isMove = moveVec.magnitude != 0;
 
-        if (isMove)
+        transform.position += moveVec * Speed * Time.deltaTime;
+
+        transform.LookAt(transform.position + moveVec);
+
+        /*if (isMove)
         {
             Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
@@ -321,10 +326,9 @@ public class BariController : MonoBehaviour
             if (!isParrying)
                 characterBody.forward = moveDir;
 
-            transform.position += moveDir * Time.deltaTime * Speed;
-        }
+        }*/
 
-        _Animator.SetBool("isWalk", isMove);
+        _Animator.SetBool("isWalk", moveVec != Vector3.zero);
     }
 
     void Jump()
