@@ -6,19 +6,9 @@ using DG.Tweening;
 public class BariController : MonoBehaviour
 {
     private Animator _Animator;
-    private Transform characterBody;
     private Rigidbody m_Rigid;
     private TestShot m_MissileSkill;
     private NearItemCheck m_NearItem;
-
-    public Transform cameraArm;
-
-    public Camera m_Camera;
-    public Camera m_MazeCam;
-    public Camera m_MazeQuaterCam;
-    public GameObject m_MazeGround;
-
-    public Transform m_MazeStartPos;
 
     public float Speed;
     public float MinSpeed;
@@ -35,7 +25,7 @@ public class BariController : MonoBehaviour
     [SerializeField]
     float Wheel;
 
-    //public BoxCollider m_FirstArea;
+    public BoxCollider m_FirstArea;
     //public BoxCollider m_SecondArea;
     //public BoxCollider m_FinalArea;
 
@@ -67,9 +57,6 @@ public class BariController : MonoBehaviour
     GameObject scanObject;
     private Vector3 ObjPosition;
 
-    public Light m_Light;
-    public Light m_MazeLigth;
-
     public bool m_UseMazeKey;
 
     public GameObject m_TeleportEff;
@@ -80,7 +67,6 @@ public class BariController : MonoBehaviour
     void Awake()
     {
         _Animator = GetComponent<Animator>();
-        characterBody = GetComponent<Transform>();
         m_Rigid = GetComponent<Rigidbody>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
@@ -90,7 +76,7 @@ public class BariController : MonoBehaviour
 
     void Start()
     {
-        //m_FirstArea.enabled = false;
+        m_FirstArea.enabled = false;
         //m_SecondArea.enabled = false;
         //m_FinalArea.enabled = false;
         m_FinalAttack = false;
@@ -131,6 +117,9 @@ public class BariController : MonoBehaviour
         }
 
         SpringBuff();
+
+        if (Input.GetMouseButton(0) && !isAttack)
+            StartCoroutine(TestAttack());
     }
 
     void OnTriggerStay(Collider other)
@@ -144,23 +133,23 @@ public class BariController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "FirstPortal")
-            StartCoroutine(MazeStart(0));
-        else if(other.tag == "MazeFirstPortal")
-            StartCoroutine(MazeStart(1));
+            StartCoroutine(MazeManager.Instance.MazeStart(0));
+        else if (other.tag == "MazeFirstPortal")
+            StartCoroutine(MazeManager.Instance.MazeStart(1));
         else if (other.tag == "MazeSecondPortal")
-            StartCoroutine(MazeStart(2));
-        else if(other.tag == "MazeBonusInPortal")
-            StartCoroutine(MazeStart(3));
+            StartCoroutine(MazeManager.Instance.MazeStart(2));
+        else if (other.tag == "MazeBonusInPortal")
+            StartCoroutine(MazeManager.Instance.MazeStart(3));
         else if (other.tag == "MazeBossPortal")
-            StartCoroutine(MazeStart(4));
+            StartCoroutine(MazeManager.Instance.MazeStart(4));
         else if (other.tag == "MazeBonusOutPortal")
-            StartCoroutine(MazeStart(5));
+            StartCoroutine(MazeManager.Instance.MazeStart(5));
         else if (other.tag == "MazeThirdPortal")
-            StartCoroutine(MazeStart(6));
+            StartCoroutine(MazeManager.Instance.MazeStart(6));
         else if (other.tag == "MazeFinalPortal")
         {
             if (m_UseMazeKey)
-                StartCoroutine(MazeStart(7));
+                StartCoroutine(MazeManager.Instance.MazeStart(7));
             else
                 Debug.Log("열쇠가 필요합니다.");
         }
@@ -173,7 +162,7 @@ public class BariController : MonoBehaviour
         if (other.tag == "MazeDeathObj")
         {
             Debug.Log("Death");
-            transform.position = m_MazeStartPos.transform.position;
+            MazeManager.Instance.MazeDeath();
         }
     }
 
@@ -201,38 +190,6 @@ public class BariController : MonoBehaviour
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
         _Animator.SetBool("isWalk", false);
-        yield return null;
-    }
-
-    IEnumerator MazeStart(int StageNum)
-    {
-        isFading = true;
-        AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
-        AT_GameManager.Instance.isMazePlaying = true;
-        yield return new WaitForSeconds(3);
-        MazeManager.Instance.StageCtrl(StageNum);
-        m_Camera.gameObject.SetActive(false);
-        if (StageNum == 0 || StageNum == 5)
-        {
-            m_Light.gameObject.SetActive(false);
-            m_MazeLigth.gameObject.SetActive(true);
-            isMazePlay = true;
-            m_MazeQuaterCam.gameObject.SetActive(false);
-            m_MazeGround.gameObject.SetActive(true);
-            m_MazeCam.gameObject.SetActive(true);
-        }
-        else if (StageNum == 2 || StageNum == 7)
-        {
-            m_MazeLigth.gameObject.SetActive(false);
-            m_Light.gameObject.SetActive(true);
-            isMazePlay = false;
-            m_MazeCam.gameObject.SetActive(false);
-            m_MazeGround.gameObject.SetActive(false);
-            m_MazeQuaterCam.gameObject.SetActive(true);
-        }
-        transform.position = m_MazeStartPos.transform.position;
-        AT_GameManager.Instance.OutStartFadeAnim(0.2f);
-        isFading = false;
         yield return null;
     }
 
@@ -308,25 +265,11 @@ public class BariController : MonoBehaviour
 
     void Move()
     {
-        //Vector2 moveInput = new Vector2(HAxis, VAxis);
         Vector3 moveVec = new Vector3(HAxis, 0, VAxis).normalized;
-
-        //bool isMove = moveVec.magnitude != 0;
 
         transform.position += moveVec * Speed * Time.deltaTime;
 
         transform.LookAt(transform.position + moveVec);
-
-        /*if (isMove)
-        {
-            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
-
-            if (!isParrying)
-                characterBody.forward = moveDir;
-
-        }*/
 
         _Animator.SetBool("isWalk", moveVec != Vector3.zero);
     }
@@ -348,6 +291,16 @@ public class BariController : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    IEnumerator TestAttack()
+    {
+        isAttack = true;
+        m_FirstArea.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        m_FirstArea.enabled = false;
+        isAttack = false;
+        yield return null;
     }
 
     void ItemUse()

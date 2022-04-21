@@ -1063,7 +1063,7 @@ GameObject:
   - component: {fileID: 236281637}
   - component: {fileID: 236281636}
   m_Layer: 6
-  m_Name: MazeCameraTest
+  m_Name: MazeCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,7 +1081,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1385327669}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 71.43, y: 0, z: 0}
 --- !u!114 &236281636
 MonoBehaviour:
@@ -1734,140 +1734,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299991630}
   m_CullTransparentMesh: 1
---- !u!1 &315819889
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 315819890}
-  - component: {fileID: 315819893}
-  - component: {fileID: 315819892}
-  - component: {fileID: 315819891}
-  - component: {fileID: 315819894}
-  m_Layer: 6
-  m_Name: MazeCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &315819890
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315819889}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 7.7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1385327669}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &315819891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315819889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
---- !u!81 &315819892
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315819889}
-  m_Enabled: 1
---- !u!20 &315819893
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315819889}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 5
-  far clip plane: 1000
-  field of view: 14
-  orthographic: 1
-  orthographic size: 25
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!114 &315819894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315819889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 32c5b7054d2df1e41ad401df3ff0b8ad, type: 2}
 --- !u!1 &345929911
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +1895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.96
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2037,7 +1903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.18
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2099,6 +1965,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[4]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6376981416866869141, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
+      propertyPath: frustumSettings.baseSettings
+      value: 
+      objectReference: {fileID: 1297908030}
+    - target: {fileID: 6376981416866869141, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
+      propertyPath: frustumSettings.qualitySettings
+      value: 
+      objectReference: {fileID: 990582319}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6b9e1584f8fbe4da4ee01c2079ce1d, type: 3}
 --- !u!4 &361632760 stripped
@@ -2190,6 +2064,7 @@ MonoBehaviour:
   m_TalkText: {fileID: 570470843}
   m_ScanObject: {fileID: 0}
   isAction: 0
+  m_SceneNum: 0
   talkIndex: 0
   _UICanvas: {fileID: 933365584}
   _FadeBG: {fileID: 0}
@@ -4165,7 +4040,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1385327669}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &1186288192
 Light:
@@ -4475,7 +4350,6 @@ Transform:
   m_LocalPosition: {x: 110, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 315819890}
   - {fileID: 236281635}
   - {fileID: 1837478697}
   - {fileID: 1186288191}
@@ -4513,6 +4387,13 @@ MonoBehaviour:
   - {fileID: 1505650266}
   - {fileID: 1078210343}
   - {fileID: 3175200314361426456}
+  m_Camera: {fileID: 19102811}
+  m_MazeCam: {fileID: 236281640}
+  m_MazeQuaterCam: {fileID: 1837478702}
+  m_MazeGround: {fileID: 1460172342}
+  m_Light: {fileID: 817396876}
+  m_MazeLigth: {fileID: 1186288192}
+  m_MazeStartPos: {fileID: 1760750464}
 --- !u!1001 &1415154915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4842,7 +4723,7 @@ Transform:
   - {fileID: 170759685}
   - {fileID: 1525796532}
   m_Father: {fileID: 1385327669}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1460172344
 MeshCollider:
@@ -5783,7 +5664,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1385327669}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1761981577
 GameObject:
@@ -6163,7 +6044,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1385327669}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 69.5, y: 0, z: 0}
 --- !u!114 &1837478698
 MonoBehaviour:
@@ -7568,38 +7449,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_Light
-      value: 
-      objectReference: {fileID: 817396876}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 19102811}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: cameraArm
-      value: 
-      objectReference: {fileID: 1628070698}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_MazeCam
-      value: 
-      objectReference: {fileID: 315819893}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_MazeLigth
-      value: 
-      objectReference: {fileID: 1186288192}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_MazeGround
-      value: 
-      objectReference: {fileID: 1460172342}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_MazeStartPos
-      value: 
-      objectReference: {fileID: 1760750464}
-    - target: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
-      propertyPath: m_MazeQuaterCam
-      value: 
-      objectReference: {fileID: 1837478702}
     - target: {fileID: 5882595188538905930, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -7713,13 +7562,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385327669}
     m_Modifications:
+    - target: {fileID: 1802213794, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
+      propertyPath: frustumSettings.baseSettings
+      value: 
+      objectReference: {fileID: 1297908030}
+    - target: {fileID: 1802213794, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
+      propertyPath: frustumSettings.qualitySettings
+      value: 
+      objectReference: {fileID: 990582319}
     - target: {fileID: 4521951591058129954, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.96
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7727,7 +7584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.18
       objectReference: {fileID: 0}
     - target: {fileID: 4521951591058129954, guid: 4813258b6364be548a64097e0f7accbb, type: 3}
       propertyPath: m_LocalRotation.w

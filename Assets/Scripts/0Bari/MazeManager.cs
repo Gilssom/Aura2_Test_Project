@@ -6,6 +6,16 @@ public class MazeManager : MonoBehaviour
 {
     public GameObject[] m_Stage;
 
+    private BariController m_Player;
+
+    public Camera m_Camera;
+    public Camera m_MazeCam;
+    public Camera m_MazeQuaterCam;
+    public GameObject m_MazeGround;
+    public Light m_Light;
+    public Light m_MazeLigth;
+    public Transform m_MazeStartPos;
+
     private static MazeManager m_instance;
     // ΩÃ±€≈Ê
     public static MazeManager Instance
@@ -35,6 +45,11 @@ public class MazeManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        m_Player = GameObject.FindWithTag("Player").GetComponent<BariController>();
+    }
+
     public void StageCtrl(int StageNum)
     {
         if(StageNum == 0)
@@ -46,5 +61,49 @@ public class MazeManager : MonoBehaviour
             m_Stage[StageNum - 1].SetActive(false);
             m_Stage[StageNum].SetActive(true);
         }
+    }
+
+    public IEnumerator MazeStart(int StageNum)
+    {
+        m_Player.isFading = true;
+        AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
+        AT_GameManager.Instance.isMazePlaying = true;
+        yield return new WaitForSeconds(3);
+        MazeManager.Instance.StageCtrl(StageNum);
+        m_Camera.gameObject.SetActive(false);
+        if (StageNum == 0 || StageNum == 5) // Normal Maze Stage
+        {
+            m_Light.gameObject.SetActive(false);
+            m_MazeLigth.gameObject.SetActive(true);
+            m_Player.isMazePlay = true;
+            m_MazeQuaterCam.gameObject.SetActive(false);
+            m_MazeGround.gameObject.SetActive(true);
+            m_MazeCam.gameObject.SetActive(true);
+        }
+        else if (StageNum == 2 || StageNum == 7) // Queater View Maze Stage
+        {
+            m_MazeLigth.gameObject.SetActive(false);
+            m_Light.gameObject.SetActive(true);
+            m_Player.isMazePlay = false;
+            m_MazeCam.gameObject.SetActive(false);
+            m_MazeGround.gameObject.SetActive(false);
+        }
+        else if (StageNum == 3) // Middle Boss Stage
+        {
+            m_MazeQuaterCam.gameObject.SetActive(true);
+        }
+        else if (StageNum == 4) // Not Boss Stage
+        {
+            m_MazeQuaterCam.gameObject.SetActive(false);
+        }
+        transform.position = m_MazeStartPos.transform.position;
+        AT_GameManager.Instance.OutStartFadeAnim(0.2f);
+        m_Player.isFading = false;
+        yield return null;
+    }
+
+    public void MazeDeath()
+    {
+        m_Player.transform.position = m_MazeStartPos.transform.position;
     }
 }
