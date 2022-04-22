@@ -210,7 +210,7 @@ public class MonsterTest : MonoBehaviour
         {
             BazierMissile Missile = other.GetComponent<BazierMissile>();
 
-            _Hp -= Missile.m_Dmg;
+            //_Hp -= Missile.m_Dmg;
         }
     }
 

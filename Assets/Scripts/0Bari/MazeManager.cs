@@ -96,7 +96,7 @@ public class MazeManager : MonoBehaviour
         {
             m_MazeQuaterCam.gameObject.SetActive(false);
         }
-        transform.position = m_MazeStartPos.transform.position;
+        m_Player.transform.position = m_MazeStartPos.transform.position;
         AT_GameManager.Instance.OutStartFadeAnim(0.2f);
         m_Player.isFading = false;
         yield return null;

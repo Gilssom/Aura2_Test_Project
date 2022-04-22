@@ -5,7 +5,12 @@ using UnityEngine.AI;
 
 public class NPCMove : MonoBehaviour
 {
-    private NavMeshAgent _navAgent;
+    private NavMeshAgent m_NavAgent;
+
+    [SerializeField] Transform[] m_WayPoints = null;
+    public int m_count;
+
+    public bool isTalking;
 
     public Transform m_MovePos;
 
@@ -38,14 +43,38 @@ public class NPCMove : MonoBehaviour
         }
     }
 
+    void MoveToNextWayPoint()
+    {
+        if (m_NavAgent.velocity == Vector3.zero)
+        {
+            m_NavAgent.speed = 4;
+            m_NavAgent.SetDestination(m_WayPoints[m_count++].position);
+
+            if (m_count >= m_WayPoints.Length)
+            {
+                m_count = 0;
+            }
+        }
+    }
+
     void Start()
     {
-        _navAgent = GetComponent<NavMeshAgent>();
+        m_NavAgent = GetComponent<NavMeshAgent>();
+
+        isTalking = false;
+
+        InvokeRepeating("MoveToNextWayPoint", 2f, 2f);
+    }
+
+    void Update()
+    {
+        if (isTalking)
+            CancelInvoke();
     }
 
     public void Move()
     {
-        _navAgent.destination = m_MovePos.position;
+        m_NavAgent.destination = m_MovePos.position;
     }
 
     void OnTriggerEnter(Collider other)

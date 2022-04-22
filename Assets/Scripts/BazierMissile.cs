@@ -13,8 +13,6 @@ public class BazierMissile : MonoBehaviour
     private float m_speed;
     public bool m_Attack = false;
 
-    public int m_Dmg;
-
     public void Init(Transform _startTr, Transform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr)
     {
         m_speed = _speed;

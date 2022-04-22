@@ -190,6 +190,8 @@ public class BariController : MonoBehaviour
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
         _Animator.SetBool("isWalk", false);
+        if (scanObject.name == "LightNPC")
+            NPCMove.Instance.isTalking = true;
         yield return null;
     }
 
