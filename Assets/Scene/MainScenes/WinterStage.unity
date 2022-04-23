@@ -693,6 +693,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &129859628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 129859628, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
+  m_PrefabInstance: {fileID: 8434260423239059295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &131710397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,13 +1111,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236281634}
-  m_LocalRotation: {x: 0.5837538, y: 0, z: 0, w: 0.8119308}
-  m_LocalPosition: {x: -0.97, y: 38, z: -17.4}
+  m_LocalRotation: {x: 0.21082996, y: 0.44851583, z: -0.10975113, w: 0.8615909}
+  m_LocalPosition: {x: -30.5, y: 14, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1385327669}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 71.43, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 27.5, y: 55, z: 0}
 --- !u!114 &236281636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,6 +2219,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &538577624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5031700556934798101, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
+  m_PrefabInstance: {fileID: 8434260423239059295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &570470841
 GameObject:
   m_ObjectHideFlags: 0
@@ -4465,6 +4475,7 @@ MonoBehaviour:
   m_Light: {fileID: 817396876}
   m_MazeLigth: {fileID: 1186288192}
   m_MazeStartPos: {fileID: 1760750464}
+  m_MazeCamPoint: {x: 109, y: 38, z: -17.5}
 --- !u!1001 &1415154915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6425,6 +6436,8 @@ MonoBehaviour:
   QuestActionIndex: 0
   QuestObject:
   - {fileID: 266215106}
+  - {fileID: 129859628}
+  - {fileID: 538577624}
   FirstGate: {fileID: 2118251680}
   m_PlayableDirector: {fileID: 900972778}
   m_CinemaCam: {fileID: 1761981584}
@@ -8098,6 +8111,10 @@ PrefabInstance:
     - target: {fileID: 1135130778704891950, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031700556934798101, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8434260424511998396, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
       propertyPath: m_RootOrder

@@ -22,12 +22,19 @@ public class TalkManager : MonoBehaviour
         // Add 로 대화 내용 추가 , 대화 하나에는 여러 문장이 들어있으므로 배열로 사용
         m_talkData.Add(1000, new string[] { "..." , "불상이다." });
         m_talkData.Add(2000, new string[] { "뭘 보는거야." });
+        m_talkData.Add(3000, new string[] { "..." , "미궁에도 불상이 있다." });
 
         // Quest Talk
+        // Winter Stage
         m_talkData.Add(10 + 1000, new string[] { "어서오세요." , "무슨 일로 오셨나요." });
 
         m_talkData.Add(20 + 2000, new string[] { "너는 누구야?!", "... 사람이잖아!!", "멀리 떨어져!!" });
         m_talkData.Add(21 + 2000, new string[] { "잔말 말고 일단 나만 따라와." });
+
+        // Winter _ Maze Stage
+        m_talkData.Add(40 + 3000, new string[] { "...", "왠지 모르게 숨이 막혀온다.", "무슨 소리가 들리는데..." });
+        m_talkData.Add(41 + 4000, new string[] {"??? : 으아악!! 이게 뭐야!!", "너무 무섭잖아...", "일단 내가 먼저 가볼테니까..", "알아서 따라와!!",
+        "...", "그래.. 한번 가보자.."});
     }
 
     // 지정된 대화 문장을 반환하는 함수 생성

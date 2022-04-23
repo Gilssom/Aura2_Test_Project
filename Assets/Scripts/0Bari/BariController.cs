@@ -133,7 +133,10 @@ public class BariController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "FirstPortal")
+        {
+            QuestManager.Instance.QuestId = 40;
             StartCoroutine(MazeManager.Instance.MazeStart(0));
+        }
         else if (other.tag == "MazeFirstPortal")
             StartCoroutine(MazeManager.Instance.MazeStart(1));
         else if (other.tag == "MazeSecondPortal")

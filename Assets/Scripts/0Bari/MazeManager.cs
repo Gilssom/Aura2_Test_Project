@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MazeManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class MazeManager : MonoBehaviour
     public Light m_Light;
     public Light m_MazeLigth;
     public Transform m_MazeStartPos;
+
+    public Vector3 m_MazeCamPoint;
 
     private static MazeManager m_instance;
     // ΩÃ±€≈Ê
@@ -63,22 +66,27 @@ public class MazeManager : MonoBehaviour
         }
     }
 
+    public void MazeCamChange() // Maze Npc Talking Next Method
+    {
+        m_Camera.gameObject.SetActive(false);
+        m_Light.gameObject.SetActive(false);
+        m_MazeLigth.gameObject.SetActive(true);
+        m_MazeCam.gameObject.SetActive(true);
+        m_MazeCam.transform.DOMove(m_MazeCamPoint, 4);
+        m_MazeCam.transform.DORotate(new Vector3(71.5f, 0, 0), 4);
+    }
+
     public IEnumerator MazeStart(int StageNum)
     {
         m_Player.isFading = true;
         AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
         AT_GameManager.Instance.isMazePlaying = true;
         yield return new WaitForSeconds(3);
-        MazeManager.Instance.StageCtrl(StageNum);
-        m_Camera.gameObject.SetActive(false);
-        if (StageNum == 0 || StageNum == 5) // Normal Maze Stage
+        StageCtrl(StageNum);
+        if (StageNum == 0) // Normal Maze Stage
         {
-            m_Light.gameObject.SetActive(false);
-            m_MazeLigth.gameObject.SetActive(true);
             m_Player.isMazePlay = true;
-            m_MazeQuaterCam.gameObject.SetActive(false);
             m_MazeGround.gameObject.SetActive(true);
-            m_MazeCam.gameObject.SetActive(true);
         }
         else if (StageNum == 2 || StageNum == 7) // Queater View Maze Stage
         {
@@ -95,6 +103,14 @@ public class MazeManager : MonoBehaviour
         else if (StageNum == 4) // Not Boss Stage
         {
             m_MazeQuaterCam.gameObject.SetActive(false);
+        }
+        else if(StageNum == 5) // Queatur View Maze Stage
+        {
+            m_Light.gameObject.SetActive(false);
+            m_MazeLigth.gameObject.SetActive(true);
+            m_MazeQuaterCam.gameObject.SetActive(false);
+            m_MazeGround.gameObject.SetActive(true);
+            m_MazeCam.gameObject.SetActive(true);
         }
         m_Player.transform.position = m_MazeStartPos.transform.position;
         AT_GameManager.Instance.OutStartFadeAnim(0.2f);
