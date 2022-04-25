@@ -9,6 +9,7 @@ public class MazeController : MonoBehaviour
     public Type m_MazeObjectType;
 
     public float m_MoveSpeed;
+    public float m_RotateSpeed;
 
     Vector3 m_CurPos;
     public float m_Zdelta; // 좌우로 이동 가능한 최대값
@@ -57,8 +58,12 @@ public class MazeController : MonoBehaviour
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
                 break;
             case Type.MoveWall:
+                var IceStone = transform.Find("MazeIceStone").GetComponent<Transform>();
+                var IceStone_2 = transform.Find("MazeIceStone_2").GetComponent<Transform>();
                 Vector3 v = m_CurPos;
-                if(isXmoving)
+                IceStone.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
+                IceStone_2.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
+                if (isXmoving)
                 {
                     v.x += m_Xdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }

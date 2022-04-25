@@ -188,7 +188,7 @@ public class BariController : MonoBehaviour
             AT_GameManager.Instance.OutStartFadeAnim(0.2f);
         }
         transform.LookAt(ObjPosition);
-        scanObject.transform.LookAt(new Vector3(transform.position.x, scanObject.transform.position.y, transform.position.z));
+        //scanObject.transform.LookAt(new Vector3(transform.position.x, scanObject.transform.position.y, transform.position.z));
 
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
