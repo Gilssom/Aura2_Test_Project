@@ -39,6 +39,8 @@ public class ArtChanUI : MonoBehaviour
 
         if (m_ItemCS.m_NearItem)
             m_ItemNameText.text = m_ItemCS.m_NearItem.name + " »πµÊ«œ±‚ (E)";
+        //else if (m_Player.scanObject && !AT_GameManager.Instance.isAction)
+            //m_ItemNameText.text = "¥Î»≠«œ±‚ (E)";
         else
             m_ItemNameText.text = null;
 

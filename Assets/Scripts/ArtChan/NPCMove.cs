@@ -69,7 +69,10 @@ public class NPCMove : MonoBehaviour
     void Update()
     {
         if (isTalking)
+        {
             CancelInvoke();
+            m_NavAgent.speed = 0;
+        }
     }
 
     public void Move()

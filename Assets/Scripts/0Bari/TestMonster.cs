@@ -132,7 +132,6 @@ public class TestMonster : MonoBehaviour
 
     void Death()
     {
-        Debug.Log("Monster Death");
         StopAllCoroutines();
         m_NavAgent.enabled = false;
         isDeath = true;

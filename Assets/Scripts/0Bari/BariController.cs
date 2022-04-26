@@ -47,14 +47,18 @@ public class BariController : MonoBehaviour
     public bool isMazePlay;
     public bool isFading;
 
+    [SerializeField]
     bool isGrounded;
+    [SerializeField]
+    bool isWall;
     public LayerMask Ground;
+    public LayerMask Wall;
 
     public float m_SkillNum;
 
     public bool m_ItemPickup;
     [SerializeField]
-    GameObject scanObject;
+    public GameObject scanObject;
     private Vector3 ObjPosition;
 
     public bool m_UseMazeKey;
@@ -181,14 +185,16 @@ public class BariController : MonoBehaviour
     {
         ObjPosition = new Vector3(scanObject.transform.position.x, transform.position.y, scanObject.transform.position.z);
 
-        if (!AT_GameManager.Instance.isAction)
+        /*if (!AT_GameManager.Instance.isAction)
         {
             AT_GameManager.Instance.InStartFadeAnim(0.2f, false);
             yield return new WaitForSeconds(0.2f);
             AT_GameManager.Instance.OutStartFadeAnim(0.2f);
-        }
+        }*/
         transform.LookAt(ObjPosition);
-        //scanObject.transform.LookAt(new Vector3(transform.position.x, scanObject.transform.position.y, transform.position.z));
+
+        if(scanObject.name == "LightNPC")
+            scanObject.transform.LookAt(new Vector3(transform.position.x, scanObject.transform.position.y, transform.position.z));
 
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
@@ -209,20 +215,20 @@ public class BariController : MonoBehaviour
             Speed = MinSpeed;
         }
 
-        //if (Input.GetMouseButton(1) && !isMazePlay)
-        //{
-        //    isParrying = true;
-        //    Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit rayhit;
-        //    if (Physics.Raycast(ray, out rayhit, 100))
-        //    {
-        //        Vector3 nextVec = rayhit.point - transform.position;
-        //        nextVec.y = 0;
-        //        transform.LookAt(transform.position + nextVec);
-        //    }
-        //}
-        //else
-        //    isParrying = false;
+        /*if (Input.GetMouseButton(1) && !isMazePlay)
+        {
+            isParrying = true;
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayhit;
+            if (Physics.Raycast(ray, out rayhit, 100))
+            {
+                Vector3 nextVec = rayhit.point - transform.position;
+                nextVec.y = 0;
+                transform.LookAt(transform.position + nextVec);
+            }
+        }
+        else
+            isParrying = false;*/
 
         if(m_TportCount < 3 && m_TportAddTime >= 0)
         {
@@ -241,7 +247,7 @@ public class BariController : MonoBehaviour
         {
             m_TportEnable = true;
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && m_TportEnable && !isMazePlay)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && m_TportEnable && !isMazePlay && !isWall)
             {
                 Vector3 Pos = this.transform.position;
                 GameObject Teleport = Instantiate(m_TeleportEff, this.transform.forward +
@@ -292,9 +298,14 @@ public class BariController : MonoBehaviour
         {
             isGrounded = true;
         }
+        else if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 4.5f, Wall))
+        {
+            isWall = true;
+        }
         else
         {
             isGrounded = false;
+            isWall = false;
         }
     }
 
