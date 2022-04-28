@@ -2302,7 +2302,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236281634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
@@ -2774,7 +2774,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 2
+  m_Radius: 3
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: -1, z: 0}
@@ -2891,6 +2891,7 @@ MonoBehaviour:
   m_count: 0
   isTalking: 0
   m_MovePos: {fileID: 2106023580}
+  m_WarpParticle: {fileID: 7093495837381547195, guid: f2d78ab82185db942b52c6b8d23f5238, type: 3}
 --- !u!195 &266215114
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2961,8 +2962,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Events:
-    m_Signals: []
-    m_Events: []
+    m_Signals:
+    - {fileID: 11400000, guid: dd8b7e291d615644c81e2da7e0064f41, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2093798130}
+          m_TargetAssemblyTypeName: TimelineEvent, Assembly-CSharp
+          m_MethodName: LightNPCEnable
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &267545351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7085,7 +7101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 1442144262}
-  m_ItemNameText: {fileID: 1713052671}
+  m_NearNameText: {fileID: 1713052671}
   m_Skill1Img: {fileID: 1498558301}
   m_Skill2Img: {fileID: 196953262}
   m_MazePanel: {fileID: 1023949667}
@@ -11289,7 +11305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460172342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -9.64, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 92280020}
@@ -13070,7 +13086,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704093070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1538249316}
@@ -13106,7 +13122,7 @@ GameObject:
   - component: {fileID: 1713052672}
   - component: {fileID: 1713052671}
   m_Layer: 5
-  m_Name: NearItemText
+  m_Name: NearNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13612,12 +13628,27 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: dd8b7e291d615644c81e2da7e0064f41, type: 2}
+    - {fileID: 11400000, guid: f2fee5dc1dd76814e99d32bb4420a4e6, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2093798130}
           m_TargetAssemblyTypeName: TimelineEvent, Assembly-CSharp
           m_MethodName: CinemachineOff
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2093798130}
+          m_TargetAssemblyTypeName: TimelineEvent, Assembly-CSharp
+          m_MethodName: CinemachineOn
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -14407,9 +14438,10 @@ MonoBehaviour:
   QuestActionIndex: 0
   QuestObject:
   - {fileID: 266215106}
+  - {fileID: 2118251679}
   - {fileID: 129859628}
   - {fileID: 538577624}
-  FirstGate: {fileID: 2118251680}
+  - {fileID: 7093495837381547195, guid: f2d78ab82185db942b52c6b8d23f5238, type: 3}
   m_PlayableDirector: {fileID: 900972778}
   m_CinemaCam: {fileID: 1761981584}
 --- !u!4 &1855248972
@@ -15704,6 +15736,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83f4eb288e666e46b64b81dd61ddd14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Player: {fileID: 7686058215862178973}
+  m_UICanvas: {fileID: 933365580}
   m_ShiningNpc: {fileID: 518546058}
   m_ShiningHelpers: {fileID: 1583013945}
   m_YellowEffect: {fileID: 77846226}
@@ -15827,7 +15861,7 @@ GameObject:
   - component: {fileID: 2118251680}
   - component: {fileID: 2118251682}
   m_Layer: 0
-  m_Name: FristGate
+  m_Name: WinterFirstGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16922,6 +16956,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6550764403551686640, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
   m_PrefabInstance: {fileID: 3477518596153334631}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7686058215862178973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 565602043321317852, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
+  m_PrefabInstance: {fileID: 3477518596153334631}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7686058215862178967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e07c2fe646c76c44ae7f42a8d1e9631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &7686058215862178975 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1561402841932484313, guid: ea4c20b060929b1498fabd03c605b8e2, type: 3}
@@ -17021,6 +17066,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1678715454958351801, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031700556934798101, guid: a6e4081709e5f214e84addfce46625c1, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8434260424511998396, guid: a6e4081709e5f214e84addfce46625c1, type: 3}

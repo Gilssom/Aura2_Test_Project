@@ -9,7 +9,6 @@ public class QuestManager : MonoBehaviour
     public int QuestId; // 현재 진행중인 퀘스트 Id
     public int QuestActionIndex; // 퀘스트 대화순서 변수 생성
     public GameObject[] QuestObject; // 퀘스트 오브젝트를 저장할 변수 생성
-    public BoxCollider FirstGate;
 
     public PlayableDirector m_PlayableDirector;
     public Camera m_CinemaCam;
@@ -118,22 +117,30 @@ public class QuestManager : MonoBehaviour
                 }
                 if (QuestActionIndex == 2)
                 {
-                    FirstGate.isTrigger = true;
-                    NPCMove.Instance.Move();
+                    QuestObject[1].SetActive(false);
+                    NPCMove.Instance.Warp();
+                    Destroy(NPCMove.Instance.gameObject);
                 }
                 break;
             case 40:
                 if(QuestActionIndex == 1)
                 {
                     MazeManager.Instance.MazeCamChange();
-                    QuestObject[1].transform.DOMoveY(-2, 2);
-                    QuestObject[2].SetActive(true);
+                    QuestObject[2].transform.DOMoveY(-2, 2);
+                    QuestObject[3].SetActive(true);
+                }
+                if(QuestActionIndex == 2)
+                {
+                    Vector3 Pos = QuestObject[3].transform.position;
+                    GameObject Teleport = Instantiate(QuestObject[4], new Vector3(Pos.x, Pos.y, Pos.z), this.transform.rotation);
+
+                    QuestObject[3].SetActive(false);
                 }
                 break;
             case 50:
                 if(QuestActionIndex == 0)
-                {     
-                    QuestObject[2].SetActive(false);   
+                {
+                    Debug.Log("Check");   
                 }
                 break;
         }

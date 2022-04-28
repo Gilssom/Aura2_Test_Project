@@ -9,7 +9,7 @@ public class ArtChanUI : MonoBehaviour
     private NearItemCheck m_ItemCS;
 
     public Text m_Text;
-    public Text m_ItemNameText;
+    public Text m_NearNameText;
 
     public Image m_Skill1Img;
     public Image m_Skill2Img;
@@ -38,11 +38,11 @@ public class ArtChanUI : MonoBehaviour
             "Tport AddTime ::" + m_Player.m_TportAddTime.ToString("F1");
 
         if (m_ItemCS.m_NearItem)
-            m_ItemNameText.text = m_ItemCS.m_NearItem.name + " »πµÊ«œ±‚ (E)";
-        //else if (m_Player.scanObject && !AT_GameManager.Instance.isAction)
-            //m_ItemNameText.text = "¥Î»≠«œ±‚ (E)";
+            m_NearNameText.text = m_ItemCS.m_NearItem.name + " »πµÊ«œ±‚ (E)";
+        else if (m_Player.scanObject && !AT_GameManager.Instance.isAction)
+            m_NearNameText.text = "¥Î»≠«œ±‚ (E)";
         else
-            m_ItemNameText.text = null;
+            m_NearNameText.text = null;
 
         SkillImageChange();
         
@@ -53,7 +53,7 @@ public class ArtChanUI : MonoBehaviour
             else
             {
                 m_SkillPanel.SetActive(false);
-                m_MazePanel.SetActive(true);
+                //m_MazePanel.SetActive(true);
             }
         }
 

@@ -13,6 +13,7 @@ public class NPCMove : MonoBehaviour
     public bool isTalking;
 
     public Transform m_MovePos;
+    public GameObject m_WarpParticle;
 
     private static NPCMove m_instance;
     // ΩÃ±€≈Ê
@@ -75,9 +76,15 @@ public class NPCMove : MonoBehaviour
         }
     }
 
-    public void Move()
+    /*public void Move()
     {
         m_NavAgent.destination = m_MovePos.position;
+    }*/
+
+    public void Warp()
+    {
+        Vector3 Pos = this.transform.position;
+        GameObject Teleport = Instantiate(m_WarpParticle, new Vector3(Pos.x, Pos.y, Pos.z) ,this.transform.rotation);
     }
 
     void OnTriggerEnter(Collider other)
