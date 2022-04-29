@@ -16,6 +16,7 @@ public class MazeController : MonoBehaviour
     public float m_Xdelta;
     public bool isXmoving;
     public bool isMinusZWall;
+    public bool isIceStone;
 
     public bool isStopTurn;
 
@@ -58,23 +59,28 @@ public class MazeController : MonoBehaviour
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
                 break;
             case Type.MoveWall:
-                var IceStone = transform.Find("MazeIceStone").GetComponent<Transform>();
-                var IceStone_2 = transform.Find("MazeIceStone_2").GetComponent<Transform>();
+                if(isIceStone)
+                {
+                    var IceStone = transform.Find("MazeIceStone").GetComponent<Transform>();
+                    var IceStone_2 = transform.Find("MazeIceStone_2").GetComponent<Transform>();    
+                    IceStone.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
+                    IceStone_2.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
+                }
+
                 Vector3 v = m_CurPos;
-                IceStone.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
-                IceStone_2.transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
+
                 if (isXmoving)
                 {
                     v.x += m_Xdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }
                 else if(isMinusZWall)
                 {
-                    m_MoveSpeed = -1.3f;
+                    //m_MoveSpeed = -1.3f;
                     v.z += m_Zdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }             
                 else
                 {
-                    m_MoveSpeed = 1.3f;
+                    //m_MoveSpeed = 1.3f;
                     v.z += m_Zdelta * Mathf.Sin(Time.time * m_MoveSpeed);
                 }
                 transform.position = v;
