@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class TestMonster : MonoBehaviour
 {
+    public enum BossType { Maze, ETC }
+    public BossType m_BossType;
+
     public enum CurState { idle, trace, attack, death}
     public CurState m_CurState = CurState.idle;
 
@@ -15,6 +18,7 @@ public class TestMonster : MonoBehaviour
     float m_TraceDis = 7;
     float m_AttackDis = 2;
     float m_rotSpeed = 3;
+    float m_moveSpeed = 3;
 
     bool isDeath;
 
@@ -41,6 +45,7 @@ public class TestMonster : MonoBehaviour
         {
             Debug.Log("Winter Dmg Check || Cur HP : " + m_CurHP);
             m_CurHP -= 20;
+            m_moveSpeed = 1;
         }
 
         if(other.tag == "Missile")
@@ -67,8 +72,11 @@ public class TestMonster : MonoBehaviour
 
     void Update()
     {
-        if (m_CurHP < 0)
-            Death();
+        if (m_CurHP < 0 && !isDeath)
+            StartCoroutine(Death());
+ 
+        if (m_moveSpeed < 3)
+            m_moveSpeed += Time.deltaTime;
     }
 
     void LookPlayer()
@@ -102,7 +110,7 @@ public class TestMonster : MonoBehaviour
                 case CurState.idle:
                     break;
                 case CurState.trace:
-                    m_NavAgent.speed = 3;
+                    m_NavAgent.speed = m_moveSpeed;
                     m_Rigid.isKinematic = true;
                     m_NavAgent.destination = m_Player.transform.position;
                     m_NavAgent.Resume();
@@ -130,11 +138,28 @@ public class TestMonster : MonoBehaviour
         Destroy(Effect, 1);
     }
 
-    void Death()
+    IEnumerator Death()
     {
+        isDeath = true;
+        Debug.Log(gameObject.name + " Death");
         StopAllCoroutines();
         m_NavAgent.enabled = false;
-        isDeath = true;
-        Destroy(gameObject, 2f);
+
+        switch (m_BossType)
+        {
+            case BossType.Maze:
+                Vector3 CurPos = transform.position;
+                Quaternion CurRot = Quaternion.Euler(0, 0, 0);
+                Instantiate(Resources.Load("2ModelingResource/SkillCryStal"),
+                    new Vector3(CurPos.x, 0, CurPos.z), CurRot);
+                break;
+            case BossType.ETC:
+                break;
+            default:
+                break;
+        }
+
+        Destroy(gameObject, 2);
+        yield return null;
     }
 }

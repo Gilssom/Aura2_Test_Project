@@ -20,9 +20,11 @@ public class TalkManager : MonoBehaviour
     void GenerateData()
     {
         // Add 로 대화 내용 추가 , 대화 하나에는 여러 문장이 들어있으므로 배열로 사용
+        // Winter Stage Object
         m_talkData.Add(1000, new string[] { "..." , "불상이다." });
         m_talkData.Add(2000, new string[] { "뭘 보는거야." });
         m_talkData.Add(3000, new string[] { "..." , "미궁에도 불상이 있다." });
+        m_talkData.Add(4000, new string[] { "얼리기 스킬을 획득하였습니다." });
 
         // Quest Talk
         // Winter Stage

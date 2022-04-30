@@ -57,7 +57,6 @@ public class BariController : MonoBehaviour
     public float m_SkillNum;
 
     public bool m_ItemPickup;
-    [SerializeField]
     public GameObject scanObject;
     private Vector3 ObjPosition;
 
@@ -67,6 +66,14 @@ public class BariController : MonoBehaviour
     bool m_TportEnable;
     public float m_TportCount;
     public float m_TportAddTime;
+
+    [SerializeField]
+    float m_CurEnableSkill;
+
+    bool m_WinterSkillacquire;
+    bool m_FallingSkillacquire;
+    bool m_SummerSkillacquire;
+    bool m_SpringSkillacquire;
 
     void Awake()
     {
@@ -89,7 +96,7 @@ public class BariController : MonoBehaviour
 
         m_SkillStack = 0;
         m_StackTime = 1;
-        m_SkillNum = 1;
+        //m_SkillNum = 1;
         m_TportCount = 3;
         m_TportAddTime = 5;
     }
@@ -199,9 +206,22 @@ public class BariController : MonoBehaviour
         AT_GameManager.Instance.Action(scanObject);
         _Animator.SetBool("isRun", false);
         _Animator.SetBool("isWalk", false);
+        ObjInteraction();
+        yield return null;
+    }
+
+    void ObjInteraction()
+    {
         if (scanObject.name == "LightNPC")
             NPCMove.Instance.isTalking = true;
-        yield return null;
+        else if (scanObject.name == "SkillCryStal" && !AT_GameManager.Instance.isAction)
+        {
+            Debug.Log("얼리기 스킬 획득");
+            m_WinterSkillacquire = true;
+            m_CurEnableSkill++;
+            m_SkillNum++;
+            Destroy(scanObject.gameObject);
+        }
     }
 
     void GetInput()
@@ -259,19 +279,6 @@ public class BariController : MonoBehaviour
         }
         else
             m_TportEnable = false;
-    }
-
-    void MouseWheel()
-    {
-        Wheel = Input.GetAxis("Mouse ScrollWheel");
-        if (Wheel > 0 && m_SkillNum < 4)
-        {
-            m_SkillNum++;
-        }
-        else if (Wheel < 0 && m_SkillNum > 1)
-        {
-            m_SkillNum--;
-        }
     }
 
     void Move()
@@ -358,6 +365,19 @@ public class BariController : MonoBehaviour
         }
     }
 
+    void MouseWheel()
+    {
+        Wheel = Input.GetAxis("Mouse ScrollWheel");
+        if (Wheel > 0 && m_SkillNum < m_CurEnableSkill)
+        {
+            m_SkillNum++;
+        }
+        else if (Wheel < 0 && m_SkillNum > 1)
+        {
+            m_SkillNum--;
+        }
+    }
+
     public void SkillChange()
     {
         if (m_SkillNum == 1)
@@ -377,22 +397,24 @@ public class BariController : MonoBehaviour
             m_SkillEnable = true;
             if (Input.GetKeyDown(KeyCode.Q) && !isAttack)
             {
-                if (m_SkillNum == 1)
+                if (m_SkillNum == 1 && m_WinterSkillacquire)
                 {
                     StartCoroutine(BariSkillManager.Instance.WinterIceStun());
                 }
-                else if (m_SkillNum == 2)
+                else if (m_SkillNum == 2 && m_FallingSkillacquire)
                 {
                     m_MissileSkill.MissileSkill();
                 }
-                else if(m_SkillNum == 3)
+                else if (m_SkillNum == 3 && m_SummerSkillacquire)
                 {
                     StartCoroutine(BariSkillManager.Instance.SummerLaser());
                 }
-                else if(m_SkillNum == 4)
+                else if (m_SkillNum == 4 && m_SpringSkillacquire)
                 {
                     StartCoroutine(BariSkillManager.Instance.SpringSkill());
                 }
+                else
+                    Debug.Log("스킬을 아직 획득하지 못했습니다.");
             }
         }
         else

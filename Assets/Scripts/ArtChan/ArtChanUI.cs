@@ -69,9 +69,13 @@ public class ArtChanUI : MonoBehaviour
     void SkillImageChange()
     {
         float SkillNum = m_Player.m_SkillNum;
-
-        if (SkillNum == 1)
+        if(SkillNum == 0)
         {
+            m_SkillPanel.SetActive(false);
+        }
+        else if (SkillNum == 1)
+        {
+            m_SkillPanel.SetActive(true);
             m_Skill1Img.sprite = m_SkillIcon[0];
             m_Skill2Img.sprite = m_SkillIcon[1];
         }
