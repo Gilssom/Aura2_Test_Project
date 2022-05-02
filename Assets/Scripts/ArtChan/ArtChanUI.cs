@@ -16,6 +16,8 @@ public class ArtChanUI : MonoBehaviour
 
     public GameObject m_MazePanel;
     public GameObject m_SkillPanel;
+    public GameObject m_PausePanel;
+    bool isPause;
 
     public Sprite[] m_SkillIcon;
 
@@ -71,28 +73,46 @@ public class ArtChanUI : MonoBehaviour
         float SkillNum = m_Player.m_SkillNum;
         if(SkillNum == 0)
         {
-            m_SkillPanel.SetActive(false);
+            m_Skill1Img.gameObject.SetActive(false);
         }
         else if (SkillNum == 1)
         {
-            m_SkillPanel.SetActive(true);
+            m_Skill1Img.gameObject.SetActive(true);
             m_Skill1Img.sprite = m_SkillIcon[0];
-            m_Skill2Img.sprite = m_SkillIcon[1];
+            //m_Skill2Img.sprite = m_SkillIcon[1];
         }
         else if (SkillNum == 2)
         {
             m_Skill1Img.sprite = m_SkillIcon[1];
-            m_Skill2Img.sprite = m_SkillIcon[2];
+            //m_Skill2Img.sprite = m_SkillIcon[2];
         }
         else if(SkillNum == 3)
         {
             m_Skill1Img.sprite = m_SkillIcon[2];
-            m_Skill2Img.sprite = m_SkillIcon[3];
+            //m_Skill2Img.sprite = m_SkillIcon[3];
         }
         else if (SkillNum == 4)
         {
             m_Skill1Img.sprite = m_SkillIcon[3];
-            m_Skill2Img.sprite = m_SkillIcon[2];
+            //m_Skill2Img.sprite = m_SkillIcon[2];
+        }
+    }
+
+    public void PauseMenuCtrl()
+    {
+        Debug.Log("Check");
+
+        if (isPause)
+        {
+            m_PausePanel.SetActive(false);
+            isPause = false;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            m_PausePanel.SetActive(true);
+            isPause = true;
+            Time.timeScale = 0;
         }
     }
 }
