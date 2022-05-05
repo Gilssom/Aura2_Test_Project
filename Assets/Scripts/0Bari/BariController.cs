@@ -229,11 +229,11 @@ public class BariController : MonoBehaviour
         HAxis = Input.GetAxis("Horizontal");
         VAxis = Input.GetAxis("Vertical");
 
-        if (HAxis == 0 && VAxis == 0)
+        /*if (HAxis == 0 && VAxis == 0)
         {
             _Animator.SetBool("isRun", false);
             Speed = MinSpeed;
-        }
+        }/*
 
         /*if (Input.GetMouseButton(1) && !isMazePlay)
         {
@@ -427,12 +427,14 @@ public class BariController : MonoBehaviour
         if (DoSpringBuff)
         {
             Speed = MaxSpeed;
-            _Animator.SetFloat("WalkSpeed", 3);
+            //_Animator.SetFloat("WalkSpeed", 3);
+            _Animator.SetBool("isRun", true);
         }
         else
         {
             Speed = MinSpeed;
-            _Animator.SetFloat("WalkSpeed", 2);
+            //_Animator.SetFloat("WalkSpeed", 2);
+            _Animator.SetBool("isRun", false);
         }
     }
 }
