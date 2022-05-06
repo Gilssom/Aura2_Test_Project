@@ -294,7 +294,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca20dcec356d273429393fee6240de03, type: 2}
+  - {fileID: 2100000, guid: 38de40d90c6c0574ebc646eacd7e752b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,7 +389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6133090348458256381
 Transform:
   m_ObjectHideFlags: 0
@@ -592,11 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41dd478cad53ff24e97d7ab3f711bfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BossType: 0
   m_CurState: 0
   m_HitEffect: {fileID: 1929737415531137406, guid: 9be800306daa4ee44b54b64b8e89ce80, type: 3}
-  m_BossType: 0
-  m_DropItem: {fileID: 7307500816309416830, guid: 64e7dcfeffdabcc44970ffb877594340, type: 3}
-  m_BossDeath: 0
 --- !u!1001 &956524712559107600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -848,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8848526836005105430, guid: 44316f2c2867e174883755f350a92c74, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8848526836005105430, guid: 44316f2c2867e174883755f350a92c74, type: 3}
       propertyPath: m_Materials.Array.data[0]

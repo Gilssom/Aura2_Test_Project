@@ -9,6 +9,7 @@ public class BariController : MonoBehaviour
     private Rigidbody m_Rigid;
     private TestShot m_MissileSkill;
     private NearItemCheck m_NearItem;
+    private Camera m_Camera;
 
     public float Speed;
     public float MinSpeed;
@@ -25,9 +26,10 @@ public class BariController : MonoBehaviour
     [SerializeField]
     float Wheel;
 
-    public BoxCollider m_FirstArea;
+    //public BoxCollider m_FirstArea;
     //public BoxCollider m_SecondArea;
     //public BoxCollider m_FinalArea;
+    public BoxCollider m_AttackArea;
 
     public float m_SkillStack;
     public float m_SkillMinStack = 0;
@@ -81,13 +83,14 @@ public class BariController : MonoBehaviour
         m_Rigid = GetComponent<Rigidbody>();
         m_MissileSkill = GetComponent<TestShot>();
         m_NearItem = GetComponent<NearItemCheck>();
+        m_Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         DontDestroyOnLoad(this);
     }
 
     void Start()
     {
-        m_FirstArea.enabled = false;
+        m_AttackArea.enabled = false;
         //m_SecondArea.enabled = false;
         //m_FinalArea.enabled = false;
         m_FinalAttack = false;
@@ -110,7 +113,8 @@ public class BariController : MonoBehaviour
         }
         if (!AT_GameManager.Instance.isAction && !isMazePlay)
         {
-            QSkill();
+            Attack();
+            QSkillAnim();
         }
         GroundCheck();
         ItemUse();
@@ -129,8 +133,8 @@ public class BariController : MonoBehaviour
 
         SpringBuff();
 
-        if (Input.GetMouseButton(0) && !isAttack)
-            StartCoroutine(TestAttack());
+        /*if (Input.GetMouseButton(0) && !isAttack)
+            StartCoroutine(TestAttack());*/
     }
 
     void OnTriggerStay(Collider other)
@@ -316,14 +320,87 @@ public class BariController : MonoBehaviour
         }
     }
 
-    IEnumerator TestAttack()
+    void Attack()
+    {
+        /*if (Input.GetMouseButtonDown(0) && !isAttack)
+        {
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayhit;
+            if (Physics.Raycast(ray, out rayhit, 100))
+            {
+                Vector3 nextVec = rayhit.point - transform.position;
+                nextVec.y = 0;
+                transform.LookAt(transform.position + nextVec);
+            }
+        }*/
+
+        if (Input.GetMouseButtonDown(0) && comboStep == 0)
+        {
+            _Animator.SetBool("isWalk", false);
+            _Animator.SetBool("isRun", false);
+
+            _Animator.SetTrigger("Attack");
+            comboStep = 1;
+            isAttackReady = false;
+            m_FinalAttack = true;
+            return;
+        }
+
+        if (comboStep != 0)
+        {
+            if (ComboPossible && Input.GetMouseButtonDown(0))
+            {
+                m_FinalAttack = true;
+                ComboPossible = false;
+                comboStep += 1;
+            }
+        }
+    }
+
+    void AttackCheck()
     {
         isAttack = true;
-        m_FirstArea.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        m_FirstArea.enabled = false;
+    }
+
+    void Attackfalse()
+    {
         isAttack = false;
-        yield return null;
+    }
+
+    void Combopossible()
+    {
+        ComboPossible = true;
+    }
+    void Combo()
+    {
+        if (comboStep == 2)
+        {
+            _Animator.SetTrigger("SecondAttack");
+        }
+    }
+
+    void ComboReset()
+    {
+        //_Animator.ResetTrigger("SecondAttack");
+        ComboPossible = false;
+        isAttackReady = true;
+        m_FinalAttack = false;
+        isAttack = false;
+        comboStep = 0;
+    }
+
+    void FirstAttack()
+    {
+        m_AttackArea.enabled = true;
+    }
+    void SecondAttack()
+    {
+        m_AttackArea.enabled = true;
+    }
+    void AreaEnd()
+    {
+        m_AttackArea.enabled = false;
+        m_AttackArea.enabled = false;
     }
 
     void ItemUse()
@@ -390,36 +467,46 @@ public class BariController : MonoBehaviour
         }
     }
 
-    void QSkill()       
+    void QSkillAnim()
     {
         if (m_SkillStack == m_SkillMaxStack)
         {
-            m_SkillEnable = true;
             if (Input.GetKeyDown(KeyCode.Q) && !isAttack)
             {
-                if (m_SkillNum == 1 && m_WinterSkillacquire)
-                {
-                    StartCoroutine(BariSkillManager.Instance.WinterIceStun());
-                }
-                else if (m_SkillNum == 2 && m_FallingSkillacquire)
-                {
-                    m_MissileSkill.MissileSkill();
-                }
-                else if (m_SkillNum == 3 && m_SummerSkillacquire)
-                {
-                    StartCoroutine(BariSkillManager.Instance.SummerLaser());
-                }
-                else if (m_SkillNum == 4 && m_SpringSkillacquire)
-                {
-                    StartCoroutine(BariSkillManager.Instance.SpringSkill());
-                }
-                else
-                    Debug.Log("스킬을 아직 획득하지 못했습니다.");
+                DoSkill = true;
+                m_SkillEnable = true;
+                m_SkillStack = m_SkillMinStack;
+                _Animator.SetBool("isWalk", false);
+                _Animator.SetBool("isRun", false);
+                _Animator.SetTrigger("DoSkill");
             }
         }
         else
             m_SkillEnable = false;
         return;
+    }
+
+    void QSkill()       
+    {
+        if (m_SkillNum == 1 && m_WinterSkillacquire)
+        {
+            StartCoroutine(BariSkillManager.Instance.WinterIceStun());
+        }
+        else if (m_SkillNum == 2 && m_FallingSkillacquire)
+        {
+            m_MissileSkill.MissileSkill();
+        }
+        else if (m_SkillNum == 3 && m_SummerSkillacquire)
+        {
+            StartCoroutine(BariSkillManager.Instance.SummerLaser());
+        }
+        else if (m_SkillNum == 4 && m_SpringSkillacquire)
+        {
+            StartCoroutine(BariSkillManager.Instance.SpringSkill());
+        }
+        else
+            Debug.Log("스킬을 아직 획득하지 못했습니다.");       
+        
     }
 
     void SpringBuff()

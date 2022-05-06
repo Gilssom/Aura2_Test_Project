@@ -47,10 +47,10 @@ public class BariSkillManager : MonoBehaviour
     public IEnumerator WinterIceStun()
     {
         Vector3 Pos = this.transform.position;
-        GameObject IceBreak = Instantiate(m_WinterIcePrefab, this.transform.forward + 
+        GameObject IceBreak = Instantiate(m_WinterIcePrefab, this.transform.forward * 3 + 
             new Vector3(Pos.x, Pos.y + 0.1f, Pos.z), this.transform.rotation);
-        m_Player.DoSkill = true;
-        m_Player.m_SkillStack = m_Player.m_SkillMinStack;
+        //m_Player.DoSkill = true;
+        //m_Player.m_SkillStack = m_Player.m_SkillMinStack;
         yield return new WaitForSeconds(0.8f);
         m_Player.DoSkill = false;
         Destroy(IceBreak, 2f);
