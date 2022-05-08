@@ -11,6 +11,8 @@ public class BariController : MonoBehaviour
     private NearItemCheck m_NearItem;
     private Camera m_Camera;
 
+    public AudioClip[] m_clip;
+
     public float Speed;
     public float MinSpeed;
     public float MaxSpeed;
@@ -20,6 +22,8 @@ public class BariController : MonoBehaviour
     public int comboStep = 0;
     public bool isAttackReady = true;
     public bool ComboPossible;
+
+    bool isDeath;
 
     float HAxis;
     float VAxis;
@@ -77,6 +81,8 @@ public class BariController : MonoBehaviour
     bool m_SummerSkillacquire;
     bool m_SpringSkillacquire;
 
+    public GameObject m_Tutorial;
+
     void Awake()
     {
         _Animator = GetComponent<Animator>();
@@ -96,6 +102,7 @@ public class BariController : MonoBehaviour
         m_FinalAttack = false;
 
         m_SkillEnable = false;
+        m_AttackStacking = true;
 
         m_SkillStack = 0;
         m_StackTime = 1;
@@ -107,7 +114,7 @@ public class BariController : MonoBehaviour
     void Update()
     {
         GetInput();
-        if (!m_FinalAttack && !DoSkill && !AT_GameManager.Instance.isAction && !isFading)
+        if (!m_FinalAttack && !DoSkill && !AT_GameManager.Instance.isAction && !isFading && !isDeath)
         {
             Move();
         }
@@ -132,9 +139,6 @@ public class BariController : MonoBehaviour
         }
 
         SpringBuff();
-
-        /*if (Input.GetMouseButton(0) && !isAttack)
-            StartCoroutine(TestAttack());*/
     }
 
     void OnTriggerStay(Collider other)
@@ -177,10 +181,26 @@ public class BariController : MonoBehaviour
             AT_GameManager.Instance.InStartFadeAnim(2, true);
         }
 
-        if (other.tag == "MazeDeathObj")
+        if (other.tag == "MazeDeathGround")
         {
-            Debug.Log("Death");
-            MazeManager.Instance.MazeDeath();
+            PlayerStats.Instance.TakeDamage(1);
+            StartCoroutine(MazeManager.Instance.MazeDeath());
+        }
+        if(other.tag == "MazeDeathObj")
+        {
+            PlayerStats.Instance.TakeDamage(1);
+
+            if (PlayerStats.Instance.Health <= 0)
+            {
+                StartCoroutine(MazeManager.Instance.MazeDeath_2());
+            }
+        }
+
+        if(other.tag == "Tutorial")
+        {
+            m_Tutorial.SetActive(true);
+            TutorialManager.Instance.InStartFadeAnim(0);
+            Destroy(GameObject.Find("TutorialTrigger"));
         }
     }
 
@@ -217,7 +237,10 @@ public class BariController : MonoBehaviour
     void ObjInteraction()
     {
         if (scanObject.name == "LightNPC")
+        {
             NPCMove.Instance.isTalking = true;
+            NPCMove.Instance.DoTalking();
+        }
         else if (scanObject.name == "SkillCryStal" && !AT_GameManager.Instance.isAction)
         {
             Debug.Log("¾ó¸®±â ½ºÅ³ È¹µæ");
@@ -276,6 +299,7 @@ public class BariController : MonoBehaviour
                 Vector3 Pos = this.transform.position;
                 GameObject Teleport = Instantiate(m_TeleportEff, this.transform.forward +
                     new Vector3(Pos.x, Pos.y + 0.7f, Pos.z), this.transform.rotation);
+                SoundManager.Instance.SFXPlay("Teleport", m_clip[0]);
                 this.transform.DOMove(transform.position + transform.forward * 5, 0.2f);
                 Destroy(Teleport, 2f);
                 m_TportCount -= 1;
@@ -322,17 +346,21 @@ public class BariController : MonoBehaviour
 
     void Attack()
     {
-        /*if (Input.GetMouseButtonDown(0) && !isAttack)
+        if(m_AttackStacking)
         {
-            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rayhit;
-            if (Physics.Raycast(ray, out rayhit, 100))
+            m_StackTime -= Time.deltaTime * 1;
+
+            if(m_StackTime <= 0)
             {
-                Vector3 nextVec = rayhit.point - transform.position;
-                nextVec.y = 0;
-                transform.LookAt(transform.position + nextVec);
+                m_SkillStack = 0;
+                m_AttackStacking = false;
+
+                if(!m_AttackStacking)
+                {
+                    m_StackTime = 1;
+                }
             }
-        }*/
+        }
 
         if (Input.GetMouseButtonDown(0) && comboStep == 0)
         {
@@ -491,18 +519,22 @@ public class BariController : MonoBehaviour
         if (m_SkillNum == 1 && m_WinterSkillacquire)
         {
             StartCoroutine(BariSkillManager.Instance.WinterIceStun());
+            SoundManager.Instance.SFXPlay("WinterSkill", m_clip[1]);
         }
         else if (m_SkillNum == 2 && m_FallingSkillacquire)
         {
             m_MissileSkill.MissileSkill();
+            SoundManager.Instance.SFXPlay("FallingSkill", m_clip[2]);
         }
         else if (m_SkillNum == 3 && m_SummerSkillacquire)
         {
             StartCoroutine(BariSkillManager.Instance.SummerLaser());
+            SoundManager.Instance.SFXPlay("SummerSkill", m_clip[3]);
         }
         else if (m_SkillNum == 4 && m_SpringSkillacquire)
         {
             StartCoroutine(BariSkillManager.Instance.SpringSkill());
+            SoundManager.Instance.SFXPlay("SpringSkill", m_clip[4]);
         }
         else
             Debug.Log("½ºÅ³À» ¾ÆÁ÷ È¹µæÇÏÁö ¸øÇß½À´Ï´Ù.");       
@@ -523,5 +555,10 @@ public class BariController : MonoBehaviour
             //_Animator.SetFloat("WalkSpeed", 2);
             _Animator.SetBool("isRun", false);
         }
+    }
+
+    public void Death()
+    {
+        isDeath = true;
     }
 }
