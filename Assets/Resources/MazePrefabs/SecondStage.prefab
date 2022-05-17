@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44085702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: -1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: -1, y: 0.3, z: -1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 3222499025298750412}
   m_RootOrder: 1
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44085702}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &44085706
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &44085704
 MonoBehaviour:
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -273,8 +273,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693408576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 1, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 3222499025298750412}
   m_RootOrder: 0
@@ -286,7 +286,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693408576}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &1693408580
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -340,7 +340,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1693408578
 MonoBehaviour:
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -428,8 +428,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651544987207895563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 1, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 1229710828379893813}
   m_RootOrder: 0
@@ -441,7 +441,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651544987207895563}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &8661480697524629742
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -462,7 +462,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -495,7 +495,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6506142722540695858
 MonoBehaviour:
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MazeObjectType: 1
-  m_MoveSpeed: -30
+  m_MoveSpeed: -15
   m_RotateSpeed: 0
   m_Zdelta: 0
   m_Xdelta: 0
@@ -986,8 +986,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4738026745038362821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: -1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: -1, y: 0.3, z: -1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 1229710828379893813}
   m_RootOrder: 1
@@ -999,7 +999,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4738026745038362821}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &641161047621701668
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1020,7 +1020,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1053,7 +1053,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2741445405162760391
 MonoBehaviour:
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -1141,8 +1141,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574311867266089475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 1, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 3317686568386212766}
   m_RootOrder: 0
@@ -1154,7 +1154,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574311867266089475}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &4575453436662592558
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1175,7 +1175,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1208,7 +1208,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4141620863747654014
 MonoBehaviour:
@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -1266,8 +1266,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654416052670424896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: -1}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: -1, y: 0.3, z: -1}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 3317686568386212766}
   m_RootOrder: 1
@@ -1279,7 +1279,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654416052670424896}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6461297695846733525, guid: dfca5aefc686a4b41880c525efce519b, type: 3}
 --- !u!23 &3909557718911910302
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1300,7 +1300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0634043e63e9f4483d52264e6203ca, type: 2}
+  - {fileID: 2100000, guid: d45d80cb3f9270b4c95bd5e81e4c044e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1333,7 +1333,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3590529914906723642
 MonoBehaviour:
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MazeObjectType: 4
   m_MoveSpeed: 5
-  m_RotateSpeed: 0
+  m_RotateSpeed: 200
   m_Zdelta: 0
   m_Xdelta: 0
   isXmoving: 0
@@ -1516,7 +1516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 836789138714649427, guid: 081e5e960f7bd7f428ddd4c847ef070e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 836789138714649427, guid: 081e5e960f7bd7f428ddd4c847ef070e, type: 3}
       propertyPath: m_LocalPosition.z

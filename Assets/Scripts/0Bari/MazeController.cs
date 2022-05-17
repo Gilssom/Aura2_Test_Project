@@ -30,7 +30,8 @@ public class MazeController : MonoBehaviour
     public bool isStopSpin;
 
     void Start()
-    {  
+    {
+        SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[1]);
         m_CurPos = transform.position;
     }
 
@@ -89,6 +90,7 @@ public class MazeController : MonoBehaviour
                 transform.Rotate(new Vector3(0, 360, 0), m_MoveSpeed * Time.deltaTime);
                 break;
             case Type.StopTurn:
+                transform.Rotate(new Vector3(0, 360, 0), m_RotateSpeed * Time.deltaTime);
                 transform.position = Vector3.MoveTowards
                     (transform.position, m_TurnPos[m_TurnNum].transform.position, m_MoveSpeed * Time.deltaTime);
 

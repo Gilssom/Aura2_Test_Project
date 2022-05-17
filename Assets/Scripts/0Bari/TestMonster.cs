@@ -14,6 +14,14 @@ public class TestMonster : MonoBehaviour
     private BariController m_Player;
     private NavMeshAgent m_NavAgent;
     private Rigidbody m_Rigid;
+    private Animator m_Anim;
+    public Material m_Dissolve;
+    public AudioClip[] m_clip;
+
+    private float MaxCutoff = 1;
+    private float MinCutoff = 0;
+    public float Cutoff = default;
+    public float Speed = default;
 
     float m_TraceDis = 7;
     float m_AttackDis = 2;
@@ -22,6 +30,7 @@ public class TestMonster : MonoBehaviour
 
     bool isDeath;
 
+    [SerializeField]
     private float m_MaxHP;
     private float m_CurHP;
 
@@ -29,10 +38,20 @@ public class TestMonster : MonoBehaviour
 
     private void Start()
     {
+        m_Anim = GetComponent<Animator>();
         m_Rigid = GetComponent<Rigidbody>();
         m_NavAgent = GetComponent<NavMeshAgent>();
         m_Player = GameObject.FindWithTag("Player").GetComponent<BariController>();
-        m_MaxHP = 100;
+        m_Dissolve.SetFloat("_Dissolve", 0);
+        switch (m_BossType)
+        {
+            case BossType.Maze:
+                m_MaxHP = 100;
+                break;
+            case BossType.ETC:
+                m_MaxHP = 40;
+                break;
+        }
         m_CurHP = m_MaxHP;
 
         StartCoroutine(this.CheckState());
@@ -63,7 +82,8 @@ public class TestMonster : MonoBehaviour
         if(other.tag == "Weapon")
         {
             if(m_Player.m_SkillStack < 3)
-                m_Player.m_SkillStack++;
+                m_Player.SkillAttack();
+            SoundManager.Instance.SFXPlay("Enemy Hit", m_Player.m_clip[5]);
             Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
             WeaponHitEff();
             m_CurHP -= 5;
@@ -72,8 +92,15 @@ public class TestMonster : MonoBehaviour
 
     void Update()
     {
-        if (m_CurHP < 0 && !isDeath)
-            StartCoroutine(Death());
+        if (m_CurHP < 0)
+        {
+            m_Anim.SetBool("isTrace", false);
+            m_Anim.SetBool("isAttack", false);
+            m_Anim.SetTrigger("Death");
+            if (!isDeath)
+                SoundManager.Instance.SFXPlay("Skeleton Death", m_clip[0]);
+            Death();
+        }
  
         if (m_moveSpeed < 3)
             m_moveSpeed += Time.deltaTime;
@@ -108,6 +135,7 @@ public class TestMonster : MonoBehaviour
             switch (m_CurState)
             {
                 case CurState.idle:
+                    m_Anim.SetBool("isTrace", false);
                     break;
                 case CurState.trace:
                     m_NavAgent.speed = m_moveSpeed;
@@ -115,11 +143,15 @@ public class TestMonster : MonoBehaviour
                     m_NavAgent.destination = m_Player.transform.position;
                     m_NavAgent.Resume();
                     LookPlayer();
+                    m_Anim.SetBool("isAttack", false);
+                    m_Anim.SetBool("isTrace", true);
                     break;
                 case CurState.attack:
                     m_NavAgent.speed = 0;
                     m_Rigid.isKinematic = false;
                     LookPlayer();
+                    m_Anim.SetBool("isTrace", false);
+                    m_Anim.SetBool("isAttack", true);
                     break;
                 case CurState.death:
                     break;
@@ -138,7 +170,7 @@ public class TestMonster : MonoBehaviour
         Destroy(Effect, 1);
     }
 
-    IEnumerator Death()
+    void Death()
     {
         isDeath = true;
         Debug.Log(gameObject.name + " Death");
@@ -152,14 +184,25 @@ public class TestMonster : MonoBehaviour
                 Quaternion CurRot = Quaternion.Euler(0, 0, 0);
                 Instantiate(Resources.Load("2ModelingResource/SkillCryStal"),
                     new Vector3(CurPos.x, 0, CurPos.z), CurRot);
+                Destroy(gameObject, 2);
                 break;
             case BossType.ETC:
+                if(isDeath)
+                {
+                    if (Cutoff >= MaxCutoff)
+                        Destroy(gameObject);
+
+                    Cutoff += Speed;
+
+                    if(Cutoff != MaxCutoff)
+                    {
+                        m_Dissolve.SetFloat("_Dissolve", Cutoff);
+                        return;
+                    }
+                }
                 break;
             default:
                 break;
         }
-
-        Destroy(gameObject, 2);
-        yield return null;
     }
 }
