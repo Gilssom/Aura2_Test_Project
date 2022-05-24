@@ -11,6 +11,7 @@ public class ChoheeController : MonoBehaviour
     private NearItemCheck m_NearItem;
     private Camera m_Camera;
 
+    public AudioSource m_FootSFX;
     public AudioClip[] m_clip;
 
     public float Speed;
@@ -24,6 +25,7 @@ public class ChoheeController : MonoBehaviour
 
     bool isDeath;
 
+    Vector3 moveVec;
     float HAxis;
     float VAxis;
     [SerializeField]
@@ -38,6 +40,7 @@ public class ChoheeController : MonoBehaviour
     [SerializeField]
     bool isAttack;
     bool isCharge;
+    bool isDodge;
 
     [SerializeField]
     bool isGrounded;
@@ -56,6 +59,8 @@ public class ChoheeController : MonoBehaviour
     public VisualEffect m_SecondSlash;
     public VisualEffect m_FinalSlash;
     public VisualEffect m_ChargeSlash;
+    public GameObject m_SlashEffect;
+    public Transform m_SlashPos;
 
     void Awake()
     {
@@ -71,6 +76,7 @@ public class ChoheeController : MonoBehaviour
         m_FirstArea.enabled = false;
         m_SecondArea.enabled = false;
         m_FinalArea.enabled = false;
+        m_ChargeArea.enabled = false;
         m_FinalAttack = false;
     }
 
@@ -90,9 +96,9 @@ public class ChoheeController : MonoBehaviour
         //    StartCoroutine(TalkStart());
         //}
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && !isDodge)
         {
-            Jump();
+            Dodge();
         }
     }
 
@@ -120,19 +126,52 @@ public class ChoheeController : MonoBehaviour
 
     void Move()
     {
-        Vector3 moveVec = new Vector3(HAxis, 0, VAxis).normalized;
+        bool isMoving = false;
+
+        moveVec = new Vector3(HAxis, 0, VAxis).normalized;
 
         transform.position += moveVec * Speed * Time.deltaTime;
 
         transform.LookAt(transform.position + moveVec);
 
         m_Animator.SetBool("isRun", moveVec != Vector3.zero);
+
+        if (moveVec != Vector3.zero && !isDodge)
+            isMoving = true;
+        else
+            isMoving = false;
+
+        if (isMoving)
+        {
+            if (!m_FootSFX.isPlaying)
+                m_FootSFX.Play();
+        }
+        else
+            m_FootSFX.Stop();
     }
 
     void Jump()
     {
         m_Rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
         m_Animator.SetTrigger("DoJump");
+    }
+
+    void Dodge()
+    {
+        if (moveVec != Vector3.zero && !isDodge) // ! = bool 형태의 반대(=false)
+        {
+            Speed *= 2;
+            m_Animator.SetTrigger("DoJump");
+            isDodge = true;
+
+            Invoke("DodgeOut", 0.7f); // 시간차 호출
+        }
+    }
+
+    void DodgeOut()
+    {
+        Speed *= 0.5f;
+        isDodge = false;
     }
 
     void GroundCheck()
@@ -171,6 +210,8 @@ public class ChoheeController : MonoBehaviour
                 nextVec.y = 0;
                 transform.LookAt(transform.position + nextVec);
             }
+
+            m_FootSFX.Stop();
         }
 
         if (Input.GetMouseButtonDown(0) && comboStep == 0)
@@ -194,7 +235,7 @@ public class ChoheeController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(1) && !isAttack)
+        if (Input.GetMouseButton(1) && !isAttack &&!isCharge)
         {
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayhit;
@@ -206,16 +247,27 @@ public class ChoheeController : MonoBehaviour
             }
 
             isCharge = true;
+            m_FootSFX.Stop();
             m_Animator.SetTrigger("DoSlashAttack");
+            QuarterView.Instance.isZoomOut = true;
+            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * -5, 0.5f);
         }
 
         if (Input.GetMouseButtonUp(1))
         {
+            GameObject intantBullet = Instantiate(m_SlashEffect, m_SlashPos.position, m_SlashPos.rotation);
+            Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
+            bulletRigid.velocity = m_SlashPos.forward * 20;
+
             m_Animator.SetTrigger("DoSlashStart");
             m_Animator.ResetTrigger("DoSlashAttack");
+            SoundManager.Instance.SFXPlay("Slash Sound", m_clip[4]);
+            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 5, 0.1f);
+
+            Destroy(intantBullet, 1.5f);
         }
 
-        if (Input.GetMouseButtonDown(2) && !isAttack)
+        if (Input.GetMouseButtonDown(2) && !isAttack && !isCharge)
         {
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayhit;
@@ -227,6 +279,7 @@ public class ChoheeController : MonoBehaviour
             }
 
             isCharge = true;
+            m_FootSFX.Stop();
             m_Animator.SetTrigger("DoChargeAttack");
         }
     }
@@ -308,5 +361,9 @@ public class ChoheeController : MonoBehaviour
         m_SecondArea.enabled = false;
         m_FinalArea.enabled = false;
         m_ChargeArea.enabled = false;
+    }
+    void SlashAttackEnd()
+    {
+        QuarterView.Instance.isZoomOut = false;
     }
 }
