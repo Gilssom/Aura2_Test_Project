@@ -61,32 +61,29 @@ public class TestMonster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "WinterIce")
-        {
-            Debug.Log("Winter Dmg Check || Cur HP : " + m_CurHP);
-            m_CurHP -= 20;
-            m_moveSpeed = 1;
-        }
-
-        if(other.tag == "Missile")
-        {
-            Debug.Log("Falling Dmg Check || Cur HP : " + m_CurHP);
-            m_CurHP -= 3;
-        }
-
-        if (other.tag == "SummerLaser")
-        {
-            Debug.Log("Summer Dmg Check || Cur HP : " + m_CurHP);
-            m_CurHP -= 30;
-        }
-
         if(other.tag == "Weapon")
         {
             Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
             WeaponHitEff();
             m_Anim.SetTrigger("DoHit");
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
-            m_CurHP -= 5;
+            m_CurHP -= ChoheeWeapon.Instance.m_CurDmg;
+        }
+        else if (other.tag == "ChargeWeapon")
+        {
+            Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
+            WeaponHitEff();
+            m_Anim.SetTrigger("DoHit");
+            this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
+            m_CurHP -= ChoheeWeapon.Instance.m_ChargeDmg;
+        }
+        else if (other.tag == "SlashWeapon")
+        {
+            Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
+            WeaponHitEff();
+            m_Anim.SetTrigger("DoHit");
+            this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
+            m_CurHP -= ChoheeWeapon.Instance.m_SlashDmg;
         }
     }
 

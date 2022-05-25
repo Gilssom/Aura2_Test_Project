@@ -28,37 +28,24 @@ public class ChoheeController : MonoBehaviour
     Vector3 moveVec;
     float HAxis;
     float VAxis;
-    [SerializeField]
     float Wheel;
 
-    public BoxCollider m_FirstArea;
-    public BoxCollider m_SecondArea;
-    public BoxCollider m_FinalArea;
-    public BoxCollider m_ChargeArea;
+    public BoxCollider[] m_AreaType;
 
     bool m_FinalAttack;
-    [SerializeField]
     bool isAttack;
     bool isCharge;
     bool isDodge;
 
     [SerializeField]
-    bool isGrounded;
-    [SerializeField]
     bool isWall;
     public LayerMask Ground;
     public LayerMask Wall;
 
-    public float m_SkillNum;
-
     public bool m_ItemPickup;
     public GameObject scanObject;
-    private Vector3 ObjPosition;
 
-    public VisualEffect m_FirstSlash;
-    public VisualEffect m_SecondSlash;
-    public VisualEffect m_FinalSlash;
-    public VisualEffect m_ChargeSlash;
+    public VisualEffect[] m_AttackEffect;
     public GameObject m_SlashEffect;
     public Transform m_SlashPos;
 
@@ -73,10 +60,12 @@ public class ChoheeController : MonoBehaviour
     }
     void Start()
     {
-        m_FirstArea.enabled = false;
-        m_SecondArea.enabled = false;
-        m_FinalArea.enabled = false;
-        m_ChargeArea.enabled = false;
+        m_AreaType[0].enabled = false; // First
+        m_AreaType[1].enabled = false; // Second
+        m_AreaType[2].enabled = false; // Final
+        m_AreaType[3].enabled = false; // Charge
+        m_AreaType[4].enabled = false; // Fire Weapon
+        m_AreaType[5].enabled = false; // Ice Weapon
         m_FinalAttack = false;
     }
 
@@ -88,7 +77,6 @@ public class ChoheeController : MonoBehaviour
             Move();
         }
         Attack();
-        GroundCheck();
         HitDamage();
 
         //if (scanObject != null && Input.GetKeyDown(KeyCode.E))
@@ -150,18 +138,13 @@ public class ChoheeController : MonoBehaviour
             m_FootSFX.Stop();
     }
 
-    void Jump()
-    {
-        m_Rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-        m_Animator.SetTrigger("DoJump");
-    }
-
     void Dodge()
     {
         if (moveVec != Vector3.zero && !isDodge) // ! = bool 형태의 반대(=false)
         {
             Speed *= 2;
             m_Animator.SetTrigger("DoJump");
+            SoundManager.Instance.SFXPlay("Charge Attack", m_clip[5]);
             isDodge = true;
 
             Invoke("DodgeOut", 0.7f); // 시간차 호출
@@ -172,21 +155,6 @@ public class ChoheeController : MonoBehaviour
     {
         Speed *= 0.5f;
         isDodge = false;
-    }
-
-    void GroundCheck()
-    {
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, Vector3.down, Color.green);
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f, Ground))
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
     }
 
     void HitDamage()
@@ -324,32 +292,34 @@ public class ChoheeController : MonoBehaviour
 
     void FirstAttack()
     {
-        m_FirstArea.enabled = true;
-        m_FirstSlash.Play();
+        m_AreaType[0].enabled = true;
+        m_AreaType[4].enabled = true; 
+        m_AreaType[5].enabled = true; 
+        m_AttackEffect[0].Play();
         SoundManager.Instance.SFXPlay("FirstAttack", m_clip[0]);
         this.transform.DOMove(transform.position + transform.forward * 0.5f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.05f, 0.05f).SetLoops(2, LoopType.Yoyo);
     }
     void SecondAttack()
     {
-        m_SecondArea.enabled = true;
-        m_SecondSlash.Play();
+        m_AreaType[1].enabled = true;
+        m_AttackEffect[1].Play();
         SoundManager.Instance.SFXPlay("SecondAttack", m_clip[1]);
         this.transform.DOMove(transform.position + transform.forward * 0.7f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.15f, 0.05f).SetLoops(2, LoopType.Yoyo);
     }
     void FinalAttack()
     {
-        m_FinalArea.enabled = true;
-        m_FinalSlash.Play();
+        m_AreaType[2].enabled = true;
+        m_AttackEffect[2].Play();
         SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
         this.transform.DOMove(transform.position + transform.forward * 0.8f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.3f, 0.05f).SetLoops(2, LoopType.Yoyo);
     }
     void ChargeAttack()
     {
-        m_ChargeArea.enabled = true;
-        m_ChargeSlash.Play();
+        m_AreaType[3].enabled = true;
+        m_AttackEffect[3].Play();
         SoundManager.Instance.SFXPlay("Charge Attack", m_clip[3]);
         this.transform.DOMove(transform.position + transform.forward * 7f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.5f, 0.05f).SetLoops(2, LoopType.Yoyo);
@@ -357,10 +327,12 @@ public class ChoheeController : MonoBehaviour
     void AreaEnd()
     {
         isCharge = false;
-        m_FirstArea.enabled = false;
-        m_SecondArea.enabled = false;
-        m_FinalArea.enabled = false;
-        m_ChargeArea.enabled = false;
+        m_AreaType[0].enabled = false;
+        m_AreaType[1].enabled = false;
+        m_AreaType[2].enabled = false;
+        m_AreaType[3].enabled = false;
+        m_AreaType[4].enabled = false;
+        m_AreaType[5].enabled = false;
     }
     void SlashAttackEnd()
     {
