@@ -144,7 +144,7 @@ public class ChoheeController : MonoBehaviour
         {
             Speed *= 2;
             m_Animator.SetTrigger("DoJump");
-            SoundManager.Instance.SFXPlay("Charge Attack", m_clip[5]);
+            SoundManager.Instance.SFXPlay("Charge Attack", m_clip[4]);
             isDodge = true;
 
             Invoke("DodgeOut", 0.7f); // 시간차 호출
@@ -216,6 +216,7 @@ public class ChoheeController : MonoBehaviour
 
             isCharge = true;
             m_FootSFX.Stop();
+            SoundManager.Instance.SFXPlay("Charge Attack", m_clip[3]);
             m_Animator.SetTrigger("DoSlashAttack");
             QuarterView.Instance.isZoomOut = true;
             m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * -5, 0.5f);
@@ -229,7 +230,7 @@ public class ChoheeController : MonoBehaviour
 
             m_Animator.SetTrigger("DoSlashStart");
             m_Animator.ResetTrigger("DoSlashAttack");
-            SoundManager.Instance.SFXPlay("Slash Sound", m_clip[4]);
+            SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
             m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 5, 0.1f);
 
             Destroy(intantBullet, 1.5f);
@@ -248,6 +249,7 @@ public class ChoheeController : MonoBehaviour
 
             isCharge = true;
             m_FootSFX.Stop();
+            SoundManager.Instance.SFXPlay("Charge Attack", m_clip[3]);
             m_Animator.SetTrigger("DoChargeAttack");
         }
     }
@@ -320,7 +322,7 @@ public class ChoheeController : MonoBehaviour
     {
         m_AreaType[3].enabled = true;
         m_AttackEffect[3].Play();
-        SoundManager.Instance.SFXPlay("Charge Attack", m_clip[3]);
+        SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
         this.transform.DOMove(transform.position + transform.forward * 7f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.5f, 0.05f).SetLoops(2, LoopType.Yoyo);
     }
