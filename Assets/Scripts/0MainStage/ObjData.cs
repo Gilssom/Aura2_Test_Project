@@ -68,6 +68,10 @@ public class ObjData : MonoBehaviour
         {
             FenceDissolve();
         }
+        if (id == 5 && FieldObjectController.Instance.m_FireOnCount >= 6)
+        {
+            FenceDissolve();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
