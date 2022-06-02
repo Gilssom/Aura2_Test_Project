@@ -77,7 +77,7 @@ public class MonsterTest : MonoBehaviour
         _transform = GetComponent<Transform>();
         _navAgent = this.gameObject.GetComponent<NavMeshAgent>();
         //_Playertransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        _Playertransform = GameManager.Instance.m_Player.transform;
+        //_Playertransform = GameManager.Instance.m_Player.transform;
 
         m_Slider.value = CulHealth();
         m_Slider.maxValue = _MaxHp;

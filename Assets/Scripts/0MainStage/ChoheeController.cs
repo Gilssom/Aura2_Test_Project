@@ -77,7 +77,6 @@ public class ChoheeController : MonoBehaviour
             Move();
         }
         Attack();
-        HitDamage();
 
         //if (scanObject != null && Input.GetKeyDown(KeyCode.E))
         //{
@@ -87,6 +86,19 @@ public class ChoheeController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !isDodge)
         {
             Dodge();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Monster" && !isAttack)
+        {
+            HitDamage();
+        }
+
+        if(other.tag == "FirstGate")
+        {
+            GameManager.Instance.ObjectCtrl(1, true);
         }
     }
 
@@ -159,11 +171,8 @@ public class ChoheeController : MonoBehaviour
 
     void HitDamage()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            m_Animator.SetTrigger("DoHit");
-            m_Camera.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);
-        }
+        m_Animator.SetTrigger("DoHit");
+        m_Camera.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);        
     }
 
     void Attack()

@@ -48,12 +48,12 @@ public class ChoheeWeapon : MonoBehaviour
 
     void Start()
     {
-        m_NorDmg = 5;
+        m_NorDmg = 100;
         m_CurDmg = m_NorDmg;
 
         m_FireDmg = m_CurDmg * 1.5f;
-        m_ChargeDmg = m_CurDmg * 1.2f;
-        m_SlashDmg = m_CurDmg * 1.5f;
+        m_ChargeDmg = m_CurDmg * 2;
+        m_SlashDmg = m_CurDmg;
 
         m_Number = 0;
         rend = GetComponent<Renderer>();

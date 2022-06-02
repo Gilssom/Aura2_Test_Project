@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
         _CurHP = _MaxHP;
 
-        if (_Gamemanager.PlayerIndex != PlayerNum)
+        /*if (_Gamemanager.PlayerIndex != PlayerNum)
         {
             Debug.Log("None");
             Destroy(gameObject);
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         else if(_Gamemanager.PlayerIndex == PlayerNum)
         {
             GameManager.Instance.m_Player = this.gameObject;
-        }
+        }*/
 
         DontDestroyOnLoad(this);
     }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Portal")
         {
             isPortal = true;
-            _Gamemanager.InStartFadeAnim();
+            //_Gamemanager.InStartFadeAnim();
         }
     }
 

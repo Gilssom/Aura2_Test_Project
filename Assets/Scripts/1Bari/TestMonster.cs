@@ -6,54 +6,71 @@ using DG.Tweening;
 
 public class TestMonster : MonoBehaviour
 {
-    public enum BossType { Maze, ETC }
-    public BossType m_BossType;
+    public enum EnemyType { HellGhost, FireMonster }
+    public EnemyType m_EnemyType;
 
     public enum CurState { idle, trace, attack, death}
     public CurState m_CurState = CurState.idle;
+
+    public bool isSpawnMonster;
 
     private ChoheeController m_Player;
     private NavMeshAgent m_NavAgent;
     private Rigidbody m_Rigid;
     private Animator m_Anim;
-    public Material m_Dissolve;
+    private SkinnedMeshRenderer m_SkinmeshRenderer;
+    private BoxCollider m_AttackArea;
     public AudioClip[] m_clip;
 
     private float MaxCutoff = 1;
     private float MinCutoff = 0;
-    public float Cutoff = default;
-    public float Speed = default;
-
-    float m_TraceDis = 7;
-    float m_AttackDis = 2;
-    float m_rotSpeed = 3;
-    float m_moveSpeed = 3;
+    private float Cutoff = default;
+    private float Speed = 0.0025f;
+    [SerializeField]
+    float m_TraceDis = default;
+    float m_AttackDis = default;
+    float m_rotSpeed = default;
+    float m_moveSpeed = default;
 
     bool isDeath;
 
-    [SerializeField]
     private float m_MaxHP;
     private float m_CurHP;
 
     public GameObject m_HitEffect;
+    public GameObject m_FireEffect;
 
-    private void Start()
+    void Awake()
     {
         m_Anim = GetComponent<Animator>();
         m_Rigid = GetComponent<Rigidbody>();
         m_NavAgent = GetComponent<NavMeshAgent>();
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
-        m_Dissolve.SetFloat("_Dissolve", 0);
-        switch (m_BossType)
+        m_SkinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        m_AttackArea = GetComponentInChildren<BoxCollider>();
+    }
+
+    private void Start()
+    {
+        switch (m_EnemyType)
         {
-            case BossType.Maze:
-                m_MaxHP = 100;
+            case EnemyType.HellGhost:
+                m_MaxHP = 600;
                 break;
-            case BossType.ETC:
-                m_MaxHP = 40;
+            case EnemyType.FireMonster:
+                if (isSpawnMonster)
+                    m_TraceDis = 100;
+                else                
+                    m_TraceDis = 7;
+
+                m_AttackDis = 2;
+                m_rotSpeed = 3;
+                m_moveSpeed = 3;
+                m_MaxHP = 200;
                 break;
         }
         m_CurHP = m_MaxHP;
+        m_AttackArea.enabled = false;
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
@@ -63,25 +80,19 @@ public class TestMonster : MonoBehaviour
     {
         if(other.tag == "Weapon")
         {
-            Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
             WeaponHitEff();
-            m_Anim.SetTrigger("DoHit");
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_CurDmg;
         }
         else if (other.tag == "ChargeWeapon")
         {
-            Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
             WeaponHitEff();
-            m_Anim.SetTrigger("DoHit");
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_ChargeDmg;
         }
         else if (other.tag == "SlashWeapon")
         {
-            Debug.Log("PlayerAttack Check || Cur HP: " + m_CurHP);
             WeaponHitEff();
-            m_Anim.SetTrigger("DoHit");
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_SlashDmg;
         }
@@ -91,11 +102,8 @@ public class TestMonster : MonoBehaviour
     {
         if (m_CurHP < 0)
         {
-            m_Anim.SetBool("isTrace", false);
             m_Anim.SetBool("isAttack", false);
             m_Anim.SetTrigger("Death");
-            if (!isDeath)
-                SoundManager.Instance.SFXPlay("Skeleton Death", m_clip[0]);
             Death();
         }
  
@@ -132,7 +140,6 @@ public class TestMonster : MonoBehaviour
             switch (m_CurState)
             {
                 case CurState.idle:
-                    m_Anim.SetBool("isTrace", false);
                     break;
                 case CurState.trace:
                     m_NavAgent.speed = m_moveSpeed;
@@ -141,13 +148,11 @@ public class TestMonster : MonoBehaviour
                     m_NavAgent.Resume();
                     LookPlayer();
                     m_Anim.SetBool("isAttack", false);
-                    m_Anim.SetBool("isTrace", true);
                     break;
                 case CurState.attack:
                     m_NavAgent.speed = 0;
                     m_Rigid.isKinematic = false;
                     LookPlayer();
-                    m_Anim.SetBool("isTrace", false);
                     m_Anim.SetBool("isAttack", true);
                     break;
                 case CurState.death:
@@ -160,10 +165,21 @@ public class TestMonster : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        m_AttackArea.enabled = true;
+    }
+    
+    void AttackEnd()
+    {
+        m_AttackArea.enabled = false;
+    }
+
     void WeaponHitEff()
     {
-        GameObject Effect = Instantiate(m_HitEffect, this.transform.position, this.transform.rotation);
-        Effect.transform.SetParent(this.transform);
+        Vector3 Pos = this.transform.position;
+        GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
+        Effect.transform.SetParent(null, false);
         Destroy(Effect, 1);
     }
 
@@ -173,30 +189,36 @@ public class TestMonster : MonoBehaviour
         StopAllCoroutines();
         m_NavAgent.enabled = false;
 
-        switch (m_BossType)
+        switch (m_EnemyType)
         {
-            case BossType.Maze:
-                Vector3 CurPos = transform.position;
-                Quaternion CurRot = Quaternion.Euler(0, 0, 0);
-                Instantiate(Resources.Load("2ModelingResource/SkillCryStal"),
-                    new Vector3(CurPos.x, 0, CurPos.z), CurRot);
-                Destroy(gameObject, 2);
+            case EnemyType.HellGhost:
                 break;
-            case BossType.ETC:
+            case EnemyType.FireMonster:
                 if(isDeath)
                 {
-                    //if (Cutoff >= MaxCutoff)
-                    //    Destroy(gameObject);
+                    SphereCollider coll = GetComponent<SphereCollider>();
 
-                    //Cutoff += Speed;
+                    coll.enabled = false;
 
-                    //if(Cutoff != MaxCutoff)
-                    //{
-                    //    m_Dissolve.SetFloat("_Dissolve", Cutoff);
-                    //    return;
-                    //}
-                    Destroy(gameObject, 2);
-                }
+                    m_FireEffect.SetActive(false);
+
+                    if (Cutoff >= MaxCutoff)
+                    {
+                        Destroy(gameObject);
+                        GameManager.Instance.m_KillCount += 1;
+                    }
+
+                    Material[] mats = m_SkinmeshRenderer.materials;
+
+                    Cutoff += Speed;
+                    if (Cutoff != MaxCutoff)
+                    {
+                        m_SkinmeshRenderer.material.SetFloat("_Dissolve", Cutoff);
+                    }
+
+                    m_SkinmeshRenderer.materials = mats;
+
+                    }
                 break;
             default:
                 break;

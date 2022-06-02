@@ -7,6 +7,7 @@ using System.Linq;
 public class FieldObjectController : MonoBehaviour
 {
     public float m_FireOnCount;
+    public float m_FireOffCount;
 
     private static FieldObjectController m_instance;
     // ΩÃ±€≈Ê

@@ -71,7 +71,7 @@ public class CharacterSelect : MonoBehaviour
             }
         }
 
-        m_manager.PlayerIndex = m_InputIndex;
+        //m_manager.PlayerIndex = m_InputIndex;
 
         if (m_Selecting)
         {
@@ -84,7 +84,7 @@ public class CharacterSelect : MonoBehaviour
     public void PlayerSelect()
     {
         m_CharacterName.text = "Game Start !";
-        m_manager.InStartFadeAnim();
+        //m_manager.InStartFadeAnim();
         m_Canvas.enabled = false;
         if (m_InputIndex == 1)
         {

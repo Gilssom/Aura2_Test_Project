@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MazeGround
-  m_Shader: {fileID: -6465566751694194690, guid: d2a6254fe6fc3b448bdc94dc387f0e1a, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: efb1d26729dab8341947b355fc21a823, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 85970ae6aa1f318469efe17e15d8f8d1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -77,6 +77,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - BOOLEAN_0107A33C3886411D8E1319901D3A8A0D: 0
+    - BOOLEAN_6C4164AC: 0
     - Vector1_1300eb6d78774ab18d90cdb6ffbf9c7a: -3.15
     - Vector1_1562df90e80f4d438fb183bfc797d3d5: 19.8
     - Vector1_38bc1c18f25c469c9d3f6b50c8539eb9: 0
@@ -87,7 +89,10 @@ Material:
     - Vector1_624a14cb419848b691ef9295e95be927: 8.86
     - Vector1_72ba2caedb4f4b98a8d655d19a8204d9: 0.94
     - Vector1_76afecd344f44670b81a136935d17736: 0.317
+    - Vector1_80D01D36: 2
     - Vector1_9e20286c33fc48d88cde69bd0e7e57e8: 0
+    - Vector1_BF525535: 5
+    - Vector1_F3317B59: 1.6
     - Vector1_a5444177b44c45438bc7aca0bda06874: 4.24
     - Vector1_b76045bf29d146db9d1cbbad608b904d: -117.76
     - Vector1_c0f384791f964d418108f8b8e60dcd1f: 10.8
@@ -105,12 +110,16 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dissolve: 0
     - _DstBlend: 0
+    - _EdgeColorIntensity: 1
+    - _EdgeWidth: 0.1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _NoiseScale: 50
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -124,16 +133,22 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_25713750: {r: 1, g: 1, b: 1, a: 1}
     - Color_5566eb6016594c4eb46d796fa644da44: {r: 0.6462264, g: 0.8055199, b: 1, a: 0}
-    - Color_778ab3cc3fc64a229fda0685b77201e0: {r: 0.32504082, g: 0.19815768, b: 0.6886792, a: 0}
+    - Color_58E0201D: {r: 0.003921569, g: 0, b: 0.011764706, a: 0.9490196}
+    - Color_778ab3cc3fc64a229fda0685b77201e0: {r: 0, g: 0, b: 0, a: 0}
     - Color_893d68c311f640c48aa43b2a9d1fb274: {r: 0.23281978, g: 0.12522249, b: 0.3962264, a: 0}
-    - Color_c9075fbb11c14bd589dc31db0c9beb8f: {r: 0.11442735, g: 0.066666685, b: 0.22745098, a: 0}
+    - Color_c9075fbb11c14bd589dc31db0c9beb8f: {r: 0.15701929, g: 0.08926664, b: 0.3207547, a: 0}
     - Vector2_630a23374132488fb74d64caab257cfd: {r: 0.2, g: 5.6, b: 0, a: 0}
     - Vector2_75dab54775cb4823a37b5a65b686341d: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 5.3403134, g: 0, b: 0.19571829, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NoiseUVSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _Offest: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7107555171583733686
 MonoBehaviour:
