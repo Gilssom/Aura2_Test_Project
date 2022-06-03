@@ -39,6 +39,8 @@ public class TestMonster : MonoBehaviour
 
     public GameObject m_HitEffect;
     public GameObject m_FireEffect;
+    private GameObject m_DropSoul;
+    private GameObject m_DropHeal;
 
     void Awake()
     {
@@ -48,6 +50,9 @@ public class TestMonster : MonoBehaviour
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
         m_SkinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         m_AttackArea = GetComponentInChildren<BoxCollider>();
+
+        m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
+        m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
     }
 
     private void Start()
@@ -83,12 +88,30 @@ public class TestMonster : MonoBehaviour
             WeaponHitEff();
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_CurDmg;
+
+            if (PlayerStats.Instance.Slash >= 3)
+            {
+                return;
+            }
+            if (PlayerStats.Instance.Slash < 3)
+            {
+                PlayerStats.Instance.AddSlashGage(1);
+            }
         }
         else if (other.tag == "ChargeWeapon")
         {
             WeaponHitEff();
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_ChargeDmg;
+
+            if (PlayerStats.Instance.Slash >= 3)
+            {
+                return;
+            }
+            if (PlayerStats.Instance.Slash < 3)
+            {
+                PlayerStats.Instance.AddSlashGage(1);
+            }
         }
         else if (other.tag == "SlashWeapon")
         {
@@ -185,6 +208,8 @@ public class TestMonster : MonoBehaviour
 
     void Death()
     {
+        Vector3 Pos = this.transform.position;
+
         isDeath = true;
         StopAllCoroutines();
         m_NavAgent.enabled = false;
@@ -204,21 +229,28 @@ public class TestMonster : MonoBehaviour
 
                     if (Cutoff >= MaxCutoff)
                     {
-                        Destroy(gameObject);
+                        Destroy(this.gameObject);
                         GameManager.Instance.m_KillCount += 1;
-                    }
 
-                    Material[] mats = m_SkinmeshRenderer.materials;
+                        int MaxItems = Random.Range(1, 3);
+                        for (int i = 0; i < MaxItems; i++)
+                        {
+                            float RandomTF = Random.Range(0.5f, 3);
+                            Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
+                        }
+
+                        int HealthDrop = Random.Range(0, 100);
+                        Debug.Log(HealthDrop);
+                        if(HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
+                            Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
+                    }
 
                     Cutoff += Speed;
                     if (Cutoff != MaxCutoff)
                     {
                         m_SkinmeshRenderer.material.SetFloat("_Dissolve", Cutoff);
                     }
-
-                    m_SkinmeshRenderer.materials = mats;
-
-                    }
+                }
                 break;
             default:
                 break;

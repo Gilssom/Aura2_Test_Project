@@ -212,7 +212,7 @@ public class ChoheeController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(1) && !isAttack &&!isCharge)
+        if (Input.GetMouseButton(1) && !isAttack &&!isCharge && PlayerStats.Instance.Slash > 0)
         {
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayhit;
@@ -228,10 +228,10 @@ public class ChoheeController : MonoBehaviour
             SoundManager.Instance.SFXPlay("Charge Attack", m_clip[3]);
             m_Animator.SetTrigger("DoSlashAttack");
             QuarterView.Instance.isZoomOut = true;
-            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * -5, 0.5f);
+            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * -2, 0.2f);
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && isCharge)
         {
             GameObject intantBullet = Instantiate(m_SlashEffect, m_SlashPos.position, m_SlashPos.rotation);
             Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
@@ -240,8 +240,11 @@ public class ChoheeController : MonoBehaviour
             m_Animator.SetTrigger("DoSlashStart");
             m_Animator.ResetTrigger("DoSlashAttack");
             SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
-            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 5, 0.1f);
+            m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 2, 0.05f);
 
+            isCharge = false;
+            QuarterView.Instance.isZoomOut = false;
+            PlayerStats.Instance.AddSlashGage(-1);
             Destroy(intantBullet, 1.5f);
         }
 
@@ -344,9 +347,5 @@ public class ChoheeController : MonoBehaviour
         m_AreaType[3].enabled = false;
         m_AreaType[4].enabled = false;
         m_AreaType[5].enabled = false;
-    }
-    void SlashAttackEnd()
-    {
-        QuarterView.Instance.isZoomOut = false;
     }
 }
