@@ -13,6 +13,8 @@ public class TestMonster : MonoBehaviour
     public CurState m_CurState = CurState.idle;
 
     public bool isSpawnMonster;
+    [SerializeField]
+    private int m_HaveMaskNum;
 
     private ChoheeController m_Player;
     private NavMeshAgent m_NavAgent;
@@ -41,6 +43,17 @@ public class TestMonster : MonoBehaviour
     public GameObject m_FireEffect;
     private GameObject m_DropSoul;
     private GameObject m_DropHeal;
+    /// <summary>
+    /// 1 = Normal
+    /// 2 = Speed
+    /// 3 = Fire
+    /// 4 = Ice
+    /// </summary>
+     
+    [SerializeField]
+    private GameObject[] m_DropMask;
+
+    private string m_DropItemName;
 
     void Awake()
     {
@@ -53,6 +66,12 @@ public class TestMonster : MonoBehaviour
 
         m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
         m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
+
+        m_DropMask[0] = null;
+        m_DropMask[1] = Resources.Load<GameObject>("5Item/NormalMask_Item");
+        m_DropMask[2] = Resources.Load<GameObject>("5Item/SpeedMask_Item");
+        m_DropMask[3] = Resources.Load<GameObject>("5Item/FireMask_Item");
+        m_DropMask[4] = Resources.Load<GameObject>("5Item/IceMask_Item");
     }
 
     private void Start()
@@ -79,6 +98,11 @@ public class TestMonster : MonoBehaviour
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
+
+        if (gameObject.name == "FireMonster_FireMask")
+            m_HaveMaskNum = 3;
+        else
+            m_HaveMaskNum = 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -224,6 +248,8 @@ public class TestMonster : MonoBehaviour
                     SphereCollider coll = GetComponent<SphereCollider>();
 
                     coll.enabled = false;
+                    m_AttackArea.enabled = false;
+                    m_Rigid.isKinematic = true;
 
                     m_FireEffect.SetActive(false);
 
@@ -243,6 +269,15 @@ public class TestMonster : MonoBehaviour
                         Debug.Log(HealthDrop);
                         if(HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
                             Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
+
+                        if(m_HaveMaskNum != 0)
+                        {
+                            string ItemName = m_DropMask[m_HaveMaskNum].name;
+
+                            GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum], 
+                                new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
+                            Mask.name = ItemName;
+                        }
                     }
 
                     Cutoff += Speed;

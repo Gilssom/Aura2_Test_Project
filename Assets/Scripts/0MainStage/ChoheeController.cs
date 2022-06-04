@@ -10,6 +10,8 @@ public class ChoheeController : MonoBehaviour
     private Rigidbody m_Rigid;
     private NearItemCheck m_NearItem;
     private Camera m_Camera;
+    [SerializeField]
+    private ChoheeWeapon m_Weapon;
 
     public AudioSource m_FootSFX;
     public AudioClip[] m_clip;
@@ -33,6 +35,7 @@ public class ChoheeController : MonoBehaviour
     public BoxCollider[] m_AreaType;
 
     bool m_FinalAttack;
+    [SerializeField]
     bool isAttack;
     bool isCharge;
     bool isDodge;
@@ -55,6 +58,7 @@ public class ChoheeController : MonoBehaviour
         m_Rigid = GetComponent<Rigidbody>();
         m_NearItem = GetComponent<NearItemCheck>();
         m_Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        m_Weapon = GetComponentInChildren<ChoheeWeapon>();
 
         DontDestroyOnLoad(this);
     }
@@ -77,6 +81,7 @@ public class ChoheeController : MonoBehaviour
             Move();
         }
         Attack();
+        ItemUse();
 
         //if (scanObject != null && Input.GetKeyDown(KeyCode.E))
         //{
@@ -171,6 +176,8 @@ public class ChoheeController : MonoBehaviour
 
     void HitDamage()
     {
+        PlayerStats.Instance.TakeDamage(0.25f);
+        m_Weapon.WeaponTypeChange("Hit");
         m_Animator.SetTrigger("DoHit");
         m_Camera.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);        
     }
@@ -295,6 +302,7 @@ public class ChoheeController : MonoBehaviour
 
     void ComboReset()
     {
+        Debug.Log("ComboReset");
         m_Animator.ResetTrigger("SecondAttack");
         m_Animator.ResetTrigger("FinalAttack");
         ComboPossible = false;
@@ -347,5 +355,20 @@ public class ChoheeController : MonoBehaviour
         m_AreaType[3].enabled = false;
         m_AreaType[4].enabled = false;
         m_AreaType[5].enabled = false;
+    }
+
+    void ItemUse()
+    {
+        var Item = m_NearItem.m_NearItem;
+
+        if (Item)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                m_Weapon.WeaponTypeChange(Item.name);
+                Debug.Log(Item.name + "À» È¹µæÇÏ¿´½À´Ï´Ù");
+                Destroy(Item);
+            }
+        }
     }
 }

@@ -16,6 +16,13 @@ public class ChoheeWeapon : MonoBehaviour
     Renderer rend;
 
     public GameObject[] m_WeaponEff;
+    /// <summary>
+    /// 0 = Normal
+    /// 1 = Speed
+    /// 2 = Fire
+    /// 3 = Ice
+    /// </summary>
+    public GameObject[] m_Mask;
 
     private static ChoheeWeapon m_instance;
     // ΩÃ±€≈Ê
@@ -65,31 +72,70 @@ public class ChoheeWeapon : MonoBehaviour
     {
         rend.sharedMaterial = material[m_Number];
 
-        WeaponTypeChange();
+        //WeaponTypeChange();
     }
 
-    void WeaponTypeChange()
+    public void WeaponTypeChange(string MaskName)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (MaskName == "NormalMask_Item")
         {
             m_Number = 0;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[1].SetActive(false);
             m_WeaponEff[0].SetActive(false);
+
+            m_Mask[0].SetActive(true);
+            m_Mask[1].SetActive(false);
+            m_Mask[2].SetActive(false);
+            m_Mask[3].SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (MaskName == "SpeedMask_Item")
+        {
+            m_Number = 0;
+            m_CurDmg = m_NorDmg;
+            m_WeaponEff[1].SetActive(false);
+            m_WeaponEff[0].SetActive(false);
+
+            m_Mask[0].SetActive(false);
+            m_Mask[1].SetActive(true);
+            m_Mask[2].SetActive(false);
+            m_Mask[3].SetActive(false);
+        }
+        else if (MaskName == "FireMask_Item")
         {
             m_Number = 1;
             m_CurDmg = m_FireDmg;
             m_WeaponEff[0].SetActive(true);
             m_WeaponEff[1].SetActive(false);
+
+            m_Mask[0].SetActive(false);
+            m_Mask[1].SetActive(false);
+            m_Mask[2].SetActive(true);
+            m_Mask[3].SetActive(false);
         }
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        else if(MaskName == "IceMask_Item")
         {
             m_Number = 2;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[1].SetActive(true);
             m_WeaponEff[0].SetActive(false);
+
+            m_Mask[0].SetActive(false);
+            m_Mask[1].SetActive(false);
+            m_Mask[2].SetActive(false);
+            m_Mask[3].SetActive(true);
+        }
+        else
+        {
+            m_Number = 0;
+            m_CurDmg = m_NorDmg;
+            m_WeaponEff[1].SetActive(false);
+            m_WeaponEff[0].SetActive(false);
+
+            m_Mask[0].SetActive(false);
+            m_Mask[1].SetActive(false);
+            m_Mask[2].SetActive(false);
+            m_Mask[3].SetActive(false);
         }
     }
 }

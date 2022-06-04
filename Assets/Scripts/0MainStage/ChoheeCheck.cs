@@ -6,7 +6,7 @@ public class ChoheeCheck : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Item")
+        if (other.tag == "DropItem")
         {
             ItemScript item = other.GetComponent<ItemScript>();
             switch (item.type)

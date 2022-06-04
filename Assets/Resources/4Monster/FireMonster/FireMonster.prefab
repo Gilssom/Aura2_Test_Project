@@ -100,9 +100,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EnemyType: 1
   m_CurState: 0
+  isSpawnMonster: 0
+  m_HaveMaskNum: 0
   m_clip: []
+  m_TraceDis: 0
   m_HitEffect: {fileID: 6244133246584083714, guid: c03d7347ce37f4e40bf8fd80841c7f5b, type: 3}
   m_FireEffect: {fileID: 192617172771368399}
+  m_DropMask:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!195 &7898956508533972968
 NavMeshAgent:
   m_ObjectHideFlags: 0
