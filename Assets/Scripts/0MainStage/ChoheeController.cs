@@ -17,9 +17,6 @@ public class ChoheeController : MonoBehaviour
     public AudioClip[] m_clip;
 
     public float Speed;
-    public float MinSpeed;
-    public float MaxSpeed;
-    public float JumpPower;
 
     public int comboStep = 0;
     public bool isAttackReady = true;
@@ -71,6 +68,7 @@ public class ChoheeController : MonoBehaviour
         m_AreaType[4].enabled = false; // Fire Weapon
         m_AreaType[5].enabled = false; // Ice Weapon
         m_FinalAttack = false;
+        Speed = 5;
     }
 
     void Update()

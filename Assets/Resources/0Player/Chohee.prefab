@@ -1145,6 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b44181898e35af41b31980d96e1c47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
   m_CurDmg: 0
   m_ChargeDmg: 0
   m_SlashDmg: 0
@@ -2485,7 +2486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Weapon: {fileID: 0}
-  m_FootSFX: {fileID: 0}
+  m_FootSFX: {fileID: 7071893767382764345}
   m_clip:
   - {fileID: 8300000, guid: 2017c63e210c81e45a859a575e4eb13a, type: 3}
   - {fileID: 8300000, guid: 2017c63e210c81e45a859a575e4eb13a, type: 3}
@@ -2493,9 +2494,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a125ed1e0b404db45bfa9536100ba6e9, type: 3}
   - {fileID: 8300000, guid: 00344d747eddb4f3e9aaf74bf3317103, type: 3}
   Speed: 5
-  MinSpeed: 5
-  MaxSpeed: 5
-  JumpPower: 3
   comboStep: 0
   isAttackReady: 1
   ComboPossible: 0
@@ -2535,9 +2533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0b64c0b1dccc64d91eee52d85267bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
-  maxHealth: 3
-  maxTotalHealth: 10
+  health: 4
+  maxHealth: 4
+  maxTotalHealth: 4
   soul: 0
   SlashGage: 0
 --- !u!114 &7071893767382764342

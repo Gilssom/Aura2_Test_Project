@@ -98,11 +98,28 @@ public class TestMonster : MonoBehaviour
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
+        NameCheck();
+    }
 
-        if (gameObject.name == "FireMonster_FireMask")
-            m_HaveMaskNum = 3;
-        else
-            m_HaveMaskNum = 0;
+    void NameCheck()
+    {
+        switch (m_EnemyType)
+        {
+            case EnemyType.HellGhost:
+                break;
+            case EnemyType.FireMonster:
+                if (gameObject.name == "FireMonster_NormalMask")
+                    m_HaveMaskNum = 1;
+                else if (gameObject.name == "FireMonster_SpeedMask")
+                    m_HaveMaskNum = 2;
+                else if (gameObject.name == "FireMonster_FireMask")
+                    m_HaveMaskNum = 3;
+                else if (gameObject.name == "FireMonster_IceMask")
+                    m_HaveMaskNum = 4;
+                else
+                    m_HaveMaskNum = 0;
+                break;
+        }    
     }
 
     private void OnTriggerEnter(Collider other)
@@ -113,11 +130,11 @@ public class TestMonster : MonoBehaviour
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_CurDmg;
 
-            if (PlayerStats.Instance.Slash >= 3)
+            if (PlayerStats.Instance.Slash >= 4)
             {
                 return;
             }
-            if (PlayerStats.Instance.Slash < 3)
+            if (PlayerStats.Instance.Slash < 4)
             {
                 PlayerStats.Instance.AddSlashGage(1);
             }
@@ -128,11 +145,11 @@ public class TestMonster : MonoBehaviour
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_ChargeDmg;
 
-            if (PlayerStats.Instance.Slash >= 3)
+            if (PlayerStats.Instance.Slash >= 4)
             {
                 return;
             }
-            if (PlayerStats.Instance.Slash < 3)
+            if (PlayerStats.Instance.Slash < 4)
             {
                 PlayerStats.Instance.AddSlashGage(1);
             }
