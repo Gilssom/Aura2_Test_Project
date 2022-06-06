@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ObjData : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class ObjData : MonoBehaviour
 
     int Kill;
     float OnFire;
+    bool OnDoor;
+
+    public Vector3 m_DownPos;
 
     void Start()
     {
@@ -52,13 +56,6 @@ public class ObjData : MonoBehaviour
 
         if (id == 3 || id == 4)
             Speed = 0.0025f;
-
-        if(id == 6 || id == 7 || id == 13 || id == 15 || id == 16)
-        {
-            this.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve", 1);
-            Cutoff = 1;
-            Speed = 0.0025f;
-        }
 
         // Forth ~
         if (id == 0)
@@ -86,10 +83,10 @@ public class ObjData : MonoBehaviour
             FenceDissolve();       
         if (id == 4 && OnFire >= 4)        
             FenceDissolve();
-        if(id == 6 && Kill == 12)
-            DoorDissolve(2);
-        if (id == 7 && Kill == 19)
-            DoorDissolve(4);
+        if (id == 6 && !OnDoor)
+            StartCoroutine(DoorDown(m_DownPos, 2));
+        if (id == 7 && !OnDoor)
+            StartCoroutine(DoorDown(m_DownPos, 4));
 
         // Forth ~ Seventh Field
         if (id == 5 && OnFire >= 6)
@@ -104,29 +101,32 @@ public class ObjData : MonoBehaviour
             FenceDissolve();
         if (id == 12 && Kill == 121)
             FenceDissolve();
-        if (id == 13 && Kill == 41)
-            DoorDissolve(6);
+        if (id == 13 && !OnDoor)
+            StartCoroutine(DoorDown(m_DownPos, 6));
         if (id == 14 && FieldObjectController.Instance.m_FireOffCount == 2)
             FenceDissolve();
-        if (id == 15 && Kill == 81) // 3-2 Spawn
-            DoorDissolve(12);
-        if (id == 16 && Kill == 99) // 3-4 Spawn
-            DoorDissolve(16);
+        if (id == 15 && !OnDoor) // 3-2 Spawn
+            StartCoroutine(DoorDown(m_DownPos, 12));
+        if (id == 16 && !OnDoor) // 3-4 Spawn
+            StartCoroutine(DoorDown(m_DownPos, 16));
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (id == 1 || id == 0)
         {
-            if (other.tag == "FireWeapon")
+            var audio = GetComponent<AudioSource>();
+
+            if (other.tag == "FireWeapon" && !isFire)
             {
                 if(!isFire)
                     FieldObjectController.Instance.m_FireOnCount += 1;
                 
                 isFire = true;
+                SoundManager.Instance.SFXPlay("Fire On", GameManager.Instance.m_Clip[1]);
                 m_Child.SetActive(true);
             }
-            else if (other.tag == "IceWeapon")
+            else if (other.tag == "IceWeapon" && isFire)
             {
                 if (isFire)
                 {
@@ -139,6 +139,8 @@ public class ObjData : MonoBehaviour
                 isFire = false;
                 m_Child.SetActive(false);
             }
+            if(audio)
+                audio.enabled = isFire;
         }
     }
 
@@ -161,7 +163,19 @@ public class ObjData : MonoBehaviour
         }
     }
 
-    void DoorDissolve(int ObjNum)
+    IEnumerator DoorDown(Vector3 SpawnPos , int ObjNum)
+    {
+        OnDoor = true;
+        SoundManager.Instance.SFXPlay("DoorSFX", GameManager.Instance.m_Clip[0]);
+        yield return new WaitForSeconds(0.6f);
+        this.gameObject.transform.DOMove(SpawnPos, 0.1f);
+        yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.ObjectCtrl(ObjNum, true);
+
+        yield return null;
+    }
+
+    /*void DoorDissolve(int ObjNum)
     {
         BoxCollider coll = GetComponent<BoxCollider>();
 
@@ -178,5 +192,5 @@ public class ObjData : MonoBehaviour
             Speed = 0;
             GameManager.Instance.ObjectCtrl(ObjNum, true);
         }
-    }
+    }*/
 }

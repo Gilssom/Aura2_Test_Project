@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public Image m_PlayerMask;
     public Image[] m_PlayerSkill;
     public Text m_SoulCount;
+    public Image m_BloodScreen;
+    public bool m_BloodPlaying;
+    public GameObject m_PausePanel;
 
     /// <summary>
     /// 0 = Life == 4,
@@ -40,6 +43,35 @@ public class UIManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Sprite[] m_SkillGage;
+
+    private static UIManager m_instance;
+    // ½Ì±ÛÅæ
+    public static UIManager Instance
+    {
+        get
+        {
+            if (!m_instance)
+            {
+                m_instance = FindObjectOfType(typeof(UIManager)) as UIManager;
+
+                if (m_instance == null)
+                    Debug.Log("No Singletone Obj");
+            }
+            return m_instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (m_instance == null)
+        {
+            m_instance = this;
+        }
+        else if (m_instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -130,5 +162,46 @@ public class UIManager : MonoBehaviour
     void SoulCount()
     {
         m_SoulCount.text = PlayerStats.Instance.Soul.ToString();
+    }
+
+    public IEnumerator BloodScreen(float ExitTime)
+    {
+        m_BloodPlaying = true;
+
+        Color BScolor = m_BloodScreen.color;
+
+        float m_Time = 0f;
+
+        BScolor.a = Mathf.Lerp(1, 0, m_Time);
+
+        while(BScolor.a > 0f)
+        {
+            m_Time += Time.deltaTime / ExitTime;
+
+            BScolor.a = Mathf.Lerp(1, 0, m_Time);
+
+            m_BloodScreen.color = BScolor;
+
+            yield return null;
+        }
+
+        m_BloodPlaying = false;
+    }
+
+    public void PauseButton()
+    {
+        if(GameManager.Instance.isPause)
+        {
+            Time.timeScale = 1f;
+            m_PausePanel.SetActive(false);
+            GameManager.Instance.isPause = false;
+        }
+
+        else
+        {
+            Time.timeScale = 0f;
+            m_PausePanel.SetActive(true);
+            GameManager.Instance.isPause = true;
+        }
     }
 }

@@ -177,6 +177,7 @@ public class ChoheeController : MonoBehaviour
         PlayerStats.Instance.TakeDamage(0.25f);
         m_Weapon.WeaponTypeChange("Hit");
         m_Animator.SetTrigger("DoHit");
+        StartCoroutine(UIManager.Instance.BloodScreen(0.5f));
         m_Camera.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);        
     }
 

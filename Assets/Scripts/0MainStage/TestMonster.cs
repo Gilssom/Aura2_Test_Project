@@ -204,6 +204,16 @@ public class TestMonster : MonoBehaviour
             switch (m_CurState)
             {
                 case CurState.idle:
+                    while(m_CurState == CurState.idle && !isSpawnMonster)
+                    {
+                        Vector3 curPos = this.transform.position;
+                        float dir1 = Random.Range(-0.2f, 0.2f);
+                        float dir2 = Random.Range(-0.2f, 0.2f);
+                        float ranTime = Random.Range(0, 3);
+
+                        yield return new WaitForSeconds(ranTime);
+                        this.transform.DOMove(new Vector3(curPos.x + dir1, curPos.y, curPos.z + dir2), 1);
+                    }
                     break;
                 case CurState.trace:
                     m_NavAgent.speed = m_moveSpeed;

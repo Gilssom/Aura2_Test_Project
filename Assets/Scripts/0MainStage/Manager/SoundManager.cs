@@ -47,15 +47,16 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < m_BgList.Length; i++)
         {
+            Debug.Log(arg0.name);
             if(arg0.name == m_BgList[i].name)
                 BgSoundPlay(m_BgList[i]);
         }
     }
 
-    /*public void BGSoundVolume(float val) // UI º¼·ý ¼³Á¤Ã¢
+    public void BGSoundVolume(float val) // UI º¼·ý ¼³Á¤Ã¢
     {
         m_Mixer.SetFloat("BGSoundVolume", Mathf.Log10(val) * 20);
-    }*/
+    }
 
     public void SFXPlay(string sfxName, AudioClip clip)
     {

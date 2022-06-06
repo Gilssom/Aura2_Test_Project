@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
     public int m_KillCount;
 
+    public bool isPause;
+
+    [SerializeField]
+    public AudioClip[] m_Clip;
+
     public GameObject[] m_CountObject;
+    public GameObject[] m_DoorObject;
 
     private static GameManager m_instance;
     // ΩÃ±€≈Ê
@@ -37,11 +44,14 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
+
+        isPause = false;
     }
 
     void Update()
     {
         CountObject();
+        DoorObject();
     }
 
     void CountObject()
@@ -78,8 +88,38 @@ public class GameManager : MonoBehaviour
             ObjectCtrl(19, true);
     }
 
+    void DoorObject()
+    {
+        if (m_KillCount == 12)
+            m_DoorObject[0].SetActive(true);
+        else if (m_KillCount == 19)
+            m_DoorObject[1].SetActive(true);
+        else if (m_KillCount == 41)
+            m_DoorObject[2].SetActive(true);
+        else if (m_KillCount == 81)
+            m_DoorObject[3].SetActive(true);
+        else if (m_KillCount == 99)
+            m_DoorObject[4].SetActive(true);
+    }
+
     public void ObjectCtrl(int GateNumber, bool Active)
     {
-        m_CountObject[GateNumber].SetActive(Active);
+        if(GateNumber == 1)
+        {
+            StartCoroutine(SkyDownGate());
+        }
+        else
+            m_CountObject[GateNumber].SetActive(Active);
+    }
+
+    IEnumerator SkyDownGate()
+    {
+        Vector3 GatePos = new Vector3(81.06154f, 18.84901f, 67.98146f);
+
+        SoundManager.Instance.SFXPlay("DoorSFX", m_Clip[0]);
+        yield return new WaitForSeconds(0.6f);
+        m_CountObject[1].transform.DOMove(GatePos, 0.1f);
+        
+        yield return null;
     }
 }

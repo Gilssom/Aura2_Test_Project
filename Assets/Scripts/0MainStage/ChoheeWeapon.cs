@@ -92,6 +92,7 @@ public class ChoheeWeapon : MonoBehaviour
             m_Player.Speed = 5;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
+            m_WeaponEff[2].SetActive(false);
             m_WeaponEff[1].SetActive(false);
             m_WeaponEff[0].SetActive(false);
 
@@ -106,6 +107,7 @@ public class ChoheeWeapon : MonoBehaviour
             m_Player.Speed = 6;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
+            m_WeaponEff[2].SetActive(true);
             m_WeaponEff[1].SetActive(false);
             m_WeaponEff[0].SetActive(false);
 
@@ -120,6 +122,7 @@ public class ChoheeWeapon : MonoBehaviour
             m_Player.Speed = 5;
             m_Number = 1;
             m_CurDmg = m_FireDmg;
+            m_WeaponEff[2].SetActive(false);
             m_WeaponEff[0].SetActive(true);
             m_WeaponEff[1].SetActive(false);
 
@@ -134,6 +137,7 @@ public class ChoheeWeapon : MonoBehaviour
             m_Player.Speed = 5;
             m_Number = 2;
             m_CurDmg = m_NorDmg;
+            m_WeaponEff[2].SetActive(false);
             m_WeaponEff[1].SetActive(true);
             m_WeaponEff[0].SetActive(false);
 
@@ -148,6 +152,7 @@ public class ChoheeWeapon : MonoBehaviour
             m_Player.Speed = 5;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
+            m_WeaponEff[2].SetActive(false);
             m_WeaponEff[1].SetActive(false);
             m_WeaponEff[0].SetActive(false);
 
