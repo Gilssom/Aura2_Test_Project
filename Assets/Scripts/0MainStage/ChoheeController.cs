@@ -301,7 +301,6 @@ public class ChoheeController : MonoBehaviour
 
     void ComboReset()
     {
-        Debug.Log("ComboReset");
         m_Animator.ResetTrigger("SecondAttack");
         m_Animator.ResetTrigger("FinalAttack");
         ComboPossible = false;

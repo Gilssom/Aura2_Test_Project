@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     public bool m_BloodPlaying;
     public GameObject m_PausePanel;
 
+    public GameObject[] m_PauseMenus;
+
+    public Button m_Test;
+
     /// <summary>
     /// 0 = Life == 4,
     /// 1 = Life == 3,
@@ -202,6 +206,17 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0f;
             m_PausePanel.SetActive(true);
             GameManager.Instance.isPause = true;
+        }
+    }
+
+    public void PauseChoiceButton(int MenuNumber)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == MenuNumber)
+                m_PauseMenus[i].SetActive(true);
+            else
+                m_PauseMenus[i].SetActive(false);
         }
     }
 }

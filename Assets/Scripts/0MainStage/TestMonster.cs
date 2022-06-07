@@ -293,7 +293,6 @@ public class TestMonster : MonoBehaviour
                         }
 
                         int HealthDrop = Random.Range(0, 100);
-                        Debug.Log(HealthDrop);
                         if(HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
                             Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
 
