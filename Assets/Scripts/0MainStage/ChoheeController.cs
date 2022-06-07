@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.VFX;
 
@@ -185,27 +186,33 @@ public class ChoheeController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isAttack)
         {
-            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rayhit;
-            if (Physics.Raycast(ray, out rayhit, 100))
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                Vector3 nextVec = rayhit.point - transform.position;
-                nextVec.y = 0;
-                transform.LookAt(transform.position + nextVec);
-            }
+                Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit rayhit;
+                if (Physics.Raycast(ray, out rayhit, 100))
+                {
+                    Vector3 nextVec = rayhit.point - transform.position;
+                    nextVec.y = 0;
+                    transform.LookAt(transform.position + nextVec);
+                }
 
-            m_FootSFX.Stop();
+                m_FootSFX.Stop();
+            }      
         }
 
         if (Input.GetMouseButtonDown(0) && comboStep == 0)
         {
-            m_Animator.SetBool("isRun", false);
+            if(!EventSystem.current.IsPointerOverGameObject())
+            {
+                m_Animator.SetBool("isRun", false);
 
-            m_Animator.SetTrigger("Attack");
-            comboStep = 1;
-            isAttackReady = false;
-            m_FinalAttack = true;
-            return;
+                m_Animator.SetTrigger("Attack");
+                comboStep = 1;
+                isAttackReady = false;
+                m_FinalAttack = true;
+                return;
+            }
         }
 
         if (comboStep != 0)

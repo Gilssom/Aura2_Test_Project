@@ -60,8 +60,12 @@ public class GameManager : MonoBehaviour
             ObjectCtrl(0, false);
         // Third Field Spawn Controll
         else if (m_KillCount == 13)
+            ObjectCtrl(2, true);
+        else if (m_KillCount == 16)
             ObjectCtrl(3, true);
         else if (m_KillCount == 20)
+            ObjectCtrl(4, true);
+        else if (m_KillCount == 23)
             ObjectCtrl(5, true);
         // Fifth Field
         else if (m_KillCount == 42)

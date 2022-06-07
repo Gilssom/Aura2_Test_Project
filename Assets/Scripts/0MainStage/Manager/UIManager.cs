@@ -18,8 +18,17 @@ public class UIManager : MonoBehaviour
     public GameObject m_PausePanel;
 
     public GameObject[] m_PauseMenus;
+    public GameObject[] m_PauseIcon;
+    public GameObject[] m_KeyHelpersMenus;
+    public GameObject[] m_SettingText;
+    public Image[] m_BGM;
+    public Image[] m_SFX;
 
-    public Button m_Test;
+    int m_SettingMenuNumber;
+    int m_SFXGage;
+    int m_BGMGage;
+    private Sprite m_SettingGageOn;
+    private Sprite m_SettingGageOff;
 
     /// <summary>
     /// 0 = Life == 4,
@@ -96,6 +105,12 @@ public class UIManager : MonoBehaviour
         m_SkillGage[0] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_False");
         m_SkillGage[1] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_Ready");
         m_SkillGage[2] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_True");
+
+        m_SettingGageOn = Resources.Load<Sprite>("7Textures/UI/Settings/GageOn");
+        m_SettingGageOff = Resources.Load<Sprite>("7Textures/UI/Settings/GageOff");
+
+        m_SFXGage = 4;
+        m_BGMGage = 4;
     }
 
     void Update()
@@ -103,8 +118,12 @@ public class UIManager : MonoBehaviour
         ItemInfo();
         HealthCtrl();
         MaskCtrl();
+        SFXSoundCheck();
+        BGMSoundCheck();
         SkillGageCtrl();
         SoulCount();
+        SettingMenu();
+        PauseFalse();
     }
 
     void ItemInfo()
@@ -194,29 +213,168 @@ public class UIManager : MonoBehaviour
 
     public void PauseButton()
     {
-        if(GameManager.Instance.isPause)
+        Time.timeScale = 0f;
+        m_PauseIcon[0].SetActive(true);
+        m_PausePanel.SetActive(true);
+        GameManager.Instance.isPause = true;
+        
+    }
+
+    void PauseFalse()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.isPause)
         {
             Time.timeScale = 1f;
             m_PausePanel.SetActive(false);
             GameManager.Instance.isPause = false;
         }
-
-        else
-        {
-            Time.timeScale = 0f;
-            m_PausePanel.SetActive(true);
-            GameManager.Instance.isPause = true;
-        }
     }
 
-    public void PauseChoiceButton(int MenuNumber)
+    public void PauseChagneMenu(int MenuNumber)
     {
         for (int i = 0; i < 3; i++)
         {
             if (i == MenuNumber)
+            {
                 m_PauseMenus[i].SetActive(true);
+                m_PauseIcon[i].SetActive(true);
+            }
             else
+            {
                 m_PauseMenus[i].SetActive(false);
+                m_PauseIcon[i].SetActive(false);
+            }
         }
+    }
+
+    void SettingMenu()
+    {
+        if(Input.GetKeyUp(KeyCode.UpArrow) && m_SettingMenuNumber > -1 && m_SettingMenuNumber < 2)
+        {
+            m_SettingMenuNumber++;
+            SettingTextCtrl(m_SettingMenuNumber);
+        }
+        else if(Input.GetKeyUp(KeyCode.DownArrow) && m_SettingMenuNumber > 0 && m_SettingMenuNumber < 3)
+        {
+            m_SettingMenuNumber--;
+            SettingTextCtrl(m_SettingMenuNumber);
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            if (m_SettingMenuNumber == 1 && m_SFXGage > -1 && m_SFXGage < 5)
+            {
+                m_SFXGage++;
+                SettingGageCtrl(m_SFXGage);
+            }
+            else if (m_SettingMenuNumber == 2 && m_SFXGage > -1 && m_SFXGage < 5)
+            {
+                m_BGMGage++;
+                SettingGageCtrl(m_BGMGage);
+            }
+            else
+                return;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            if (m_SettingMenuNumber == 1 && m_SFXGage > 0 && m_SFXGage < 6)
+            {
+                m_SFXGage--;
+                SettingGageCtrl(m_SFXGage);
+            }
+            else if (m_SettingMenuNumber == 2 && m_BGMGage > 0 && m_BGMGage < 6)
+            {
+                m_BGMGage--;
+                SettingGageCtrl(m_BGMGage);
+            }
+            else
+                return;
+        }
+    }
+
+    void SettingTextCtrl(int Gage)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == Gage)
+            {
+                m_SettingText[i].SetActive(true);
+            }
+            else
+            {
+                m_SettingText[i].SetActive(false);
+            }
+        }
+    }
+
+    void SettingGageCtrl(int Gage)
+    {
+        if(!m_SFX[0] && !m_BGM[0])
+        {
+            for (int i = Gage; i < 6; i++)
+            {
+                if (m_SettingMenuNumber == 1)
+                {
+                    if(i == 0)
+                        m_SFX[1].sprite = m_SettingGageOff;
+                    else if (i == Gage)
+                        m_SFX[i].sprite = m_SettingGageOn;
+                    else if (i > Gage)
+                        m_SFX[i].sprite = m_SettingGageOff;
+                }
+
+                else if (m_SettingMenuNumber == 2)
+                {
+                    if (i == 0)
+                        m_BGM[1].sprite = m_SettingGageOff;
+                    else if (i == Gage)
+                        m_BGM[i].sprite = m_SettingGageOn;
+                    else if (i > Gage)
+                        m_BGM[i].sprite = m_SettingGageOff;
+                }
+            }
+        }      
+    }
+
+    public void KeyHelpersMouse(int MouseNumber)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == MouseNumber)
+                m_KeyHelpersMenus[i].SetActive(true);
+            else
+                m_KeyHelpersMenus[i].SetActive(false);
+        }
+    }
+
+    void SFXSoundCheck()
+    {
+        if (m_SFXGage == 0)
+            SoundManager.Instance.SFXSoundVolume(-80);
+        else if (m_SFXGage == 1)
+            SoundManager.Instance.SFXSoundVolume(-20);
+        else if (m_SFXGage == 2)
+            SoundManager.Instance.SFXSoundVolume(-10);
+        else if (m_SFXGage == 3)
+            SoundManager.Instance.SFXSoundVolume(-5);
+        else if (m_SFXGage == 4)
+            SoundManager.Instance.SFXSoundVolume(0);
+        else if (m_SFXGage == 5)
+            SoundManager.Instance.SFXSoundVolume(10);
+    }
+
+    void BGMSoundCheck()
+    {
+        if (m_BGMGage == 0)
+            SoundManager.Instance.BGSoundVolume(-80);
+        else if (m_BGMGage == 1)
+            SoundManager.Instance.BGSoundVolume(-20);
+        else if (m_BGMGage == 2)
+            SoundManager.Instance.BGSoundVolume(-10);
+        else if (m_BGMGage == 3)
+            SoundManager.Instance.BGSoundVolume(-5);
+        else if (m_BGMGage == 4)
+            SoundManager.Instance.BGSoundVolume(0);
+        else if (m_BGMGage == 5)
+            SoundManager.Instance.BGSoundVolume(10);
     }
 }

@@ -164,7 +164,7 @@ public class TestMonster : MonoBehaviour
 
     void Update()
     {
-        if (m_CurHP < 0)
+        if (m_CurHP <= 0)
         {
             m_Anim.SetBool("isAttack", false);
             m_Anim.SetTrigger("Death");
@@ -207,8 +207,8 @@ public class TestMonster : MonoBehaviour
                     while(m_CurState == CurState.idle && !isSpawnMonster)
                     {
                         Vector3 curPos = this.transform.position;
-                        float dir1 = Random.Range(-0.2f, 0.2f);
-                        float dir2 = Random.Range(-0.2f, 0.2f);
+                        float dir1 = Random.Range(-0.3f, 0.3f);
+                        float dir2 = Random.Range(-0.3f, 0.3f);
                         float ranTime = Random.Range(0, 3);
 
                         yield return new WaitForSeconds(ranTime);

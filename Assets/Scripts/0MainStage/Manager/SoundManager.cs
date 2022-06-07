@@ -55,7 +55,14 @@ public class SoundManager : MonoBehaviour
 
     public void BGSoundVolume(float val) // UI º¼·ý ¼³Á¤Ã¢
     {
-        m_Mixer.SetFloat("BGSoundVolume", Mathf.Log10(val) * 20);
+        //m_Mixer.SetFloat("BGSoundVolume", Mathf.Log10(val) * 20);
+        m_Mixer.SetFloat("BGSoundVolume", val);
+    }
+
+    public void SFXSoundVolume(float val) // UI º¼·ý ¼³Á¤Ã¢
+    {
+        //m_Mixer.SetFloat("BGSoundVolume", Mathf.Log10(val) * 20);
+        m_Mixer.SetFloat("SFXVolume", val);
     }
 
     public void SFXPlay(string sfxName, AudioClip clip)
