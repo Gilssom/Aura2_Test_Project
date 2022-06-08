@@ -79,6 +79,14 @@ public class TestMonster : MonoBehaviour
         switch (m_EnemyType)
         {
             case EnemyType.HellGhost:
+                if (isSpawnMonster)
+                    m_TraceDis = 100;
+                else
+                    m_TraceDis = 7;
+
+                m_AttackDis = 2.5f;
+                m_rotSpeed = 3;
+                m_moveSpeed = 4;
                 m_MaxHP = 600;
                 break;
             case EnemyType.FireMonster:
@@ -106,6 +114,22 @@ public class TestMonster : MonoBehaviour
         switch (m_EnemyType)
         {
             case EnemyType.HellGhost:
+                if (gameObject.name == "GhostMonster_NormalMask")
+                    m_HaveMaskNum = 1;
+                else if (gameObject.name == "GhostMonster_SpeedMask")
+                {
+                    m_HaveMaskNum = 2;
+                    m_MaxHP = 750;
+                }
+                else if (gameObject.name == "GhostMonster_FireMask")
+                {
+                    m_HaveMaskNum = 3;
+                    m_MaxHP = 1000;
+                }
+                else if (gameObject.name == "GhostMonster_IceMask")
+                    m_HaveMaskNum = 4;
+                else
+                    m_HaveMaskNum = 0;
                 break;
             case EnemyType.FireMonster:
                 if (gameObject.name == "FireMonster_NormalMask")
@@ -204,14 +228,20 @@ public class TestMonster : MonoBehaviour
             switch (m_CurState)
             {
                 case CurState.idle:
-                    while(m_CurState == CurState.idle && !isSpawnMonster)
+                    if (m_EnemyType == EnemyType.HellGhost)
+                    {
+                        m_Anim.SetBool("isRun", false);
+                        m_Anim.SetBool("isAttack", false);
+                    }
+
+                    while (m_CurState == CurState.idle && !isSpawnMonster && m_EnemyType == EnemyType.FireMonster)
                     {
                         Vector3 curPos = this.transform.position;
                         float dir1 = Random.Range(-0.3f, 0.3f);
                         float dir2 = Random.Range(-0.3f, 0.3f);
                         float ranTime = Random.Range(0, 3);
 
-                        yield return new WaitForSeconds(ranTime);
+                        yield return new WaitForSeconds(ranTime);                   
                         this.transform.DOMove(new Vector3(curPos.x + dir1, curPos.y, curPos.z + dir2), 1);
                     }
                     break;
@@ -222,11 +252,16 @@ public class TestMonster : MonoBehaviour
                     m_NavAgent.Resume();
                     LookPlayer();
                     m_Anim.SetBool("isAttack", false);
+                    if (m_EnemyType == EnemyType.HellGhost)
+                        m_Anim.SetBool("isRun", true);
                     break;
                 case CurState.attack:
                     m_NavAgent.speed = 0;
                     m_Rigid.isKinematic = false;
                     LookPlayer();
+                    if (m_EnemyType == EnemyType.HellGhost)
+                        m_Anim.SetBool("isRun", false);
+
                     m_Anim.SetBool("isAttack", true);
                     break;
                 case CurState.death:
@@ -268,13 +303,53 @@ public class TestMonster : MonoBehaviour
         switch (m_EnemyType)
         {
             case EnemyType.HellGhost:
+                CapsuleCollider Ghostcoll = GetComponent<CapsuleCollider>();
+
+                Ghostcoll.enabled = false;
+                m_AttackArea.enabled = false;
+                m_Rigid.isKinematic = true;
+
+                //m_FireEffect.SetActive(false);
+
+                if (Cutoff >= MaxCutoff)
+                {
+                    Destroy(this.gameObject);
+                    GameManager.Instance.m_KillCount += 1;
+
+                    int MaxItems = Random.Range(1, 3);
+                    for (int i = 0; i < MaxItems; i++)
+                    {
+                        float RandomTF = Random.Range(0.5f, 3);
+                        Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
+                    }
+
+                    int HealthDrop = Random.Range(0, 100);
+                    if (HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
+                        Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
+
+                    if (m_HaveMaskNum != 0)
+                    {
+                        string ItemName = m_DropMask[m_HaveMaskNum].name;
+
+                        GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum],
+                            new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
+                        Mask.name = ItemName;
+                    }
+                }
+
+                Cutoff += Speed;
+                if (Cutoff != MaxCutoff)
+                {
+                    m_SkinmeshRenderer.material.SetFloat("_Dissolve", Cutoff);
+                }
                 break;
+
             case EnemyType.FireMonster:
                 if(isDeath)
                 {
-                    SphereCollider coll = GetComponent<SphereCollider>();
+                    SphereCollider Firecoll = GetComponent<SphereCollider>();
 
-                    coll.enabled = false;
+                    Firecoll.enabled = false;
                     m_AttackArea.enabled = false;
                     m_Rigid.isKinematic = true;
 

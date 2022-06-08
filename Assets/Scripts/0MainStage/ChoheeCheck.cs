@@ -23,11 +23,33 @@ public class ChoheeCheck : MonoBehaviour
                     }
                     break;
                 case ItemScript.Type.Soul:
+                    SoundManager.Instance.SFXPlay("Soul acquire", GameManager.Instance.m_Clip[4]);
                     PlayerStats.Instance.Addsoul();
                     Destroy(other.gameObject);
                     break;
             }
             //SoundManager.instance.SFXPlay("ItemGet", clip);
+        }
+
+        if(other.tag == "FirstTutorial")
+        {
+            GameManager.Instance.Tutorial(0);
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "SecondTutorial")
+        {
+            GameManager.Instance.Tutorial(1);
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "ThirdTutorial")
+        {
+            GameManager.Instance.Tutorial(2);
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "ItemTutorial")
+        {
+            GameManager.Instance.Tutorial(3);
+            Destroy(other.gameObject);
         }
     }
 }

@@ -15,11 +15,11 @@ C:/Users/user/Documents/GitHub/Aura2_Test_Project
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-12585
+11519
 Successfully changed project path to: C:/Users/user/Documents/GitHub/Aura2_Test_Project
 C:/Users/user/Documents/GitHub/Aura2_Test_Project
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 146.64 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 184.12 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.20f1 (be552157821d)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.20f1/Editor/Data/Resources/UnitySubsystems
@@ -35,407 +35,42 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.20f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.20f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56860
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56796
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001965 seconds.
+Registered in 0.002300 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 152.10 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 189.70 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.786 seconds
+- Completed reload, in  2.528 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1786ms)
-		BeginReloadAssembly (62ms)
+	ReloadAssembly (2528ms)
+		BeginReloadAssembly (76ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (480ms)
-			LoadAssemblies (60ms)
+		EndReloadAssembly (715ms)
+			LoadAssemblies (73ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (142ms)
+			SetupTypeCache (290ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (26ms)
-			SetupLoadedEditorAssemblies (270ms)
+			RebuildScriptCaches (28ms)
+			SetupLoadedEditorAssemblies (342ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (5ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (152ms)
-				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (84ms)
-				ProcessInitializeOnLoadMethodAttributes (26ms)
+				RefreshPlugins (190ms)
+				BeforeProcessingInitializeOnLoad (2ms)
+				ProcessInitializeOnLoadAttributes (104ms)
+				ProcessInitializeOnLoadMethodAttributes (40ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.006700 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 159.02 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.356 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1357ms)
-		BeginReloadAssembly (146ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (19ms)
-		EndReloadAssembly (1154ms)
-			LoadAssemblies (99ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (359ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (79ms)
-			SetupLoadedEditorAssemblies (535ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (159ms)
-				BeforeProcessingInitializeOnLoad (113ms)
-				ProcessInitializeOnLoadAttributes (246ms)
-				ProcessInitializeOnLoadMethodAttributes (6ms)
-				AfterProcessingInitializeOnLoad (8ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (7ms)
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 1.72 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5352 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 368.7 MB.
-System memory in use after: 368.8 MB.
-
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 6048.
-Total: 5.369200 ms (FindLiveObjects: 0.724900 ms CreateObjectMapping: 0.382900 ms MarkObjects: 3.958600 ms  DeleteObjects: 0.301700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  path: Assets/Resources/3BigTree/BigTree.prefab
-  artifactKey: Guid(7605bb53bdd6b7745b99859bdacfb36c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/3BigTree/BigTree.prefab using Guid(7605bb53bdd6b7745b99859bdacfb36c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '833249ddf949bf90563d37f4f766ccd0') in 0.260914 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 42.580514 seconds.
-  path: Assets/Resources/7Textures/Font
-  artifactKey: Guid(df2b09127385cb4458efc6ce43151a96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/Font using Guid(df2b09127385cb4458efc6ce43151a96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '222c5282c8bbf90c3d6f3647e1fbf0fb') in 0.006623 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.301856 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Tree3_당산나무_수정_BaseColor.png
-  artifactKey: Guid(9d4ce989e33fd3941a4dad107987878a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Tree3_당산나무_수정_BaseColor.png using Guid(9d4ce989e33fd3941a4dad107987878a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96d1ac6dad9c1a4497d0b0aaebab16f4') in 0.071451 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.392976 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Tree2_수정_BaseColor.png
-  artifactKey: Guid(c029f1be92394984d9cf356af5e0064f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Tree2_수정_BaseColor.png using Guid(c029f1be92394984d9cf356af5e0064f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75b841372b3c40c3dd38ffa67f2b1d32') in 0.014315 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.397336 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Tree1_수정_BaseColor.png
-  artifactKey: Guid(472579f14ae82d143add3a94ec2e8de4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Tree1_수정_BaseColor.png using Guid(472579f14ae82d143add3a94ec2e8de4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e831fa5cd06fc0b577d77b15100ac4fe') in 0.013046 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 71.399671 seconds.
-  path: Assets/7StagePrefabs/Objects/09Tree/0527tree/나무1 수정_BaseColor.png
-  artifactKey: Guid(e4714acefa9faca4794503cc5776f9b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/7StagePrefabs/Objects/09Tree/0527tree/나무1 수정_BaseColor.png using Guid(e4714acefa9faca4794503cc5776f9b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7108f3345d9d3473a779a3557654cb6') in 0.029036 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 294.888798 seconds.
-  path: Assets/7StagePrefabs/Objects/09Tree/0527tree/나무3 수정_BaseColor.png
-  artifactKey: Guid(aa42bdd25d83fd74ba10df913e2f1485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/7StagePrefabs/Objects/09Tree/0527tree/나무3 수정_BaseColor.png using Guid(aa42bdd25d83fd74ba10df913e2f1485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c30c1fc9cf0b16147fd8c6f94598ab3a') in 0.015781 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1044.552954 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1ff2add4e3cab77657615c056ce108d') in 0.015937 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.509791 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Tree2_수정2_BaseColor.png
-  artifactKey: Guid(cc93891e707388d459a933b483729315) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Tree2_수정2_BaseColor.png using Guid(cc93891e707388d459a933b483729315) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd2d53f83f406cfe681a79de93b6a847') in 0.013029 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 94.840179 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a07f454f2b48d9dd3e5c931bd4140875') in 0.035164 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.930083 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cce8de89ac94a7437d089c10b622a74') in 0.016649 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.949445 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '901829a3a5842e6a33154825682ce169') in 0.019007 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.615580 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ab7d4b1bcded747216fbd86f6916d40') in 0.033814 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.716385 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd4c8f941c4f076faba113b4c1984840') in 0.023571 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.995362 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f3aab867297c963bbee9bf3d9f3a099') in 0.020742 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 10.701913 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7790496b100715d818893ee35cc30995') in 0.013970 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 5.185696 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png
-  artifactKey: Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/당산나무_수정2_BaseColor.png using Guid(a61f983daf10d2845b41f1b5b9784ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e479f2cf0782ce2d800b2745aa3525a0') in 0.033995 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 124.550137 seconds.
-  path: Assets/7StagePrefabs/Objects/09Tree/0527tree/나무2 수정!!_BaseColor.png
-  artifactKey: Guid(745b99bc8c68ffb4b90caa71c13778d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/7StagePrefabs/Objects/09Tree/0527tree/나무2 수정!!_BaseColor.png using Guid(745b99bc8c68ffb4b90caa71c13778d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8978cdc85cd71d907ffd6280d700e4d7') in 0.012211 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 18.889735 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Rock Big_수정_BaseColor.png
-  artifactKey: Guid(0aeae3175679a154a82ee241b0c3c407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Rock Big_수정_BaseColor.png using Guid(0aeae3175679a154a82ee241b0c3c407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce430f52407a6348994cccc8d31c7b28') in 0.014377 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.933210 seconds.
-  path: Assets/Resources/7Textures/06_08FieldTexture/Tree1_수정2_BaseColor.png
-  artifactKey: Guid(a07b5d775b3946242b2fd170cfc8aec6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08FieldTexture/Tree1_수정2_BaseColor.png using Guid(a07b5d775b3946242b2fd170cfc8aec6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ffa38f2200038560cce096eb5c9017f') in 0.013699 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 315.499973 seconds.
-  path: Assets/Resources/7Textures/06_08Tree
-  artifactKey: Guid(102e20d8b0b83ed40aafb0f43da784b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree using Guid(102e20d8b0b83ed40aafb0f43da784b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8086cd0051a44f085883e958aa37cd00') in 0.006558 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 6.821772 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/당산나무.fbx
-  artifactKey: Guid(22b44b6141c86c44eb14a7ed15ff3428) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/당산나무.fbx using Guid(22b44b6141c86c44eb14a7ed15ff3428) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '594377ccc4e4644688c4038dff3c8621') in 0.124689 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 85.180780 seconds.
-  path: Assets/7StagePrefabs/Objects/09Tree/0527tree/끈_DefaultMaterial_BaseColor.png
-  artifactKey: Guid(724c156fa9a742d4ba6b91f32e7e35cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/7StagePrefabs/Objects/09Tree/0527tree/끈_DefaultMaterial_BaseColor.png using Guid(724c156fa9a742d4ba6b91f32e7e35cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ce4fd5baeba7b6a7d8b95756ec1bf14') in 0.016373 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.569415 seconds.
-  path: Assets/7StagePrefabs/Objects/09Tree/0527tree/장식수정.tga
-  artifactKey: Guid(70d4039878756144699e9e6eae1ec305) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/7StagePrefabs/Objects/09Tree/0527tree/장식수정.tga using Guid(70d4039878756144699e9e6eae1ec305) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6552c01385358261b1c6a84b5ec14a4') in 0.023661 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 68.044379 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/Tree1.fbx
-  artifactKey: Guid(e8f3d005748274445b6591da795aa71a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/Tree1.fbx using Guid(e8f3d005748274445b6591da795aa71a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa4b27635489e5333c16b5ea83309631') in 0.031143 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 421.036279 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a289a163654d025271bab73af485ea28') in 0.041158 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 343.805652 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9f128ba699344e0cd4a61933f49144c') in 0.041046 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.513597 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd849596b38b2035f1639897072501bf1') in 0.027124 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.558008 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1d553bec980f87e51261daf79cf9a3d') in 0.023917 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.373923 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '248b9b37b9d633547dde969f8db2ecb5') in 0.024176 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 324.983077 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/Tree2.fbx
-  artifactKey: Guid(7870f053f4dccb346ad73224558fabd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/Tree2.fbx using Guid(7870f053f4dccb346ad73224558fabd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '478145e966a9888d27f663835743c661') in 0.020140 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006586 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.583 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1583ms)
-		BeginReloadAssembly (228ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (10ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (72ms)
-		EndReloadAssembly (1293ms)
-			LoadAssemblies (206ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (430ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (72ms)
-			SetupLoadedEditorAssemblies (385ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (90ms)
-				ProcessInitializeOnLoadAttributes (272ms)
-				ProcessInitializeOnLoadMethodAttributes (6ms)
-				AfterProcessingInitializeOnLoad (9ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (26ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.62 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5143 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 391.1 MB.
-System memory in use after: 391.2 MB.
-
-Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 6416.
-Total: 4.843800 ms (FindLiveObjects: 0.663200 ms CreateObjectMapping: 0.164000 ms MarkObjects: 3.711600 ms  DeleteObjects: 0.303700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007119 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\user\Documents\GitHub\Aura2_Test_Project\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.191 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1192ms)
-		BeginReloadAssembly (122ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (37ms)
-		EndReloadAssembly (1008ms)
-			LoadAssemblies (98ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (385ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (64ms)
-			SetupLoadedEditorAssemblies (300ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (81ms)
-				ProcessInitializeOnLoadAttributes (201ms)
-				ProcessInitializeOnLoadMethodAttributes (5ms)
-				AfterProcessingInitializeOnLoad (7ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (18ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.62 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5135 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 390.9 MB.
-System memory in use after: 391.0 MB.
-
-Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 6418.
-Total: 4.320300 ms (FindLiveObjects: 0.591700 ms CreateObjectMapping: 0.170300 ms MarkObjects: 3.256700 ms  DeleteObjects: 0.300600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 240.977879 seconds.
-  path: Assets/Resources/7Textures/06_08Tree/BigTree.prefab
-  artifactKey: Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/7Textures/06_08Tree/BigTree.prefab using Guid(599aea8f8694a1c4d8cf2b26ddfa13cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd49b567d7f94cee2f69c1a29d8ede09c') in 0.393516 seconds 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+Registered in 0.009001 seconds.

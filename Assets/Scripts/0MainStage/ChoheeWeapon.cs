@@ -86,6 +86,8 @@ public class ChoheeWeapon : MonoBehaviour
 
     public void WeaponTypeChange(string MaskName)
     {
+        SoundManager.Instance.SFXPlay("Mask Equid", GameManager.Instance.m_Clip[3]);
+
         if (MaskName == "NormalMask_Item")
         {
             m_MaskType = "Normal";

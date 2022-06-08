@@ -371,7 +371,6 @@ public class ChoheeController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 m_Weapon.WeaponTypeChange(Item.name);
-                Debug.Log(Item.name + "À» È¹µæÇÏ¿´½À´Ï´Ù");
                 Destroy(Item);
             }
         }

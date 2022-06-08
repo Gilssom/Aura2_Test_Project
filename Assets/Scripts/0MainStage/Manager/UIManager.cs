@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public Image m_BloodScreen;
     public bool m_BloodPlaying;
     public GameObject m_PausePanel;
+    public GameObject m_ExitPanel;
 
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;
@@ -96,11 +97,12 @@ public class UIManager : MonoBehaviour
         m_LifeImage[2] = Resources.Load<Sprite>("7Textures/06_05UITexture/Life_2");
         m_LifeImage[3] = Resources.Load<Sprite>("7Textures/06_05UITexture/Life_1");
 
-        m_CurMask[0] = Resources.Load<Sprite>("7Textures/06_05UITexture/MaskFrame");
-        m_CurMask[1] = Resources.Load<Sprite>("7Textures/06_05UITexture/NormalMask");
-        m_CurMask[2] = Resources.Load<Sprite>("7Textures/06_05UITexture/SpeedMask");
-        m_CurMask[3] = Resources.Load<Sprite>("7Textures/06_05UITexture/FireMask");
-        m_CurMask[4] = Resources.Load<Sprite>("7Textures/06_05UITexture/IceMask");
+        //m_CurMask[0] = Resources.Load<Sprite>("7Textures/06_05UITexture/MaskFrame");
+        m_CurMask[0] = Resources.Load<Sprite>("7Textures/UI/06_08Add/Mask/NullImage");
+        m_CurMask[1] = Resources.Load<Sprite>("7Textures/UI/06_08Add/Mask/NormalMask");
+        m_CurMask[2] = Resources.Load<Sprite>("7Textures/UI/06_08Add/Mask/SpeedMask");
+        m_CurMask[3] = Resources.Load<Sprite>("7Textures/UI/06_08Add/Mask/FireMask");
+        m_CurMask[4] = Resources.Load<Sprite>("7Textures/UI/06_08Add/Mask/IceMask");
 
         m_SkillGage[0] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_False");
         m_SkillGage[1] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_Ready");
@@ -228,10 +230,18 @@ public class UIManager : MonoBehaviour
             m_PausePanel.SetActive(false);
             GameManager.Instance.isPause = false;
         }
+        else if(Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isPause)
+        {
+            Time.timeScale = 0f;
+            m_ExitPanel.SetActive(true);
+            GameManager.Instance.isPause = true;
+        }
     }
 
     public void PauseChagneMenu(int MenuNumber)
     {
+        SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+
         for (int i = 0; i < 3; i++)
         {
             if (i == MenuNumber)
@@ -252,11 +262,13 @@ public class UIManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.UpArrow) && m_SettingMenuNumber > -1 && m_SettingMenuNumber < 2)
         {
             m_SettingMenuNumber++;
+            SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
             SettingTextCtrl(m_SettingMenuNumber);
         }
         else if(Input.GetKeyUp(KeyCode.DownArrow) && m_SettingMenuNumber > 0 && m_SettingMenuNumber < 3)
         {
             m_SettingMenuNumber--;
+            SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
             SettingTextCtrl(m_SettingMenuNumber);
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow))
@@ -264,11 +276,13 @@ public class UIManager : MonoBehaviour
             if (m_SettingMenuNumber == 1 && m_SFXGage > -1 && m_SFXGage < 5)
             {
                 m_SFXGage++;
+                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_SFXGage);
             }
             else if (m_SettingMenuNumber == 2 && m_SFXGage > -1 && m_SFXGage < 5)
             {
                 m_BGMGage++;
+                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_BGMGage);
             }
             else
@@ -279,11 +293,13 @@ public class UIManager : MonoBehaviour
             if (m_SettingMenuNumber == 1 && m_SFXGage > 0 && m_SFXGage < 6)
             {
                 m_SFXGage--;
+                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_SFXGage);
             }
             else if (m_SettingMenuNumber == 2 && m_BGMGage > 0 && m_BGMGage < 6)
             {
                 m_BGMGage--;
+                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_BGMGage);
             }
             else
@@ -376,5 +392,17 @@ public class UIManager : MonoBehaviour
             SoundManager.Instance.BGSoundVolume(0);
         else if (m_BGMGage == 5)
             SoundManager.Instance.BGSoundVolume(10);
+    }
+
+    public void ExitButtonCtrl(int Number)
+    {
+        if (Number == 0)
+            Debug.Log("Game Exit");
+        else if (Number == 1)
+        {
+            Time.timeScale = 1f;
+            m_ExitPanel.SetActive(false);
+            GameManager.Instance.isPause = false;
+        }
     }
 }

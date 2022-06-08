@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] m_CountObject;
     public GameObject[] m_DoorObject;
+    public GameObject[] m_TutorialObject;
 
     private static GameManager m_instance;
     // ΩÃ±€≈Ê
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
             ObjectCtrl(17, true);
         else if (m_KillCount == 109) // 3-5 Spawn
             ObjectCtrl(18, true);
-        else if (m_KillCount == 114) // 3-5 Spawn
+        else if (m_KillCount == 115) // 3-5 Spawn
             ObjectCtrl(19, true);
     }
 
@@ -125,5 +126,10 @@ public class GameManager : MonoBehaviour
         m_CountObject[1].transform.DOMove(GatePos, 0.1f);
         
         yield return null;
+    }
+
+    public void Tutorial(int Number)
+    {
+        TutorialManager.Instance.InStartFadeAnim(Number);
     }
 }
