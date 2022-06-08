@@ -46,10 +46,5 @@ public class ChoheeCheck : MonoBehaviour
             GameManager.Instance.Tutorial(2);
             Destroy(other.gameObject);
         }
-        if (other.tag == "ItemTutorial")
-        {
-            GameManager.Instance.Tutorial(3);
-            Destroy(other.gameObject);
-        }
     }
 }

@@ -99,7 +99,7 @@ public class ObjData : MonoBehaviour
             FenceDissolve();
         if (id == 11 && Kill == 71)
             FenceDissolve();
-        if (id == 12 && Kill == 121)
+        if (id == 12 && Kill == 119)
             FenceDissolve();
         if (id == 13 && !OnDoor)
             StartCoroutine(DoorDown(m_DownPos, 6));

@@ -35,6 +35,7 @@ public class TestMonster : MonoBehaviour
     float m_moveSpeed = default;
 
     bool isDeath;
+    bool isAttack;
 
     private float m_MaxHP;
     private float m_CurHP;
@@ -52,8 +53,6 @@ public class TestMonster : MonoBehaviour
      
     [SerializeField]
     private GameObject[] m_DropMask;
-
-    private string m_DropItemName;
 
     void Awake()
     {
@@ -82,11 +81,11 @@ public class TestMonster : MonoBehaviour
                 if (isSpawnMonster)
                     m_TraceDis = 100;
                 else
-                    m_TraceDis = 7;
+                    m_TraceDis = 10;
 
-                m_AttackDis = 2.5f;
+                m_AttackDis = 3;
                 m_rotSpeed = 3;
-                m_moveSpeed = 4;
+                m_moveSpeed = 2;
                 m_MaxHP = 600;
                 break;
             case EnemyType.FireMonster:
@@ -214,7 +213,7 @@ public class TestMonster : MonoBehaviour
             float Dis = Vector3.Distance(m_Player.transform.position, this.transform.position);
             if (Dis <= m_AttackDis)
                 m_CurState = CurState.attack;
-            else if (Dis <= m_TraceDis)
+            else if (Dis <= m_TraceDis && !isAttack)
                 m_CurState = CurState.trace;
             else
                 m_CurState = CurState.idle;
@@ -256,12 +255,14 @@ public class TestMonster : MonoBehaviour
                         m_Anim.SetBool("isRun", true);
                     break;
                 case CurState.attack:
+                    isAttack = true;
                     m_NavAgent.speed = 0;
                     m_Rigid.isKinematic = false;
                     LookPlayer();
                     if (m_EnemyType == EnemyType.HellGhost)
+                    {
                         m_Anim.SetBool("isRun", false);
-
+                    }
                     m_Anim.SetBool("isAttack", true);
                     break;
                 case CurState.death:
@@ -276,12 +277,26 @@ public class TestMonster : MonoBehaviour
 
     void Attack()
     {
+        switch (m_EnemyType)
+        {
+            case EnemyType.HellGhost:
+                SoundManager.Instance.SFXPlay("Ghost Attack", GameManager.Instance.m_Clip[5]);
+                break;
+            case EnemyType.FireMonster:
+                SoundManager.Instance.SFXPlay("Fire Attack", GameManager.Instance.m_Clip[6]);
+                break;
+        }
         m_AttackArea.enabled = true;
     }
     
     void AttackEnd()
     {
         m_AttackArea.enabled = false;
+    }
+
+    void AttackFalse()
+    {
+        isAttack = false;
     }
 
     void WeaponHitEff()

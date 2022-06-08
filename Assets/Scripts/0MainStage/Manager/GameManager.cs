@@ -60,16 +60,14 @@ public class GameManager : MonoBehaviour
         if (m_KillCount == 6)
             ObjectCtrl(0, false);
         // Third Field Spawn Controll
-        else if (m_KillCount == 13)
-            ObjectCtrl(2, true);
+        // 2 , 4 :: ObjData.cs
         else if (m_KillCount == 16)
             ObjectCtrl(3, true);
-        else if (m_KillCount == 20)
-            ObjectCtrl(4, true);
         else if (m_KillCount == 23)
             ObjectCtrl(5, true);
         // Fifth Field
-        else if (m_KillCount == 42)
+        // 6, 12, 16 :: ObjData.cs
+        else if (m_KillCount == 45)
             ObjectCtrl(7, true);
         else if (m_KillCount == 49)
             ObjectCtrl(8, true);
@@ -81,15 +79,15 @@ public class GameManager : MonoBehaviour
             ObjectCtrl(11, true);
         else if (m_KillCount == 84) // 3-3 Spawn
             ObjectCtrl(13, true);
-        else if (m_KillCount == 91) // 3-3 Spawn
+        else if (m_KillCount == 89) // 3-3 Spawn
             ObjectCtrl(14, true);
-        else if (m_KillCount == 93) // 3-3 Spawn
+        else if (m_KillCount == 92) // 3-3 Spawn
             ObjectCtrl(15, true);
-        else if (m_KillCount == 103) // 3-5 Spawn
+        else if (m_KillCount == 101) // 3-5 Spawn
             ObjectCtrl(17, true);
-        else if (m_KillCount == 109) // 3-5 Spawn
+        else if (m_KillCount == 106) // 3-5 Spawn
             ObjectCtrl(18, true);
-        else if (m_KillCount == 115) // 3-5 Spawn
+        else if (m_KillCount == 112) // 3-5 Spawn
             ObjectCtrl(19, true);
     }
 
@@ -101,9 +99,9 @@ public class GameManager : MonoBehaviour
             m_DoorObject[1].SetActive(true);
         else if (m_KillCount == 41)
             m_DoorObject[2].SetActive(true);
-        else if (m_KillCount == 81)
+        else if (m_KillCount == 78) // 78 ~ 79
             m_DoorObject[3].SetActive(true);
-        else if (m_KillCount == 99)
+        else if (m_KillCount == 96) // 96 ~ 97
             m_DoorObject[4].SetActive(true);
     }
 
