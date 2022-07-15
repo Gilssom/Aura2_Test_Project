@@ -37,7 +37,9 @@ public class TestMonster : MonoBehaviour
     bool isDeath;
     bool isAttack;
 
+    [SerializeField]
     private float m_MaxHP;
+    [SerializeField]
     private float m_CurHP;
 
     public GameObject m_HitEffect;
@@ -100,12 +102,13 @@ public class TestMonster : MonoBehaviour
                 m_MaxHP = 200;
                 break;
         }
-        m_CurHP = m_MaxHP;
         m_AttackArea.enabled = false;
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
         NameCheck();
+
+        m_CurHP = m_MaxHP;
     }
 
     void NameCheck()
@@ -134,15 +137,21 @@ public class TestMonster : MonoBehaviour
                 if (gameObject.name == "FireMonster_NormalMask")
                     m_HaveMaskNum = 1;
                 else if (gameObject.name == "FireMonster_SpeedMask")
+                {
                     m_HaveMaskNum = 2;
+                    m_MaxHP = 300;
+                }                 
                 else if (gameObject.name == "FireMonster_FireMask")
+                {
                     m_HaveMaskNum = 3;
+                    m_MaxHP = 400;
+                }                  
                 else if (gameObject.name == "FireMonster_IceMask")
                     m_HaveMaskNum = 4;
                 else
                     m_HaveMaskNum = 0;
                 break;
-        }    
+        }
     }
 
     private void OnTriggerEnter(Collider other)
