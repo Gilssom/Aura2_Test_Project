@@ -10,6 +10,7 @@ public class ChoheeController : MonoBehaviour
     private Animator m_Animator;
     private Rigidbody m_Rigid;
     private NearItemCheck m_NearItem;
+    private NearNpcCheck m_NearNpc;
     private Camera m_Camera;
     [SerializeField]
     private ChoheeWeapon m_Weapon;
@@ -55,6 +56,7 @@ public class ChoheeController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Rigid = GetComponent<Rigidbody>();
         m_NearItem = GetComponent<NearItemCheck>();
+        m_NearNpc = GetComponent<NearNpcCheck>();
         m_Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         m_Weapon = GetComponentInChildren<ChoheeWeapon>();
 
@@ -81,6 +83,7 @@ public class ChoheeController : MonoBehaviour
         }
         Attack();
         ItemUse();
+        NpcInteraction();
 
         //if (scanObject != null && Input.GetKeyDown(KeyCode.E))
         //{
@@ -372,6 +375,25 @@ public class ChoheeController : MonoBehaviour
             {
                 m_Weapon.WeaponTypeChange(Item.name);
                 Destroy(Item);
+            }
+        }
+    }
+
+    void NpcInteraction()
+    {
+        var Npc = m_NearNpc.m_NearNpc;
+
+        if(Npc)
+        {
+            if(Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isWeaponShop)
+            {
+                UIManager.Instance.SmithySystem(true);
+                GameManager.Instance.isWeaponShop = true;
+            }
+            else if(Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.isWeaponShop)
+            {
+                UIManager.Instance.SmithySystem(false);
+                GameManager.Instance.isWeaponShop = false;
             }
         }
     }

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int m_KillCount;
 
     public bool isPause;
+    public bool isWeaponShop;
 
     [SerializeField]
     public AudioClip[] m_Clip;

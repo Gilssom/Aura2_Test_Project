@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
     private ChoheeController m_Player;
     private NearItemCheck m_Item;
+    private NearNpcCheck m_Npc;
 
     public Text m_NearNameText;
     public Image m_PlayerHealth;
@@ -17,6 +19,8 @@ public class UIManager : MonoBehaviour
     public bool m_BloodPlaying;
     public GameObject m_PausePanel;
     public GameObject m_ExitPanel;
+    public GameObject m_WeaponPanel;
+    public RectTransform m_WeaponMenu;
 
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;
@@ -91,6 +95,7 @@ public class UIManager : MonoBehaviour
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
         m_Item = GameObject.FindWithTag("Player").GetComponent<NearItemCheck>();
+        m_Npc = GameObject.FindWithTag("Player").GetComponent<NearNpcCheck>();
 
         m_LifeImage[0] = Resources.Load<Sprite>("7Textures/06_05UITexture/Life_4");
         m_LifeImage[1] = Resources.Load<Sprite>("7Textures/06_05UITexture/Life_3");
@@ -117,7 +122,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        ItemInfo();
+        NearInfo();
         HealthCtrl();
         MaskCtrl();
         SFXSoundCheck();
@@ -128,7 +133,7 @@ public class UIManager : MonoBehaviour
         PauseFalse();
     }
 
-    void ItemInfo()
+    void NearInfo()
     {
         if (m_Item.m_NearItem)
         {
@@ -140,6 +145,10 @@ public class UIManager : MonoBehaviour
                 m_NearNameText.text = "√ ∑©¿Ã ≈ª »πµÊ«œ±‚" + "<color=#FFE400>" + " (E)" + "</color>";
             else if (m_Item.m_NearItem.name == "NormalMask_Item")
                 m_NearNameText.text = "æÁπ› ≈ª »πµÊ«œ±‚" + "<color=#FFE400>" + " (E)" + "</color>";
+        }
+        else if (m_Npc.m_NearNpc)
+        {
+            m_NearNameText.text = m_Npc.m_NearNpc.name + "øÕ ¥Î»≠«œ±‚" + "<color=#FFE400>" + " (E)" + "</color>";
         }
         else
             m_NearNameText.text = null;
@@ -403,6 +412,22 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 1f;
             m_ExitPanel.SetActive(false);
             GameManager.Instance.isPause = false;
+        }
+    }
+
+    public void SmithySystem(bool isShop)
+    {
+        if(isShop)
+        {
+            m_WeaponPanel.SetActive(true);
+
+            m_WeaponMenu.DOAnchorPosY(0, 1);
+        }
+        else if(!isShop)
+        {
+            m_WeaponMenu.anchoredPosition = Vector3.up * 1000;
+
+            m_WeaponPanel.SetActive(false);
         }
     }
 }
