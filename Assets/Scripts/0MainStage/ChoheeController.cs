@@ -387,12 +387,12 @@ public class ChoheeController : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isWeaponShop)
             {
-                UIManager.Instance.SmithySystem(true);
+                UIManager.Instance.SmithySystem(true, Npc.name);
                 GameManager.Instance.isWeaponShop = true;
             }
             else if(Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.isWeaponShop)
             {
-                UIManager.Instance.SmithySystem(false);
+                UIManager.Instance.SmithySystem(false, Npc.name);
                 GameManager.Instance.isWeaponShop = false;
             }
         }

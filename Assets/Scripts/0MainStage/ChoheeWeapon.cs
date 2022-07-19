@@ -8,7 +8,7 @@ public class ChoheeWeapon : MonoBehaviour
     [SerializeField]
     private ChoheeController m_Player;
 
-    private float m_NorDmg;
+    public float m_NorDmg;
     public float m_CurDmg;
     private float m_FireDmg;
     public float m_ChargeDmg;
@@ -65,11 +65,7 @@ public class ChoheeWeapon : MonoBehaviour
     {
         m_MaskType = "null";
         m_NorDmg = 100;
-        m_CurDmg = m_NorDmg;
-
-        m_FireDmg = m_CurDmg * 1.5f;
-        m_ChargeDmg = m_CurDmg * 2;
-        m_SlashDmg = m_CurDmg;
+        WeaponDamageUpdate();
 
         m_Number = 0;
         rend = GetComponent<Renderer>();
@@ -82,6 +78,15 @@ public class ChoheeWeapon : MonoBehaviour
         rend.sharedMaterial = material[m_Number];
 
         //WeaponTypeChange();
+    }
+
+    public void WeaponDamageUpdate()
+    {
+        m_CurDmg = m_NorDmg;
+
+        m_FireDmg = m_CurDmg * 1.5f;
+        m_ChargeDmg = m_CurDmg * 2;
+        m_SlashDmg = m_CurDmg;
     }
 
     public void WeaponTypeChange(string MaskName)

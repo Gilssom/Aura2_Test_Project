@@ -20,7 +20,9 @@ public class UIManager : MonoBehaviour
     public GameObject m_PausePanel;
     public GameObject m_ExitPanel;
     public GameObject m_WeaponPanel;
+    public GameObject m_ArmorPanel;
     public RectTransform m_WeaponMenu;
+    public RectTransform m_ArmorMenu;
 
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;
@@ -237,6 +239,7 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 1f;
             m_PausePanel.SetActive(false);
+            m_ExitPanel.SetActive(false);
             GameManager.Instance.isPause = false;
         }
         else if(Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isPause)
@@ -415,19 +418,31 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SmithySystem(bool isShop)
+    public void SmithySystem(bool isShop, string NpcName)
     {
-        if(isShop)
+        if(isShop && NpcName == "WeaponNpc")
         {
             m_WeaponPanel.SetActive(true);
 
-            m_WeaponMenu.DOAnchorPosY(0, 1);
+            m_WeaponMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
-        else if(!isShop)
+        else if (isShop && NpcName == "ArmorNpc")
+        {
+            m_ArmorPanel.SetActive(true);
+
+            m_ArmorMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
+        }
+        else if(!isShop && NpcName == "WeaponNpc")
         {
             m_WeaponMenu.anchoredPosition = Vector3.up * 1000;
 
             m_WeaponPanel.SetActive(false);
+        }
+        else if (!isShop && NpcName == "ArmorNpc")
+        {
+            m_ArmorMenu.anchoredPosition = Vector3.up * 1000;
+
+            m_ArmorPanel.SetActive(false);
         }
     }
 }

@@ -67,6 +67,10 @@ public class PlayerStats : MonoBehaviour
     {
         soul += 1;
     }
+    public void UseSoul(float UseSoul)
+    {
+        soul -= UseSoul;
+    }
     public void AddSlashGage(float Count)
     {
         SlashGage += Count;
