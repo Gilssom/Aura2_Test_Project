@@ -71,6 +71,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_DamageStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
+            m_Player.EnforceEff("Red");
             m_DamageStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[0].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_DamageStep) + "개";
@@ -106,6 +107,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_ChargeStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
+            m_Player.EnforceEff("Green");
             m_ChargeStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[1].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_ChargeStep) + "개";

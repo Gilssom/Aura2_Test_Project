@@ -310,6 +310,7 @@ public class TestMonster : MonoBehaviour
 
     void WeaponHitEff()
     {
+        m_Anim.SetTrigger("DoHurt");
         Vector3 Pos = this.transform.position;
         GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
         Effect.transform.SetParent(null, false);

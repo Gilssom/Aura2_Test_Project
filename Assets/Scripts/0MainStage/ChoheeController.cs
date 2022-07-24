@@ -50,6 +50,8 @@ public class ChoheeController : MonoBehaviour
     public VisualEffect[] m_AttackEffect;
     public GameObject m_SlashEffect;
     public Transform m_SlashPos;
+    public GameObject m_EnforceRedEff;
+    public GameObject m_EnforceGreenEff;
 
     void Awake()
     {
@@ -395,6 +397,23 @@ public class ChoheeController : MonoBehaviour
                 UIManager.Instance.SmithySystem(false, Npc.name);
                 GameManager.Instance.isWeaponShop = false;
             }
+        }
+    }
+
+    public void EnforceEff(string Color)
+    {
+        Vector3 Pos = this.transform.position;
+        if (Color == "Red")
+        {
+            GameObject Effect = Instantiate(m_EnforceRedEff, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
+            Effect.transform.SetParent(null, false);
+            Destroy(Effect, 1);
+        }
+        else if(Color == "Green")
+        {
+            GameObject Effect = Instantiate(m_EnforceGreenEff, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
+            Effect.transform.SetParent(null, false);
+            Destroy(Effect, 1);
         }
     }
 }
