@@ -74,7 +74,7 @@ public class EnforceManager : MonoBehaviour
             m_Player.EnforceEff("Red");
             m_DamageStep++;
             PlayerStats.Instance.UseSoul(Cost);
-            m_SoulText[0].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_DamageStep) + "개";
+            m_SoulText[0].text = "" + (100 + 100 * m_DamageStep) + "";
 
             if (m_DamageStep == 1)
             {
@@ -93,7 +93,7 @@ public class EnforceManager : MonoBehaviour
                 ChoheeWeapon.Instance.m_NorDmg = 200;
                 m_PauseDamageText.text = "200%";
                 m_EnforceUIDamageText.text = "현재 공격력 (3단계) = 200% (최대)";
-                m_SoulText[0].text = "현재 강화" + "\n" + "최대 수치";
+                m_SoulText[0].gameObject.SetActive(false);
             }
             ChoheeWeapon.Instance.WeaponDamageUpdate();
         }
@@ -107,10 +107,10 @@ public class EnforceManager : MonoBehaviour
 
         if (m_ChargeStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
-            m_Player.EnforceEff("Green");
+            m_Player.EnforceEff("Red");
             m_ChargeStep++;
             PlayerStats.Instance.UseSoul(Cost);
-            m_SoulText[1].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_ChargeStep) + "개";
+            m_SoulText[1].text = "" + (100 + 100 * m_ChargeStep) + "";
 
             if (m_ChargeStep == 1)
             {
@@ -129,7 +129,7 @@ public class EnforceManager : MonoBehaviour
                 m_Anim.SetFloat("ChargeSpeed", 1.55f);
                 m_PauseChargeText.text = "45%";
                 m_EnforceUIChargeText.text = "충전시간 감소 (3단계) = 45% (최대)";
-                m_SoulText[1].text = "현재 강화" + "\n" + "최대 수치";
+                m_SoulText[1].gameObject.SetActive(false);
             }
         }
         else
@@ -142,9 +142,10 @@ public class EnforceManager : MonoBehaviour
 
         if (m_DressStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
+            m_Player.EnforceEff("Green");
             m_DressStep++;
             PlayerStats.Instance.UseSoul(Cost);
-            m_SoulText[3].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_DressStep) + "개";
+            m_SoulText[3].text = "" + (100 + 100 * m_DressStep) + "";
 
             if (m_DressStep == 1)
             {
@@ -160,7 +161,7 @@ public class EnforceManager : MonoBehaviour
             {
                 m_PauseCollTimeText.text = "45%";
                 m_EnforceUICollTimeText.text = "회피기 재사용 시간 감소 (3단계) = 45% (최대)";
-                m_SoulText[3].text = "현재 강화" + "\n" + "최대 수치";
+                m_SoulText[3].gameObject.SetActive(false);
             }
         }
         else
@@ -173,9 +174,10 @@ public class EnforceManager : MonoBehaviour
 
         if (m_BootsStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
+            m_Player.EnforceEff("Green");
             m_BootsStep++;
             PlayerStats.Instance.UseSoul(Cost);
-            m_SoulText[4].text = "강화 비용" + "\n" + "영혼 " + (100 + 100 * m_BootsStep) + "개";
+            m_SoulText[4].text = "" + (100 + 100 * m_BootsStep) + "";
 
             if (m_BootsStep == 1)
             {
@@ -194,7 +196,7 @@ public class EnforceManager : MonoBehaviour
                 m_Player.Speed = 6.5f;
                 m_PauseSpeedText.text = "130%";
                 m_EnforceUISpeedText.text = "이동속도 증가 (3단계) = 130% (최대)";
-                m_SoulText[4].text = "현재 강화" + "\n" + "최대 수치";
+                m_SoulText[4].gameObject.SetActive(false);
             }
         }
         else
