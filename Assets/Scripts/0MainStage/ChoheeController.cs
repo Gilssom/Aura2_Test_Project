@@ -5,6 +5,12 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.VFX;
 
+[System.Serializable] //반드시 필요
+public class AttackEffect //행에 해당되는 이름
+{
+    public VisualEffect[] m_Effect;
+}
+
 public class ChoheeController : MonoBehaviour
 {
     private Animator m_Animator;
@@ -31,6 +37,12 @@ public class ChoheeController : MonoBehaviour
     float VAxis;
     float Wheel;
 
+    /// <summary>
+    /// 0 = Normal Effect
+    /// 1 = Fire Effect
+    /// 2 = Ice Effect
+    /// </summary>
+    public int m_WeaponCurType;
     public BoxCollider[] m_AreaType;
 
     bool m_FinalAttack;
@@ -47,7 +59,7 @@ public class ChoheeController : MonoBehaviour
     public bool m_ItemPickup;
     public GameObject scanObject;
 
-    public VisualEffect[] m_AttackEffect;
+    public AttackEffect[] m_AttackEffect;
     public GameObject m_SlashEffect;
     public Transform m_SlashPos;
     public GameObject m_EnforceRedEff;
@@ -326,8 +338,8 @@ public class ChoheeController : MonoBehaviour
     {
         m_AreaType[0].enabled = true;
         m_AreaType[4].enabled = true; 
-        m_AreaType[5].enabled = true; 
-        m_AttackEffect[0].Play();
+        m_AreaType[5].enabled = true;
+        m_AttackEffect[m_WeaponCurType].m_Effect[0].Play();
         SoundManager.Instance.SFXPlay("FirstAttack", m_clip[0]);
         this.transform.DOMove(transform.position + transform.forward * 0.5f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.05f, 0.05f).SetLoops(2, LoopType.Yoyo);
@@ -335,7 +347,7 @@ public class ChoheeController : MonoBehaviour
     void SecondAttack()
     {
         m_AreaType[1].enabled = true;
-        m_AttackEffect[1].Play();
+        m_AttackEffect[m_WeaponCurType].m_Effect[1].Play();
         SoundManager.Instance.SFXPlay("SecondAttack", m_clip[1]);
         this.transform.DOMove(transform.position + transform.forward * 0.7f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.15f, 0.05f).SetLoops(2, LoopType.Yoyo);
@@ -343,7 +355,7 @@ public class ChoheeController : MonoBehaviour
     void FinalAttack()
     {
         m_AreaType[2].enabled = true;
-        m_AttackEffect[2].Play();
+        m_AttackEffect[m_WeaponCurType].m_Effect[2].Play();
         SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
         this.transform.DOMove(transform.position + transform.forward * 0.8f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.3f, 0.05f).SetLoops(2, LoopType.Yoyo);
@@ -351,7 +363,7 @@ public class ChoheeController : MonoBehaviour
     void ChargeAttack()
     {
         m_AreaType[3].enabled = true;
-        m_AttackEffect[3].Play();
+        m_AttackEffect[m_WeaponCurType].m_Effect[3].Play();
         SoundManager.Instance.SFXPlay("Final Attack", m_clip[2]);
         this.transform.DOMove(transform.position + transform.forward * 7f, 0.2f);
         m_Camera.transform.DOMove(m_Camera.transform.position + m_Camera.transform.forward * 0.5f, 0.05f).SetLoops(2, LoopType.Yoyo);

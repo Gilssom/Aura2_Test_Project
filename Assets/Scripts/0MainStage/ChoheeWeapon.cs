@@ -97,6 +97,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             m_MaskType = "Normal";
             m_Player.Speed = 5;
+            m_Player.m_WeaponCurType = 0;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[2].SetActive(false);
@@ -112,6 +113,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             m_MaskType = "Speed";
             m_Player.Speed = 6;
+            m_Player.m_WeaponCurType = 0;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[2].SetActive(true);
@@ -127,6 +129,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             m_MaskType = "Fire";
             m_Player.Speed = 5;
+            m_Player.m_WeaponCurType = 1;
             m_Number = 1;
             m_CurDmg = m_FireDmg;
             m_WeaponEff[2].SetActive(false);
@@ -142,6 +145,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             m_MaskType = "Ice";
             m_Player.Speed = 5;
+            m_Player.m_WeaponCurType = 2;
             m_Number = 2;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[2].SetActive(false);
@@ -157,6 +161,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             m_MaskType = "Null";
             m_Player.Speed = 5;
+            m_Player.m_WeaponCurType = 0;
             m_Number = 0;
             m_CurDmg = m_NorDmg;
             m_WeaponEff[2].SetActive(false);

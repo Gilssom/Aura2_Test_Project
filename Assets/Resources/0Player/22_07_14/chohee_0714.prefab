@@ -1242,10 +1242,13 @@ MonoBehaviour:
   m_ItemPickup: 0
   scanObject: {fileID: 0}
   m_AttackEffect:
-  - {fileID: 210083354352422525}
-  - {fileID: 4764072115864799401}
-  - {fileID: 8397999047771347872}
-  - {fileID: 885337159257606097}
+  - m_Effect:
+    - {fileID: 210083354352422525}
+    - {fileID: 4764072115864799401}
+    - {fileID: 8397999047771347872}
+    - {fileID: 885337159257606097}
+  - m_Effect: []
+  - m_Effect: []
   m_SlashEffect: {fileID: 3495455136348662776, guid: f7185732f747e26479bde0fa64ab2dfb, type: 3}
   m_SlashPos: {fileID: 4153481565457321415}
   m_EnforceRedEff: {fileID: 1215955060385904667, guid: da3abddc94db1eb48b790c12a43758da, type: 3}

@@ -27,7 +27,7 @@ public class TestMonster : MonoBehaviour
     private float MaxCutoff = 1;
     private float MinCutoff = 0;
     private float Cutoff = default;
-    private float Speed = 0.0025f;
+    private float Speed = 0.005f;
     [SerializeField]
     float m_TraceDis = default;
     float m_AttackDis = default;
@@ -194,7 +194,7 @@ public class TestMonster : MonoBehaviour
         }
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         if (m_CurHP <= 0)
         {
@@ -202,7 +202,10 @@ public class TestMonster : MonoBehaviour
             m_Anim.SetTrigger("Death");
             Death();
         }
- 
+    }
+
+    void Update()
+    {
         if (m_moveSpeed < 3)
             m_moveSpeed += Time.deltaTime;
     }
@@ -310,7 +313,8 @@ public class TestMonster : MonoBehaviour
 
     void WeaponHitEff()
     {
-        m_Anim.SetTrigger("DoHurt");
+        if(m_EnemyType == EnemyType.HellGhost)
+            m_Anim.SetTrigger("DoHurt");
         Vector3 Pos = this.transform.position;
         GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
         Effect.transform.SetParent(null, false);
