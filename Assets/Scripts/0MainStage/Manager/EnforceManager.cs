@@ -71,7 +71,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_DamageStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
-            m_Player.EnforceEff("Red");
+            StartCoroutine(m_Player.EnforceEff(0));
             m_DamageStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[0].text = "" + (100 + 100 * m_DamageStep) + "";
@@ -107,7 +107,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_ChargeStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
-            m_Player.EnforceEff("Red");
+            StartCoroutine(m_Player.EnforceEff(0));
             m_ChargeStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[1].text = "" + (100 + 100 * m_ChargeStep) + "";
@@ -142,7 +142,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_DressStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
-            m_Player.EnforceEff("Green");
+            StartCoroutine(m_Player.EnforceEff(1));
             m_DressStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[3].text = "" + (100 + 100 * m_DressStep) + "";
@@ -174,7 +174,7 @@ public class EnforceManager : MonoBehaviour
 
         if (m_BootsStep < 3 && PlayerStats.Instance.Soul > Cost)
         {
-            m_Player.EnforceEff("Green");
+            StartCoroutine(m_Player.EnforceEff(1));
             m_BootsStep++;
             PlayerStats.Instance.UseSoul(Cost);
             m_SoulText[4].text = "" + (100 + 100 * m_BootsStep) + "";

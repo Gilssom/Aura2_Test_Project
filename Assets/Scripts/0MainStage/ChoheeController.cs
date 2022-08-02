@@ -62,8 +62,7 @@ public class ChoheeController : MonoBehaviour
     public AttackEffect[] m_AttackEffect;
     public GameObject m_SlashEffect;
     public Transform m_SlashPos;
-    public GameObject m_EnforceRedEff;
-    public GameObject m_EnforceGreenEff;
+    public VisualEffect[] m_EnforceEffectVFX;
 
     void Awake()
     {
@@ -86,6 +85,9 @@ public class ChoheeController : MonoBehaviour
         m_AreaType[5].enabled = false; // Ice Weapon
         m_FinalAttack = false;
         Speed = 5;
+
+        m_EnforceEffectVFX[0].Stop();
+        m_EnforceEffectVFX[1].Stop();
     }
 
     void Update()
@@ -412,20 +414,10 @@ public class ChoheeController : MonoBehaviour
         }
     }
 
-    public void EnforceEff(string Color)
+    public IEnumerator EnforceEff(int ColorNumber)
     {
-        Vector3 Pos = this.transform.position;
-        if (Color == "Red")
-        {
-            GameObject Effect = Instantiate(m_EnforceRedEff, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
-            Effect.transform.SetParent(null, false);
-            Destroy(Effect, 1);
-        }
-        else if(Color == "Green")
-        {
-            GameObject Effect = Instantiate(m_EnforceGreenEff, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
-            Effect.transform.SetParent(null, false);
-            Destroy(Effect, 1);
-        }
+        m_EnforceEffectVFX[ColorNumber].Play();
+        yield return new WaitForSeconds(0.5f);
+        m_EnforceEffectVFX[ColorNumber].Stop();
     }
 }
