@@ -46,5 +46,10 @@ public class ChoheeCheck : MonoBehaviour
             GameManager.Instance.Tutorial(2);
             Destroy(other.gameObject);
         }
+
+        if(other.tag == "VillagePortal")
+        {
+            GameManager.Instance.NextField(1);
+        }
     }
 }

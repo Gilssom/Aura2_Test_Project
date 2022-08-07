@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public Image[] m_PlayerSkill;
     public Text m_SoulCount;
     public Image m_BloodScreen;
+    public Image m_DeathScreen;
     public bool m_BloodPlaying;
     public GameObject m_PausePanel;
     public GameObject m_ExitPanel;
@@ -91,6 +92,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(this);
     }
 
     void Start()
@@ -444,5 +447,29 @@ public class UIManager : MonoBehaviour
 
             m_ArmorPanel.SetActive(false);
         }
+    }
+
+    public IEnumerator DeathScreen()
+    {
+        //m_BloodPlaying = true;
+
+        Color BScolor = m_DeathScreen.color;
+
+        float m_Time = 0f;
+
+        BScolor.a = Mathf.Lerp(0, 0.8f, m_Time);
+
+        while (BScolor.a < 0.8f)
+        {
+            m_Time += Time.deltaTime / 2;
+
+            BScolor.a = Mathf.Lerp(0, 0.8f, m_Time);
+
+            m_DeathScreen.color = BScolor;
+
+            yield return null;
+        }
+
+        //m_BloodPlaying = false;
     }
 }

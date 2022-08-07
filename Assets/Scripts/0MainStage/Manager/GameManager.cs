@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class GameManager : MonoBehaviour
 
     public bool isPause;
     public bool isWeaponShop;
+
+    public Transform[] m_FieldStartPos;
+
+    private GameObject m_Player;
 
     [SerializeField]
     public AudioClip[] m_Clip;
@@ -48,6 +53,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         isPause = false;
+
+        m_Player = GameObject.FindWithTag("Player");
     }
 
     void Update()
@@ -130,5 +137,13 @@ public class GameManager : MonoBehaviour
     public void Tutorial(int Number)
     {
         TutorialManager.Instance.InStartFadeAnim(Number);
+    }
+
+    public void NextField(int SceneNum)
+    {
+        Debug.Log(SceneNum + " = SceneNumber");
+        SceneManager.LoadScene(SceneNum);
+        m_Player.transform.position = m_FieldStartPos[SceneNum].position;
+        m_Player.transform.rotation = m_FieldStartPos[SceneNum].rotation;
     }
 }

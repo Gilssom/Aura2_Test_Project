@@ -93,23 +93,25 @@ public class ChoheeController : MonoBehaviour
     void Update()
     {
         GetInput();
-        if (!m_FinalAttack && !isDeath && !isCharge)
-        {
-            Move();
-        }
-        Attack();
-        ItemUse();
-        NpcInteraction();
 
-        //if (scanObject != null && Input.GetKeyDown(KeyCode.E))
-        //{
-        //    StartCoroutine(TalkStart());
-        //}
+        if (PlayerStats.Instance.Health <= 0)
+            Death();
+
+        if (!m_FinalAttack && !isDeath && !isCharge)
+            Move();
+
+        if(!isDeath)
+        {
+            Attack();
+            ItemUse();
+            NpcInteraction();
+        }
 
         if (Input.GetButtonDown("Jump") && !isDodge)
-        {
             Dodge();
-        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+            PlayerStats.Instance.TakeDamage(1);
     }
 
     void OnTriggerEnter(Collider other)
@@ -419,5 +421,13 @@ public class ChoheeController : MonoBehaviour
         m_EnforceEffectVFX[ColorNumber].Play();
         yield return new WaitForSeconds(0.5f);
         m_EnforceEffectVFX[ColorNumber].Stop();
+    }
+
+    void Death()
+    {
+        //StopAllCoroutines();
+        StartCoroutine(UIManager.Instance.DeathScreen());
+        m_Animator.SetTrigger("DoDeath");
+        isDeath = true;
     }
 }
