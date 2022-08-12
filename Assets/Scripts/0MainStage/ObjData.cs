@@ -7,13 +7,14 @@ public class ObjData : MonoBehaviour
 {
     /// <summary>
     /// ObjectNumber
-    /// 1 = Sotdae
-    /// 2 = Sky Object
-    /// 3 ~ 5 = Fence  ( Dissolve ) ( Frist ~ Third Field )
-    /// 6 ~ 7 = Door   ( Dissolve ) ( Frist ~ Third Field )
-    /// 8 ~ 12 = Fence ( Dissolve ) ( Forth ~ Seventh Field )
-    /// 13 ~ 16 = Door  ( Dissolve ) ( Forth ~ Seventh Field )
-    /// ¤¤> 14  = Reverse Door ( Reverse Dissolve )
+    /// 1 = Sotdae ,
+    /// 2 = Sky Object ,
+    /// 3 ~ 5 = Fence  ( Dissolve ) ( Frist ~ Third Field ) ,
+    /// 6 ~ 7 = Door   ( Dissolve ) ( Frist ~ Third Field ) ,
+    /// 8 ~ 12 = Fence ( Dissolve ) ( Forth ~ Seventh Field ) ,
+    /// 13 ~ 16 = Door  ( Dissolve ) ( Forth ~ Seventh Field ) ,
+    /// ¤¤> 14  = Reverse Door ( Reverse Dissolve ) ,
+    /// 1000 = Weapon Npc
     /// </summary>
     public int id;
     public bool isNpc;
