@@ -35,6 +35,8 @@ public class FieldObjectController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(this);
     }
 
     void Start()

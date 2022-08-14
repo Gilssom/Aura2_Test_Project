@@ -69,7 +69,7 @@ public class EnforceManager : MonoBehaviour
     {
         float Cost = 100 + 100 * m_DamageStep;
 
-        if (m_DamageStep < 3 && PlayerStats.Instance.Soul > Cost)
+        if (m_DamageStep < 3 && PlayerStats.Instance.Soul >= Cost)
         {
             StartCoroutine(m_Player.EnforceEff(0));
             m_DamageStep++;
@@ -105,7 +105,7 @@ public class EnforceManager : MonoBehaviour
     {
         float Cost = 100 + 100 * m_ChargeStep;
 
-        if (m_ChargeStep < 3 && PlayerStats.Instance.Soul > Cost)
+        if (m_ChargeStep < 3 && PlayerStats.Instance.Soul >= Cost)
         {
             StartCoroutine(m_Player.EnforceEff(0));
             m_ChargeStep++;
@@ -140,7 +140,7 @@ public class EnforceManager : MonoBehaviour
     {
         float Cost = 100 + 100 * m_DressStep;
 
-        if (m_DressStep < 3 && PlayerStats.Instance.Soul > Cost)
+        if (m_DressStep < 3 && PlayerStats.Instance.Soul >= Cost)
         {
             StartCoroutine(m_Player.EnforceEff(1));
             m_DressStep++;
@@ -172,7 +172,7 @@ public class EnforceManager : MonoBehaviour
     {
         float Cost = 100 + 100 * m_BootsStep;
 
-        if (m_BootsStep < 3 && PlayerStats.Instance.Soul > Cost)
+        if (m_BootsStep < 3 && PlayerStats.Instance.Soul >= Cost)
         {
             StartCoroutine(m_Player.EnforceEff(1));
             m_BootsStep++;

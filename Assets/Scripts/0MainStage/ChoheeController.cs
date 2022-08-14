@@ -403,8 +403,13 @@ public class ChoheeController : MonoBehaviour
 
         if(Npc)
         {
-            if(Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isWeaponShop)
+            if(Input.GetKeyDown(KeyCode.E) && Npc.GetComponent<ObjData>().isNeedTalk)
             {
+                GameManager.Instance.Action();
+            }
+            else if(Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isWeaponShop && !Npc.GetComponent<ObjData>().isNeedTalk)
+            {
+                GameManager.Instance.Action();
                 UIManager.Instance.SmithySystem(true, Npc.name);
                 GameManager.Instance.isWeaponShop = true;
             }

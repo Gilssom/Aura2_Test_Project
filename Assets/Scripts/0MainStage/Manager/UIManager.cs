@@ -22,8 +22,21 @@ public class UIManager : MonoBehaviour
     public GameObject m_ExitPanel;
     public GameObject m_WeaponPanel;
     public GameObject m_ArmorPanel;
+    public GameObject m_GatePanel;
+    public GameObject m_StationPanel;
     public RectTransform m_WeaponMenu;
     public RectTransform m_ArmorMenu;
+    public RectTransform m_GateMenu;
+    public RectTransform m_StationMenu;
+    public Text m_WeaponPanelText;
+    public Text m_ArmorPanelText;
+    public Text m_GatePanelText;
+    public Text m_StationPanelText;
+
+    public GameObject m_TalkPanel;
+    public RectTransform m_TalkImage;
+    public Text m_TalkText;
+    public Text m_TalkNpcNameText;
 
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;
@@ -136,6 +149,9 @@ public class UIManager : MonoBehaviour
         SoulCount();
         SettingMenu();
         PauseFalse();
+
+        if (!GameManager.Instance.isTalkAction && m_TalkImage.anchoredPosition.y == -1000)
+            m_TalkPanel.SetActive(false);
     }
 
     void NearInfo()
@@ -435,6 +451,18 @@ public class UIManager : MonoBehaviour
 
             m_ArmorMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
+        else if (isShop && NpcName == "Gate Keeper")
+        {
+            m_GatePanel.SetActive(true);
+
+            m_GateMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
+        }
+        else if (isShop && NpcName == "Station Master")
+        {
+            m_StationPanel.SetActive(true);
+
+            m_StationMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
+        }
         else if(!isShop && NpcName == "WeaponNpc")
         {
             m_WeaponMenu.anchoredPosition = Vector3.up * 1000;
@@ -446,6 +474,18 @@ public class UIManager : MonoBehaviour
             m_ArmorMenu.anchoredPosition = Vector3.up * 1000;
 
             m_ArmorPanel.SetActive(false);
+        }
+        else if (!isShop && NpcName == "Gate Keeper")
+        {
+            m_GateMenu.anchoredPosition = Vector3.up * 1000;
+
+            m_GatePanel.SetActive(false);
+        }
+        else if (!isShop && NpcName == "Station Master")
+        {
+            m_StationMenu.anchoredPosition = Vector3.up * 1000;
+
+            m_StationPanel.SetActive(false);
         }
     }
 

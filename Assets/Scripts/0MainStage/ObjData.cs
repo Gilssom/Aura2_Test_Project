@@ -14,10 +14,15 @@ public class ObjData : MonoBehaviour
     /// 8 ~ 12 = Fence ( Dissolve ) ( Forth ~ Seventh Field ) ,
     /// 13 ~ 16 = Door  ( Dissolve ) ( Forth ~ Seventh Field ) ,
     /// ㄴ> 14  = Reverse Door ( Reverse Dissolve ) ,
-    /// 1000 = Weapon Npc
+    /// 1000 = 대장장이 ,
+    /// 2000 = 재봉사 ,
+    /// 3000 = 역원 주인 ,
+    /// 4000 = 문지기
     /// </summary>
     public int id;
     public bool isNpc;
+    public bool isNeedTalk;
+    public GameObject m_Exclamation;
 
     // Jangseung properties
     private GameObject m_Child;
@@ -66,12 +71,20 @@ public class ObjData : MonoBehaviour
         }
         if (id == 5 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14)
             Speed = 0.0025f;
+
+        if (isNpc)
+        {
+            isNeedTalk = true;
+        }
     }
 
     void Update()
     {
         Kill = GameManager.Instance.m_KillCount;
         OnFire = FieldObjectController.Instance.m_FireOnCount;
+
+        if (isNpc)
+            m_Exclamation.SetActive(isNeedTalk);
 
         // First ~ Third Field
         if (id == 2)
