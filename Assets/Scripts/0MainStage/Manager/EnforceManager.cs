@@ -20,15 +20,17 @@ public class EnforceManager : MonoBehaviour
 
     public Animator m_Anim;
     public Text m_PauseDamageText;
-    public Text m_EnforceUIDamageText;
     public Text m_PauseChargeText;
     public Text m_PauseChargeText_2;
-    public Text m_EnforceUIChargeText;
 
     public Text m_PauseCollTimeText;
-    public Text m_EnforceUICollTimeText;
     public Text m_PauseSpeedText;
-    public Text m_EnforceUISpeedText;
+
+    public Image m_DamageUpGradeImage;
+    public Image m_SpeedUpGradeImage;
+    public Image m_DistanceUpGradeImage;
+    public Image m_DressUpGradeImage;
+    public Image m_BootsUpGradeImage;
 
     /// <summary>
     /// 0 = 예리하게 강화
@@ -39,6 +41,16 @@ public class EnforceManager : MonoBehaviour
     /// </summary>
     public Text[] m_SoulText;
 
+    /// <summary>
+    /// 0 , 1 = 날카롭게
+    /// 2 , 3 = 재빠르게
+    /// 4 , 5 = 커다랗게
+    /// </summary>
+    public Sprite[] m_UpGradeImage;
+    public GameObject[] m_UpGradeButton;
+
+    public Text m_SoulCount;
+
     void Start()
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
@@ -47,15 +59,11 @@ public class EnforceManager : MonoBehaviour
         {
             m_PauseDamageText.text = "100%";
             m_PauseChargeText.text = "100%";
-            m_EnforceUIDamageText.text = "현재 공격력 (0단계) = 100%";
-            m_EnforceUIChargeText.text = "충전시간 감소 (0단계) = 100%";
         }
         else if(!isWeapon)
         {
             m_PauseCollTimeText.text = "100%";
             m_PauseSpeedText.text = "100%";
-            m_EnforceUICollTimeText.text = "현재 회피기 재사용 시간 (0단계) = 100%";
-            m_EnforceUISpeedText.text = "현재 이동속도 (0단계) = 100%";
         }
     }
 
@@ -63,6 +71,8 @@ public class EnforceManager : MonoBehaviour
     {
         if(isWeapon)
             m_PauseChargeText_2.text = m_PauseChargeText.text;
+
+        m_SoulCount.text = UIManager.Instance.m_SoulCount.text;
     }
 
     public void DamageEnforce()
@@ -80,20 +90,20 @@ public class EnforceManager : MonoBehaviour
             {
                 ChoheeWeapon.Instance.m_NorDmg = 120;
                 m_PauseDamageText.text = "120%";
-                m_EnforceUIDamageText.text = "현재 공격력 (1단계) = 120%";
+                m_DamageUpGradeImage.sprite = m_UpGradeImage[0];
             }
             else if (m_DamageStep == 2)
             {
                 ChoheeWeapon.Instance.m_NorDmg = 150;
                 m_PauseDamageText.text = "150%";
-                m_EnforceUIDamageText.text = "현재 공격력 (2단계) = 150%";
+                m_DamageUpGradeImage.sprite = m_UpGradeImage[1];
             }
             else if (m_DamageStep == 3)
             {
                 ChoheeWeapon.Instance.m_NorDmg = 200;
                 m_PauseDamageText.text = "200%";
-                m_EnforceUIDamageText.text = "현재 공격력 (3단계) = 200% (최대)";
                 m_SoulText[0].gameObject.SetActive(false);
+                m_UpGradeButton[0].SetActive(false);
             }
             ChoheeWeapon.Instance.WeaponDamageUpdate();
         }
@@ -116,20 +126,20 @@ public class EnforceManager : MonoBehaviour
             {
                 m_Anim.SetFloat("ChargeSpeed", 1.15f);
                 m_PauseChargeText.text = "85%";
-                m_EnforceUIChargeText.text = "충전시간 감소 (1단계) = 85%";
+                m_SpeedUpGradeImage.sprite = m_UpGradeImage[2];
             }
             else if (m_ChargeStep == 2)
             {
                 m_Anim.SetFloat("ChargeSpeed", 1.4f);
                 m_PauseChargeText.text = "60%";
-                m_EnforceUIChargeText.text = "충전시간 감소 (2단계) = 60%";
+                m_SpeedUpGradeImage.sprite = m_UpGradeImage[3];
             }
             else if (m_ChargeStep == 3)
             {
                 m_Anim.SetFloat("ChargeSpeed", 1.55f);
                 m_PauseChargeText.text = "45%";
-                m_EnforceUIChargeText.text = "충전시간 감소 (3단계) = 45% (최대)";
                 m_SoulText[1].gameObject.SetActive(false);
+                m_UpGradeButton[1].SetActive(false);
             }
         }
         else
@@ -150,18 +160,18 @@ public class EnforceManager : MonoBehaviour
             if (m_DressStep == 1)
             {
                 m_PauseCollTimeText.text = "85%";
-                m_EnforceUICollTimeText.text = "회피기 재사용 시간 감소 (1단계) = 85%";
+                m_DressUpGradeImage.sprite = m_UpGradeImage[4];
             }
             else if (m_DressStep == 2)
             {
                 m_PauseCollTimeText.text = "60%";
-                m_EnforceUICollTimeText.text = "회피기 재사용 시간 감소 (2단계) = 60%";
+                m_DressUpGradeImage.sprite = m_UpGradeImage[5];
             }
             else if (m_DressStep == 3)
             {
                 m_PauseCollTimeText.text = "45%";
-                m_EnforceUICollTimeText.text = "회피기 재사용 시간 감소 (3단계) = 45% (최대)";
                 m_SoulText[3].gameObject.SetActive(false);
+                m_UpGradeButton[2].SetActive(false);
             }
         }
         else
@@ -183,20 +193,20 @@ public class EnforceManager : MonoBehaviour
             {
                 m_Player.Speed = 5.5f;
                 m_PauseSpeedText.text = "110%";
-                m_EnforceUISpeedText.text = "이동속도 증가 (1단계) = 110%";
+                m_BootsUpGradeImage.sprite = m_UpGradeImage[6];
             }
             else if (m_BootsStep == 2)
             {
                 m_Player.Speed = 6;
                 m_PauseSpeedText.text = "120%";
-                m_EnforceUISpeedText.text = "이동속도 증가 (2단계) = 120%";
+                m_BootsUpGradeImage.sprite = m_UpGradeImage[7];
             }
             else if (m_BootsStep == 3)
             {
                 m_Player.Speed = 6.5f;
                 m_PauseSpeedText.text = "130%";
-                m_EnforceUISpeedText.text = "이동속도 증가 (3단계) = 130% (최대)";
                 m_SoulText[4].gameObject.SetActive(false);
+                m_UpGradeButton[3].SetActive(false);
             }
         }
         else

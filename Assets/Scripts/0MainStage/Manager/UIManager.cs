@@ -217,6 +217,7 @@ public class UIManager : MonoBehaviour
     void SoulCount()
     {
         m_SoulCount.text = PlayerStats.Instance.Soul.ToString();
+        
     }
 
     public IEnumerator BloodScreen(float ExitTime)

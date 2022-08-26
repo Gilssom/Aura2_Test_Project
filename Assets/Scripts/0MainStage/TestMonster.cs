@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class TestMonster : MonoBehaviour
 {
-    public enum EnemyType { HellGhost, FireMonster }
+    public enum EnemyType { HellGhost, FireMonster, LanternMonster }
     public EnemyType m_EnemyType;
 
     public enum CurState { idle, trace, attack, death}
@@ -101,6 +101,17 @@ public class TestMonster : MonoBehaviour
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
                 break;
+            case EnemyType.LanternMonster:
+                if (isSpawnMonster)
+                    m_TraceDis = 100;
+                else
+                    m_TraceDis = 7;
+
+                m_AttackDis = 2;
+                m_rotSpeed = 3;
+                m_moveSpeed = 3;
+                m_MaxHP = 200;
+                break;
         }
         m_AttackArea.enabled = false;
 
@@ -147,6 +158,24 @@ public class TestMonster : MonoBehaviour
                     m_MaxHP = 400;
                 }                  
                 else if (gameObject.name == "FireMonster_IceMask")
+                    m_HaveMaskNum = 4;
+                else
+                    m_HaveMaskNum = 0;
+                break;
+            case EnemyType.LanternMonster:
+                if (gameObject.name == "LanternMonster_NormalMask")
+                    m_HaveMaskNum = 1;
+                else if (gameObject.name == "LanternMonster_SpeedMask")
+                {
+                    m_HaveMaskNum = 2;
+                    m_MaxHP = 300;
+                }
+                else if (gameObject.name == "LanternMonster_FireMask")
+                {
+                    m_HaveMaskNum = 3;
+                    m_MaxHP = 400;
+                }
+                else if (gameObject.name == "LanternMonster_IceMask")
                     m_HaveMaskNum = 4;
                 else
                     m_HaveMaskNum = 0;
@@ -297,6 +326,9 @@ public class TestMonster : MonoBehaviour
             case EnemyType.FireMonster:
                 SoundManager.Instance.SFXPlay("Fire Attack", GameManager.Instance.m_Clip[6]);
                 break;
+            case EnemyType.LanternMonster:
+                SoundManager.Instance.SFXPlay("Fire Attack", GameManager.Instance.m_Clip[6]);
+                break;
         }
         m_AttackArea.enabled = true;
     }
@@ -338,7 +370,8 @@ public class TestMonster : MonoBehaviour
                 m_AttackArea.enabled = false;
                 m_Rigid.isKinematic = true;
 
-                //m_FireEffect.SetActive(false);
+                if (m_FireEffect)
+                    m_FireEffect.SetActive(false);
 
                 if (Cutoff >= MaxCutoff)
                 {
@@ -405,6 +438,51 @@ public class TestMonster : MonoBehaviour
                             string ItemName = m_DropMask[m_HaveMaskNum].name;
 
                             GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum], 
+                                new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
+                            Mask.name = ItemName;
+                        }
+                    }
+
+                    Cutoff += Speed;
+                    if (Cutoff != MaxCutoff)
+                    {
+                        m_SkinmeshRenderer.material.SetFloat("_Dissolve", Cutoff);
+                    }
+                }
+                break;
+            case EnemyType.LanternMonster:
+                if (isDeath)
+                {
+                    CapsuleCollider Lanterncoll = GetComponent<CapsuleCollider>();
+
+                    Lanterncoll.enabled = false;
+                    m_AttackArea.enabled = false;
+                    m_Rigid.isKinematic = true;
+
+                    if(m_FireEffect)
+                        m_FireEffect.SetActive(false);
+
+                    if (Cutoff >= MaxCutoff)
+                    {
+                        Destroy(this.gameObject);
+                        GameManager.Instance.m_KillCount += 1;
+
+                        int MaxItems = Random.Range(2, 4);
+                        for (int i = 0; i < MaxItems; i++)
+                        {
+                            float RandomTF = Random.Range(0.5f, 3);
+                            Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
+                        }
+
+                        int HealthDrop = Random.Range(0, 100);
+                        if (HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
+                            Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
+
+                        if (m_HaveMaskNum != 0)
+                        {
+                            string ItemName = m_DropMask[m_HaveMaskNum].name;
+
+                            GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum],
                                 new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
                             Mask.name = ItemName;
                         }
