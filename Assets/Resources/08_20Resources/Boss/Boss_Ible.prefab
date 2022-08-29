@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 5289086471178121219}
   - component: {fileID: 5289086471178121272}
   - component: {fileID: 5289086471178121277}
+  - component: {fileID: 5293897024247759092}
   - component: {fileID: 2189610763361143497}
   m_Layer: 15
   m_Name: Boss_Ible
@@ -793,6 +794,22 @@ MonoBehaviour:
   m_HitEffect: {fileID: 6244133246584083714, guid: c03d7347ce37f4e40bf8fd80841c7f5b, type: 3}
   m_HpBar: {fileID: 0}
   m_HpPercent: {fileID: 0}
+--- !u!114 &5293897024247759092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019250577136700779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3531cb592e51824fade19140d2e04de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Boss: {fileID: 0}
+  m_PathCreator: {fileID: 0}
+  m_PathSpeed: 1
+  m_DistanceTravelled: 0
 --- !u!136 &2189610763361143497
 CapsuleCollider:
   m_ObjectHideFlags: 0

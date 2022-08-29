@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using PathCreation;
 
 public class Boss : MonoBehaviour
 {
+    [SerializeField]
+    private BossFollowPath m_PathSystem;
+
     [SerializeField]
     private int m_MaxHealth;
     [SerializeField]
@@ -33,11 +37,14 @@ public class Boss : MonoBehaviour
     public Slider m_HpBar;
     public Text m_HpPercent;
 
+    public GameObject m_BombObject;
+
     void Awake()
     {
         m_Rigid = GetComponent<Rigidbody>();
         m_Anim = GetComponent<Animator>();
         m_Coll = GetComponent<CapsuleCollider>();
+        m_PathSystem = GetComponent<BossFollowPath>();
         m_SkinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
         m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
@@ -51,7 +58,6 @@ public class Boss : MonoBehaviour
     void Start()
     {
         m_CurHealth = m_MaxHealth;
-
         Invoke("BossThinkStart", 2);
     }
 
@@ -62,7 +68,7 @@ public class Boss : MonoBehaviour
             m_Anim.Play("Scream");
         }
 
-        StartCoroutine(BossThink());
+        //StartCoroutine(BossThink());
     }
 
     void Update()
@@ -86,6 +92,28 @@ public class Boss : MonoBehaviour
 
         float HpPercent = m_CurHealth / 120;
         m_HpPercent.text = HpPercent.ToString("F0") + "%";
+
+        TestAttack();
+    }
+
+    void TestAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            BossNormalAttack();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            BossRotateAttack();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            BossMovingAttack();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            StartCoroutine(BossLongDisAttack());
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -133,7 +161,7 @@ public class Boss : MonoBehaviour
         Destroy(Effect, 1);
     }
 
-    IEnumerator BossThink()
+    public IEnumerator BossThink()
     {
         int OnePattenAttack = Random.Range(0, 2);
         int TwoPattenAttack = Random.Range(0, 3);
@@ -168,7 +196,7 @@ public class Boss : MonoBehaviour
                     Debug.Log("페이즈 2 : 회전공격");
                     break;
                 case 2:
-                    StartCoroutine(BossThink());
+                    BossMovingAttack();
                     Debug.Log("페이즈 2 : 이동공격");
                     break;
             }
@@ -187,7 +215,7 @@ public class Boss : MonoBehaviour
                     Debug.Log("페이즈 3 : 회전공격");
                     break;
                 case 2:
-                    StartCoroutine(BossThink());
+                    StartCoroutine(BossLongDisAttack());
                     Debug.Log("페이즈 3 : 폭탄발사");
                     break;
             }
@@ -215,14 +243,38 @@ public class Boss : MonoBehaviour
         }
     }
 
+    void BossMovingAttack()
+    {
+        m_PathSystem.enabled = true;
+    }
+
     void BossRotateAttack()
     {
         m_Anim.SetTrigger("Rotate Attack");
     }
 
+    IEnumerator BossLongDisAttack()
+    {
+        m_Anim.SetBool("Long Attack", true);
+        Vector3 Pos = this.transform.position;
+        int AttackNumbers = Random.Range(10, 15);
+
+        for (int i = 0; i < AttackNumbers; i++)
+        {
+            float RandomTFX = Random.Range(-10f, 10f);
+            float RandomTFZ = Random.Range(-10f, 10f);
+            Instantiate(m_BombObject, new Vector3(Pos.x + RandomTFX, Pos.y + 20, Pos.z + RandomTFZ), Quaternion.identity);           
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        yield return new WaitForSeconds(1);
+        m_Anim.SetBool("Long Attack", false);
+        //StartCoroutine(BossThink());
+    }
+
     public void Attack(int AttackNumber)
     {
-        if(AttackNumber != 4)
+        if(AttackNumber < 4)
             m_AttackArea[AttackNumber].enabled = true;
         else
         {
@@ -235,7 +287,7 @@ public class Boss : MonoBehaviour
 
     public void AttackFalse(int AttackNumber)
     {
-        if(AttackNumber != 4)
+        if(AttackNumber < 4)
             m_AttackArea[AttackNumber].enabled = false;
         else
         {
@@ -245,7 +297,7 @@ public class Boss : MonoBehaviour
             m_AttackArea[3].enabled = false;
         }
 
-        StartCoroutine(BossThink());
+        //StartCoroutine(BossThink());
     }
 
     void Death()
