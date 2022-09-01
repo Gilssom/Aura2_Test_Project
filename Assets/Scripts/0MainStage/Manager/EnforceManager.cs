@@ -104,6 +104,7 @@ public class EnforceManager : MonoBehaviour
                 m_PauseDamageText.text = "200%";
                 m_SoulText[0].gameObject.SetActive(false);
                 m_UpGradeButton[0].SetActive(false);
+                m_DamageUpGradeImage.sprite = m_UpGradeImage[2];
             }
             ChoheeWeapon.Instance.WeaponDamageUpdate();
         }
@@ -126,13 +127,13 @@ public class EnforceManager : MonoBehaviour
             {
                 m_Anim.SetFloat("ChargeSpeed", 1.15f);
                 m_PauseChargeText.text = "85%";
-                m_SpeedUpGradeImage.sprite = m_UpGradeImage[2];
+                m_SpeedUpGradeImage.sprite = m_UpGradeImage[3];
             }
             else if (m_ChargeStep == 2)
             {
                 m_Anim.SetFloat("ChargeSpeed", 1.4f);
                 m_PauseChargeText.text = "60%";
-                m_SpeedUpGradeImage.sprite = m_UpGradeImage[3];
+                m_SpeedUpGradeImage.sprite = m_UpGradeImage[4];
             }
             else if (m_ChargeStep == 3)
             {
@@ -140,6 +141,7 @@ public class EnforceManager : MonoBehaviour
                 m_PauseChargeText.text = "45%";
                 m_SoulText[1].gameObject.SetActive(false);
                 m_UpGradeButton[1].SetActive(false);
+                m_SpeedUpGradeImage.sprite = m_UpGradeImage[5];
             }
         }
         else
@@ -160,18 +162,19 @@ public class EnforceManager : MonoBehaviour
             if (m_DressStep == 1)
             {
                 m_PauseCollTimeText.text = "85%";
-                m_DressUpGradeImage.sprite = m_UpGradeImage[4];
+                m_DressUpGradeImage.sprite = m_UpGradeImage[6];
             }
             else if (m_DressStep == 2)
             {
                 m_PauseCollTimeText.text = "60%";
-                m_DressUpGradeImage.sprite = m_UpGradeImage[5];
+                m_DressUpGradeImage.sprite = m_UpGradeImage[7];
             }
             else if (m_DressStep == 3)
             {
                 m_PauseCollTimeText.text = "45%";
                 m_SoulText[3].gameObject.SetActive(false);
                 m_UpGradeButton[2].SetActive(false);
+                m_DressUpGradeImage.sprite = m_UpGradeImage[8];
             }
         }
         else
@@ -193,13 +196,13 @@ public class EnforceManager : MonoBehaviour
             {
                 m_Player.Speed = 5.5f;
                 m_PauseSpeedText.text = "110%";
-                m_BootsUpGradeImage.sprite = m_UpGradeImage[6];
+                m_BootsUpGradeImage.sprite = m_UpGradeImage[9];
             }
             else if (m_BootsStep == 2)
             {
                 m_Player.Speed = 6;
                 m_PauseSpeedText.text = "120%";
-                m_BootsUpGradeImage.sprite = m_UpGradeImage[7];
+                m_BootsUpGradeImage.sprite = m_UpGradeImage[10];
             }
             else if (m_BootsStep == 3)
             {
@@ -207,6 +210,7 @@ public class EnforceManager : MonoBehaviour
                 m_PauseSpeedText.text = "130%";
                 m_SoulText[4].gameObject.SetActive(false);
                 m_UpGradeButton[3].SetActive(false);
+                m_BootsUpGradeImage.sprite = m_UpGradeImage[11];
             }
         }
         else

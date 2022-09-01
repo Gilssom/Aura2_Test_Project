@@ -20,6 +20,12 @@ public class Boss : MonoBehaviour
     private CapsuleCollider m_Coll;
     private SkinnedMeshRenderer m_SkinmeshRenderer;
 
+    /// <summary>
+    /// 0   ::   FrontAttack    보스 기준 앞 공격
+    /// 1   ::   BackAttack     보스 기준 뒤 공격
+    /// 2   ::   RightAttack    보스 기준 오른쪽 공격
+    /// 3   ::   LeftAttack     보스 기준 왼쪽 공격
+    /// </summary>
     public BoxCollider[] m_AttackArea;
 
     [SerializeField]
@@ -39,6 +45,9 @@ public class Boss : MonoBehaviour
 
     public GameObject m_BombObject;
 
+    [SerializeField]
+    private int m_TurnAttackNumber;
+
     void Awake()
     {
         m_Rigid = GetComponent<Rigidbody>();
@@ -53,6 +62,7 @@ public class Boss : MonoBehaviour
         m_HpBar.maxValue = m_MaxHealth;
         m_HpBar.minValue = 9100;
         m_PhaseNumber = 1;
+        m_TurnAttackNumber = 0;
     }
 
     void Start()
@@ -93,6 +103,7 @@ public class Boss : MonoBehaviour
         float HpPercent = m_CurHealth / 120;
         m_HpPercent.text = HpPercent.ToString("F0") + "%";
 
+        // 공격 테스트용 :: StartCoroutine(BossThink()) 비활성화
         TestAttack();
     }
 
@@ -250,7 +261,21 @@ public class Boss : MonoBehaviour
 
     void BossRotateAttack()
     {
-        m_Anim.SetTrigger("Rotate Attack");
+        switch (m_TurnAttackNumber)
+        {
+            case 0:
+                m_Anim.SetTrigger("Turn_1 Attack");
+                m_TurnAttackNumber++;
+                break;
+            case 1:
+                m_Anim.SetTrigger("Turn_2 Attack");
+                m_TurnAttackNumber++;
+                break;
+            case 2:
+                m_Anim.SetTrigger("Turn_3 Attack");
+                m_TurnAttackNumber = 0;
+                break;
+        }
     }
 
     IEnumerator BossLongDisAttack()
@@ -296,7 +321,11 @@ public class Boss : MonoBehaviour
             m_AttackArea[2].enabled = false;
             m_AttackArea[3].enabled = false;
         }
+        //StartCoroutine(BossThink());
+    }
 
+    public void AttackEnd()
+    {
         //StartCoroutine(BossThink());
     }
 

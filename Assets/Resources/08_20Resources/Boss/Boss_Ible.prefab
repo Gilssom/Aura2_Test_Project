@@ -304,9 +304,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4533359066025704996}
-  - {fileID: 8858101757982056408}
   - {fileID: 1058895429977918305}
   - {fileID: 3166231621848406117}
+  - {fileID: 8858101757982056408}
   - {fileID: 7916032337192213744}
   m_Father: {fileID: 5686961532606879697}
   m_RootOrder: 0
@@ -371,7 +371,7 @@ Transform:
   m_Children:
   - {fileID: 8288177604492123059}
   m_Father: {fileID: 277473126311738334}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2456007785981084598
 GameObject:
@@ -783,6 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083d548f297597d4fa97ff37076f4a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PathSystem: {fileID: 0}
   m_MaxHealth: 12000
   m_CurHealth: 0
   m_AttackArea:
@@ -794,6 +795,7 @@ MonoBehaviour:
   m_HitEffect: {fileID: 6244133246584083714, guid: c03d7347ce37f4e40bf8fd80841c7f5b, type: 3}
   m_HpBar: {fileID: 0}
   m_HpPercent: {fileID: 0}
+  m_BombObject: {fileID: 5823326177091474843, guid: c007391e85c3db344a588f992c40cf9a, type: 3}
 --- !u!114 &5293897024247759092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,7 +1031,7 @@ Transform:
   m_Children:
   - {fileID: 5385597016853053855}
   m_Father: {fileID: 277473126311738334}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5516157401450429580
 GameObject:
@@ -1245,7 +1247,7 @@ Transform:
   m_Children:
   - {fileID: 2669321358506779158}
   m_Father: {fileID: 277473126311738334}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7144826480740560046
 GameObject:
