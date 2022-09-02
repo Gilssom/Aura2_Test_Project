@@ -24,7 +24,6 @@ public class BossFollowPath : MonoBehaviour
     {
         if (m_PathCreator != null)
         {
-            m_Boss.Attack(5);
             m_DistanceTravelled += m_PathSpeed * Time.deltaTime;
             transform.position = m_PathCreator.path.GetPointAtDistance(m_DistanceTravelled, EndOfPathInstruction.Stop);
             transform.rotation = m_PathCreator.path.GetRotationAtDistance(m_DistanceTravelled, EndOfPathInstruction.Stop);
@@ -33,7 +32,7 @@ public class BossFollowPath : MonoBehaviour
             {
                 m_DistanceTravelled = 0;
                 this.enabled = false;
-                m_Boss.AttackFalse(5);
+                m_Boss.BossMovingAttackFalse();
             }
         }
     }

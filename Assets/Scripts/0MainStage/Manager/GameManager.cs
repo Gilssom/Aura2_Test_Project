@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_DoorObject;
     public GameObject[] m_TutorialObject;
 
+    public GameObject m_Boss;
+
     private static GameManager m_instance;
     // ΩÃ±€≈Ê
     public static GameManager Instance
@@ -143,6 +145,13 @@ public class GameManager : MonoBehaviour
     public void Tutorial(int Number)
     {
         TutorialManager.Instance.InStartFadeAnim(Number);
+    }
+
+    public void BossStage()
+    {
+        SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[1]);
+        UIManager.Instance.BossStageUI();
+        m_Boss.gameObject.SetActive(true);
     }
 
     public void NextField(int SceneNum)

@@ -27,6 +27,7 @@ public class Boss : MonoBehaviour
     /// 3   ::   LeftAttack     보스 기준 왼쪽 공격
     /// </summary>
     public BoxCollider[] m_AttackArea;
+    public CapsuleCollider m_TornadoArea;
 
     [SerializeField]
     private float m_PhaseNumber;
@@ -35,6 +36,8 @@ public class Boss : MonoBehaviour
     private float MinCutoff = 0;
     private float Cutoff = default;
     private float Speed = 0.005f;
+
+    private bool isDeath = false;
 
     private GameObject m_DropSoul;
     private GameObject m_DropHeal;
@@ -47,6 +50,15 @@ public class Boss : MonoBehaviour
 
     [SerializeField]
     private int m_TurnAttackNumber;
+
+    /// <summary>
+    /// 0 :: Normal Attack Sound
+    /// 1 :: Moving Attack Sound
+    /// 2 :: Voice Sound
+    /// 3 :: Short Normal Attack Sound 
+    /// 4 :: Short Voice Sound
+    /// </summary>
+    public AudioClip[] m_SoundEffect;
 
     void Awake()
     {
@@ -78,7 +90,7 @@ public class Boss : MonoBehaviour
             m_Anim.Play("Scream");
         }
 
-        //StartCoroutine(BossThink());
+        StartCoroutine(BossThink());
     }
 
     void Update()
@@ -104,12 +116,16 @@ public class Boss : MonoBehaviour
         m_HpPercent.text = HpPercent.ToString("F0") + "%";
 
         // 공격 테스트용 :: StartCoroutine(BossThink()) 비활성화
-        TestAttack();
+        //TestAttack();
     }
 
     void TestAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[1]);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             BossNormalAttack();
         }
@@ -256,7 +272,21 @@ public class Boss : MonoBehaviour
 
     void BossMovingAttack()
     {
+        m_Anim.SetBool("Right Tornado Attack", true);
+        m_TornadoArea.enabled = true;
         m_PathSystem.enabled = true;
+    }
+
+    public void AttackSound(int AttackNumber)
+    {
+        SoundManager.Instance.SFXPlay("Attack", m_SoundEffect[AttackNumber]);
+    }
+
+    public void BossMovingAttackFalse()
+    {
+        m_Anim.SetBool("Right Tornado Attack", false);
+        m_TornadoArea.enabled = false;
+        StartCoroutine(BossThink());
     }
 
     void BossRotateAttack()
@@ -273,13 +303,14 @@ public class Boss : MonoBehaviour
                 break;
             case 2:
                 m_Anim.SetTrigger("Turn_3 Attack");
-                m_TurnAttackNumber = 0;
+                m_TurnAttackNumber = 1;
                 break;
         }
     }
 
     IEnumerator BossLongDisAttack()
     {
+        SoundManager.Instance.SFXPlay("Attack", m_SoundEffect[2]);
         m_Anim.SetBool("Long Attack", true);
         Vector3 Pos = this.transform.position;
         int AttackNumbers = Random.Range(10, 15);
@@ -294,11 +325,14 @@ public class Boss : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         m_Anim.SetBool("Long Attack", false);
-        //StartCoroutine(BossThink());
+        StartCoroutine(BossThink());
     }
 
     public void Attack(int AttackNumber)
     {
+        if(AttackNumber != 5)
+            SoundManager.Instance.SFXPlay("Attack", m_SoundEffect[3]);
+
         if(AttackNumber < 4)
             m_AttackArea[AttackNumber].enabled = true;
         else
@@ -321,17 +355,20 @@ public class Boss : MonoBehaviour
             m_AttackArea[2].enabled = false;
             m_AttackArea[3].enabled = false;
         }
-        //StartCoroutine(BossThink());
     }
 
     public void AttackEnd()
     {
-        //StartCoroutine(BossThink());
+        StartCoroutine(BossThink());
     }
 
     void Death()
     {
-        Destroy(m_HpBar.gameObject);
+        if (!isDeath)
+            SoundManager.Instance.SFXPlay("Death", m_SoundEffect[6]);
+        //Destroy(m_HpBar.gameObject);
+        isDeath = true;
+        m_HpBar.gameObject.SetActive(false);
         CancelInvoke();
         StopAllCoroutines();
         m_Anim.Play("Death");

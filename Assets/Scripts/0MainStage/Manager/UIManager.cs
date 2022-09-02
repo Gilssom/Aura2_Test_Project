@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] m_SkillGage;
 
+    public GameObject m_BossUI;
+
     private static UIManager m_instance;
     // ΩÃ±€≈Ê
     public static UIManager Instance
@@ -488,6 +490,11 @@ public class UIManager : MonoBehaviour
 
             m_StationPanel.SetActive(false);
         }
+    }
+
+    public void BossStageUI()
+    {
+        m_BossUI.SetActive(true);
     }
 
     public IEnumerator DeathScreen()

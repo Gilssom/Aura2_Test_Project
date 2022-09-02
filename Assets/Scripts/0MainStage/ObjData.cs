@@ -40,6 +40,7 @@ public class ObjData : MonoBehaviour
     private bool isFire = false;
 
     int Kill;
+    [SerializeField]
     float OnFire;
     bool OnDoor;
 

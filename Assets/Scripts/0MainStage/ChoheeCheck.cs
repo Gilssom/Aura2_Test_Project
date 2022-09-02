@@ -46,6 +46,11 @@ public class ChoheeCheck : MonoBehaviour
             GameManager.Instance.Tutorial(2);
             Destroy(other.gameObject);
         }
+        if(other.tag == "BossGate")
+        {
+            GameManager.Instance.BossStage();
+            Destroy(other.gameObject);
+        }
 
         if(other.tag == "VillagePortal")
         {
