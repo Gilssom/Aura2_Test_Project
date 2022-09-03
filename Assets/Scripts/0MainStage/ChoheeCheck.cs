@@ -54,7 +54,8 @@ public class ChoheeCheck : MonoBehaviour
 
         if(other.tag == "VillagePortal")
         {
-            GameManager.Instance.NextField(1);
+            //GameManager.Instance.NextField(1);
+            FadeInOutManager.Instance.InStartFadeAnim("VillageStage" , 1);
         }
     }
 }

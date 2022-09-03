@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_TutorialObject;
 
     public GameObject m_Boss;
+    public bool m_FirstBossEnd;
 
     private static GameManager m_instance;
     // ΩÃ±€≈Ê
@@ -154,10 +155,10 @@ public class GameManager : MonoBehaviour
         m_Boss.gameObject.SetActive(true);
     }
 
-    public void NextField(int SceneNum)
+    public void NextField(string SceneName, int SceneNum)
     {
         Debug.Log(SceneNum + " = SceneNumber");
-        SceneManager.LoadScene(SceneNum);
+        //LoadingSceneManager.LoadScene(SceneName);
         m_Player.transform.position = m_FieldStartPos[SceneNum].position;
         m_Player.transform.rotation = m_FieldStartPos[SceneNum].rotation;
     }

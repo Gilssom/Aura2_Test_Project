@@ -382,6 +382,7 @@ public class Boss : MonoBehaviour
 
         if (Cutoff >= MaxCutoff)
         {
+            GameManager.Instance.m_FirstBossEnd = true;
             Destroy(this.gameObject);
             GameManager.Instance.m_KillCount += 1;
 

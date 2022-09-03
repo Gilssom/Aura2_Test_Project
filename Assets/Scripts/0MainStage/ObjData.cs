@@ -13,6 +13,7 @@ public class ObjData : MonoBehaviour
     /// 6 ~ 7 = Door   ( Dissolve ) ( Frist ~ Third Field ) ,
     /// 8 ~ 12 = Fence ( Dissolve ) ( Forth ~ Seventh Field ) ,
     /// 13 ~ 16 = Door  ( Dissolve ) ( Forth ~ Seventh Field ) ,
+    /// 17 = Boss End Door Go Village
     /// ㄴ> 14  = Reverse Door ( Reverse Dissolve ) ,
     /// 1000 = 대장장이 ,
     /// 2000 = 재봉사 ,
@@ -43,6 +44,7 @@ public class ObjData : MonoBehaviour
     [SerializeField]
     float OnFire;
     bool OnDoor;
+    bool StopDissolve;
 
     public Vector3 m_DownPos;
 
@@ -50,9 +52,7 @@ public class ObjData : MonoBehaviour
     {
         // First ~ Third Field
         if (id == 1)
-        {
             m_Child = transform.GetChild(0).gameObject;
-        }
 
         if (id == 2)
         {
@@ -70,13 +70,15 @@ public class ObjData : MonoBehaviour
             isFire = true;
             m_Child = transform.GetChild(0).gameObject;
         }
-        if (id == 5 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14)
+
+        if (id == 5 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14 || id == 17)
             Speed = 0.0025f;
 
+        if (id == 17)
+            Cutoff = 1;
+
         if (isNpc)
-        {
             isNeedTalk = true;
-        }
     }
 
     void Update()
@@ -124,6 +126,8 @@ public class ObjData : MonoBehaviour
             StartCoroutine(DoorDown(m_DownPos, 12));
         if (id == 16 && !OnDoor) // 3-4 Spawn
             StartCoroutine(DoorDown(m_DownPos, 16));
+        if (id == 17 && GameManager.Instance.m_FirstBossEnd && !StopDissolve)
+            DoorDissolve();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -190,22 +194,26 @@ public class ObjData : MonoBehaviour
         yield return null;
     }
 
-    /*void DoorDissolve(int ObjNum)
+    void DoorDissolve()
     {
+        Debug.Log(Cutoff);
+
         BoxCollider coll = GetComponent<BoxCollider>();
 
         if (coll)
             coll.enabled = true;
 
         Cutoff -= Speed;
+
         if (Cutoff != MinCutoff && Cutoff >= MinCutoff)
         {
             this.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve", Cutoff);
         }
         else if (Cutoff <= MinCutoff)
         {
+            StopDissolve = true;
             Speed = 0;
-            GameManager.Instance.ObjectCtrl(ObjNum, true);
+            GameManager.Instance.ObjectCtrl(20, true);
         }
-    }*/
+    }
 }
