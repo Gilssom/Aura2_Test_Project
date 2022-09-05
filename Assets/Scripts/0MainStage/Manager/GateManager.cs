@@ -14,7 +14,7 @@ public class GateManager : MonoBehaviour
             {
                 m_Portal[i].SetActive(true);
                 UIManager.Instance.SmithySystem(false, "Gate Keeper");
-                GameManager.Instance.isWeaponShop = false;
+                AllGameManager.Instance.isWeaponShop = false;
             }
             else
                 break;

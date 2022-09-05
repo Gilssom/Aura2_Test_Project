@@ -43,6 +43,7 @@ public class Boss : MonoBehaviour
     private GameObject m_DropHeal;
 
     public GameObject m_HitEffect;
+    public GameObject m_BossUI;
     public Slider m_HpBar;
     public Text m_HpPercent;
 
@@ -79,6 +80,7 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
+        m_BossUI.SetActive(true);
         m_CurHealth = m_MaxHealth;
         Invoke("BossThinkStart", 2);
     }

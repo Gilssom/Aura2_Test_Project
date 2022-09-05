@@ -93,7 +93,7 @@ public class ChoheeWeapon : MonoBehaviour
     {
         if (MaskName == "NormalMask_Item")
         {
-            SoundManager.Instance.SFXPlay("Mask Equid", GameManager.Instance.m_Clip[3]);
+            SoundManager.Instance.SFXPlay("Mask Equid", AllGameManager.Instance.m_Clip[3]);
             m_MaskType = "Normal";
             m_Player.Speed = 5;
             m_Player.m_WeaponCurType = 0;
@@ -110,7 +110,7 @@ public class ChoheeWeapon : MonoBehaviour
         }
         else if (MaskName == "SpeedMask_Item")
         {
-            SoundManager.Instance.SFXPlay("Mask Equid", GameManager.Instance.m_Clip[3]);
+            SoundManager.Instance.SFXPlay("Mask Equid", AllGameManager.Instance.m_Clip[3]);
             m_MaskType = "Speed";
             m_Player.Speed = 6;
             m_Player.m_WeaponCurType = 0;
@@ -127,7 +127,7 @@ public class ChoheeWeapon : MonoBehaviour
         }
         else if (MaskName == "FireMask_Item")
         {
-            SoundManager.Instance.SFXPlay("Mask Equid", GameManager.Instance.m_Clip[3]);
+            SoundManager.Instance.SFXPlay("Mask Equid", AllGameManager.Instance.m_Clip[3]);
             m_MaskType = "Fire";
             m_Player.Speed = 5;
             m_Player.m_WeaponCurType = 1;
@@ -144,7 +144,7 @@ public class ChoheeWeapon : MonoBehaviour
         }
         else if(MaskName == "IceMask_Item")
         {
-            SoundManager.Instance.SFXPlay("Mask Equid", GameManager.Instance.m_Clip[3]);
+            SoundManager.Instance.SFXPlay("Mask Equid", AllGameManager.Instance.m_Clip[3]);
             m_MaskType = "Ice";
             m_Player.Speed = 5;
             m_Player.m_WeaponCurType = 2;

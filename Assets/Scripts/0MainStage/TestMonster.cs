@@ -321,13 +321,13 @@ public class TestMonster : MonoBehaviour
         switch (m_EnemyType)
         {
             case EnemyType.HellGhost:
-                SoundManager.Instance.SFXPlay("Ghost Attack", GameManager.Instance.m_Clip[5]);
+                SoundManager.Instance.SFXPlay("Ghost Attack", AllGameManager.Instance.m_Clip[5]);
                 break;
             case EnemyType.FireMonster:
-                SoundManager.Instance.SFXPlay("Fire Attack", GameManager.Instance.m_Clip[6]);
+                SoundManager.Instance.SFXPlay("Fire Attack", AllGameManager.Instance.m_Clip[6]);
                 break;
             case EnemyType.LanternMonster:
-                SoundManager.Instance.SFXPlay("Fire Attack", GameManager.Instance.m_Clip[6]);
+                SoundManager.Instance.SFXPlay("Fire Attack", AllGameManager.Instance.m_Clip[6]);
                 break;
         }
         m_AttackArea.enabled = true;

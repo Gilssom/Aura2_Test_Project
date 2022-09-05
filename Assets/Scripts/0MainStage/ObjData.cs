@@ -83,8 +83,11 @@ public class ObjData : MonoBehaviour
 
     void Update()
     {
-        Kill = GameManager.Instance.m_KillCount;
-        OnFire = FieldObjectController.Instance.m_FireOnCount;
+        if(!isNpc)
+        {
+            Kill = GameManager.Instance.m_KillCount;
+            OnFire = FieldObjectController.Instance.m_FireOnCount;
+        }
 
         if (isNpc)
             m_Exclamation.SetActive(isNeedTalk);
@@ -142,7 +145,7 @@ public class ObjData : MonoBehaviour
                     FieldObjectController.Instance.m_FireOnCount += 1;
                 
                 isFire = true;
-                SoundManager.Instance.SFXPlay("Fire On", GameManager.Instance.m_Clip[1]);
+                SoundManager.Instance.SFXPlay("Fire On", AllGameManager.Instance.m_Clip[1]);
                 m_Child.SetActive(true);
             }
             else if (other.tag == "IceWeapon" && isFire)
@@ -185,7 +188,7 @@ public class ObjData : MonoBehaviour
     IEnumerator DoorDown(Vector3 SpawnPos , int ObjNum)
     {
         OnDoor = true;
-        SoundManager.Instance.SFXPlay("DoorSFX", GameManager.Instance.m_Clip[0]);
+        SoundManager.Instance.SFXPlay("DoorSFX", AllGameManager.Instance.m_Clip[0]);
         yield return new WaitForSeconds(0.6f);
         this.gameObject.transform.DOMove(SpawnPos, 0.1f);
         yield return new WaitForSeconds(0.5f);

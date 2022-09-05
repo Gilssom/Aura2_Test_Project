@@ -78,8 +78,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] m_SkillGage;
 
-    public GameObject m_BossUI;
-
     private static UIManager m_instance;
     // ΩÃ±€≈Ê
     public static UIManager Instance
@@ -152,7 +150,7 @@ public class UIManager : MonoBehaviour
         SettingMenu();
         PauseFalse();
 
-        if (!GameManager.Instance.isTalkAction && m_TalkImage.anchoredPosition.y == -1000)
+        if (!AllGameManager.Instance.isTalkAction && m_TalkImage.anchoredPosition.y == -1000)
             m_TalkPanel.SetActive(false);
     }
 
@@ -251,30 +249,30 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0f;
         m_PauseIcon[0].SetActive(true);
         m_PausePanel.SetActive(true);
-        GameManager.Instance.isPause = true;
+        AllGameManager.Instance.isPause = true;
         
     }
 
     void PauseFalse()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.isPause)
+        if (Input.GetKeyDown(KeyCode.Escape) && AllGameManager.Instance.isPause)
         {
             Time.timeScale = 1f;
             m_PausePanel.SetActive(false);
             m_ExitPanel.SetActive(false);
-            GameManager.Instance.isPause = false;
+            AllGameManager.Instance.isPause = false;
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isPause)
+        else if(Input.GetKeyDown(KeyCode.Escape) && !AllGameManager.Instance.isPause)
         {
             Time.timeScale = 0f;
             m_ExitPanel.SetActive(true);
-            GameManager.Instance.isPause = true;
+            AllGameManager.Instance.isPause = true;
         }
     }
 
     public void PauseChagneMenu(int MenuNumber)
     {
-        SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+        SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
 
         for (int i = 0; i < 3; i++)
         {
@@ -296,13 +294,13 @@ public class UIManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.UpArrow) && m_SettingMenuNumber > -1 && m_SettingMenuNumber < 2)
         {
             m_SettingMenuNumber++;
-            SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+            SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
             SettingTextCtrl(m_SettingMenuNumber);
         }
         else if(Input.GetKeyUp(KeyCode.DownArrow) && m_SettingMenuNumber > 0 && m_SettingMenuNumber < 3)
         {
             m_SettingMenuNumber--;
-            SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+            SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
             SettingTextCtrl(m_SettingMenuNumber);
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow))
@@ -310,13 +308,13 @@ public class UIManager : MonoBehaviour
             if (m_SettingMenuNumber == 1 && m_SFXGage > -1 && m_SFXGage < 5)
             {
                 m_SFXGage++;
-                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+                SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_SFXGage);
             }
-            else if (m_SettingMenuNumber == 2 && m_SFXGage > -1 && m_SFXGage < 5)
+            else if (m_SettingMenuNumber == 2 && m_BGMGage > -1 && m_BGMGage < 5)
             {
                 m_BGMGage++;
-                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+                SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_BGMGage);
             }
             else
@@ -327,13 +325,13 @@ public class UIManager : MonoBehaviour
             if (m_SettingMenuNumber == 1 && m_SFXGage > 0 && m_SFXGage < 6)
             {
                 m_SFXGage--;
-                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+                SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_SFXGage);
             }
             else if (m_SettingMenuNumber == 2 && m_BGMGage > 0 && m_BGMGage < 6)
             {
                 m_BGMGage--;
-                SoundManager.Instance.SFXPlay("Button", GameManager.Instance.m_Clip[2]);
+                SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
                 SettingGageCtrl(m_BGMGage);
             }
             else
@@ -436,7 +434,7 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 1f;
             m_ExitPanel.SetActive(false);
-            GameManager.Instance.isPause = false;
+            AllGameManager.Instance.isPause = false;
         }
     }
 
@@ -490,11 +488,6 @@ public class UIManager : MonoBehaviour
 
             m_StationPanel.SetActive(false);
         }
-    }
-
-    public void BossStageUI()
-    {
-        m_BossUI.SetActive(true);
     }
 
     public IEnumerator DeathScreen()

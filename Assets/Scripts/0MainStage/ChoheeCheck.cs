@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ChoheeCheck : MonoBehaviour
 {
+    private ChoheeController m_Player;
+
+    private void Awake()
+    {
+        m_Player = this.GetComponent<ChoheeController>();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DropItem")
@@ -23,7 +30,7 @@ public class ChoheeCheck : MonoBehaviour
                     }
                     break;
                 case ItemScript.Type.Soul:
-                    SoundManager.Instance.SFXPlay("Soul acquire", GameManager.Instance.m_Clip[4]);
+                    SoundManager.Instance.SFXPlay("Soul acquire", AllGameManager.Instance.m_Clip[4]);
                     PlayerStats.Instance.Addsoul();
                     Destroy(other.gameObject);
                     break;
@@ -55,7 +62,15 @@ public class ChoheeCheck : MonoBehaviour
         if(other.tag == "VillagePortal")
         {
             //GameManager.Instance.NextField(1);
+            m_Player.isLoading = true;
             FadeInOutManager.Instance.InStartFadeAnim("VillageStage" , 1);
+        }
+
+        if (other.tag == "StagePortal")
+        {
+            //GameManager.Instance.NextField(1);
+            m_Player.isLoading = true;
+            FadeInOutManager.Instance.InStartFadeAnim("MainStage", 2);
         }
     }
 }

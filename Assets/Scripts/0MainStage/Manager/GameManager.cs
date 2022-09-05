@@ -8,21 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public int m_KillCount;
 
-    public bool isPause;
-    public bool isWeaponShop;
-
-    public bool isTalkAction;
-
-    public int m_TalkIndex;
-
-    public Transform[] m_FieldStartPos;
-
-    private GameObject m_Player;
-    private NearNpcCheck m_NearNpc;
-
-    [SerializeField]
-    public AudioClip[] m_Clip;
-
     public GameObject[] m_CountObject;
     public GameObject[] m_DoorObject;
     public GameObject[] m_TutorialObject;
@@ -58,12 +43,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(this);
-
-        isPause = false;
-
-        m_Player = GameObject.FindWithTag("Player");
-        m_NearNpc = m_Player.GetComponent<NearNpcCheck>();
+        //DontDestroyOnLoad(this);
     }
 
     void Update()
@@ -136,7 +116,7 @@ public class GameManager : MonoBehaviour
     {
         Vector3 GatePos = new Vector3(81.06154f, 18.84901f, 67.98146f);
 
-        SoundManager.Instance.SFXPlay("DoorSFX", m_Clip[0]);
+        SoundManager.Instance.SFXPlay("DoorSFX", AllGameManager.Instance.m_Clip[0]);
         yield return new WaitForSeconds(0.6f);
         m_CountObject[1].transform.DOMove(GatePos, 0.1f);
         
@@ -151,77 +131,6 @@ public class GameManager : MonoBehaviour
     public void BossStage()
     {
         SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[1]);
-        UIManager.Instance.BossStageUI();
         m_Boss.gameObject.SetActive(true);
-    }
-
-    public void NextField(string SceneName, int SceneNum)
-    {
-        Debug.Log(SceneNum + " = SceneNumber");
-        //LoadingSceneManager.LoadScene(SceneName);
-        m_Player.transform.position = m_FieldStartPos[SceneNum].position;
-        m_Player.transform.rotation = m_FieldStartPos[SceneNum].rotation;
-    }
-
-    public void Action()
-    {
-        ObjData objData = m_NearNpc.m_NearNpc.GetComponent<ObjData>();
-        Talk(objData.id, objData.isNpc);
-
-        if(objData.isNeedTalk)
-        {
-            UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
-            UIManager.Instance.m_TalkImage.DOAnchorPosY(-250, 0.75f).SetEase(Ease.OutQuad);
-        }
-    }
-
-    void Talk(int id, bool isNpc)
-    {
-        ObjData objData = m_NearNpc.m_NearNpc.GetComponent<ObjData>();
-        int questTalkIndex = QuestManager.Instance.GetQuestTalkIndex(id);
-        string talkData = TalkManager.Instance.GetTalk(id + questTalkIndex, m_TalkIndex);
-        string RandomtalkData = TalkManager.Instance.GetTalk(id, Random.Range(0, 2));
-
-        if(talkData == null)
-        {
-            m_TalkIndex = 0;
-            isTalkAction = false;
-            objData.isNeedTalk = false;
-            UIManager.Instance.m_TalkImage.DOAnchorPosY(-1000, 0.75f).SetEase(Ease.OutQuad);
-            return;
-        }
-
-        if(isNpc && objData.isNeedTalk)
-        {
-            UIManager.Instance.m_TalkText.text = talkData;
-
-            if (m_NearNpc.m_NearNpc.name == "WeaponNpc")
-                UIManager.Instance.m_TalkNpcNameText.text = "대장장이";
-            else if (m_NearNpc.m_NearNpc.name == "ArmorNpc")
-                UIManager.Instance.m_TalkNpcNameText.text = "재봉사";
-            else if (m_NearNpc.m_NearNpc.name == "Station Master")
-                UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
-            else if (m_NearNpc.m_NearNpc.name == "Gate Keeper")
-                UIManager.Instance.m_TalkNpcNameText.text = "문지기";
-
-            isTalkAction = true;
-            m_TalkIndex++;
-        }
-
-        if(isNpc && !objData.isNeedTalk)
-        {
-            if (id == 1000)
-                UIManager.Instance.m_WeaponPanelText.text = RandomtalkData;
-            if (id == 2000)
-                UIManager.Instance.m_ArmorPanelText.text = RandomtalkData;
-            if (id == 3000)
-                UIManager.Instance.m_StationPanelText.text = RandomtalkData;
-            if (id == 4000)
-                UIManager.Instance.m_GatePanelText.text = RandomtalkData;
-        }
-        else
-        {
-
-        }
     }
 }

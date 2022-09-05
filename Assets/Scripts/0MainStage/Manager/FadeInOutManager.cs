@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class FadeInOutManager : MonoBehaviour
 {
-    public Image m_FadeBG;
+    [SerializeField]
+    private Image m_FadeBG;
     public float m_FadeTime = 2f;
 
     float m_Start;
@@ -45,6 +46,8 @@ public class FadeInOutManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
+
+        m_FadeBG = GameObject.Find("FadeBG").GetComponent<Image>();
     }
 
     public void OutStartFadeAnim()
@@ -95,23 +98,22 @@ public class FadeInOutManager : MonoBehaviour
         }
 
         isPlaying = false;
+
+        AllGameManager.Instance.SceneChange();
     }
 
     IEnumerator FadeInPlay(string SceneName, int SceneNumber)
     {
-        Color color = m_FadeBG.color;
         isPlaying = true;
 
         Color fadecolor = m_FadeBG.color;
 
-        while (color.a <= 255)
-            m_Time = 0f;
+        m_Time = 0f;
 
         fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
 
         while (fadecolor.a < 1f)
         {
-            color.a += Time.deltaTime * 0.1f;
             m_Time += Time.deltaTime / m_FadeTime;
 
             fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
@@ -121,9 +123,11 @@ public class FadeInOutManager : MonoBehaviour
             yield return null;
         }
 
-        yield return null;
         isPlaying = false;
 
-        GameManager.Instance.NextField(SceneName, SceneNumber);
+        if(SceneNumber == 1 || SceneNumber == 2)
+            AllGameManager.Instance.NextField(SceneName, SceneNumber);
+        else if(SceneNumber == 0)
+            LoadingSceneManager.LoadScene(SceneName);
     }
 }
