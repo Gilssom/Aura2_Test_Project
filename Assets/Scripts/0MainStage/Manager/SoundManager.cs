@@ -11,6 +11,11 @@ public class SoundManager : MonoBehaviour
     public AudioSource m_BgSound;
     public AudioClip[] m_BgList;
 
+    public int m_SFXGage;
+    public int m_BGMGage;
+
+    public string m_SceneName;
+
     private static SoundManager m_instance;
     // ΩÃ±€≈Ê
     public static SoundManager Instance
@@ -41,6 +46,9 @@ public class SoundManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
+
+        m_SFXGage = 4;
+        m_BGMGage = 4;
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -48,8 +56,11 @@ public class SoundManager : MonoBehaviour
         for (int i = 0; i < m_BgList.Length; i++)
         {
             Debug.Log(arg0.name);
-            if(arg0.name == m_BgList[i].name)
+            m_SceneName = arg0.name;
+            if (arg0.name == m_BgList[i].name)
                 BgSoundPlay(m_BgList[i]);
+            else if (arg0.name == "LoadingScene")
+                m_BgSound.Stop();
         }
     }
 

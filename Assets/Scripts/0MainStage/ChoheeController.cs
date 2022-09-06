@@ -51,7 +51,7 @@ public class ChoheeController : MonoBehaviour
     bool isCharge;
     bool isDodge;
 
-    public bool isLoading = false;
+    public bool isLoading;
 
     [SerializeField]
     bool isWall;
@@ -86,6 +86,7 @@ public class ChoheeController : MonoBehaviour
         m_AreaType[4].enabled = false; // Fire Weapon
         m_AreaType[5].enabled = false; // Ice Weapon
         m_FinalAttack = false;
+        isLoading = true;
         Speed = 5;
 
         m_EnforceEffectVFX[0].Stop();

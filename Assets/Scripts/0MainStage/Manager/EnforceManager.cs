@@ -51,10 +51,13 @@ public class EnforceManager : MonoBehaviour
 
     public Text m_SoulCount;
 
-    void Start()
+    private void Awake()
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
+    }
 
+    void Start()
+    {
         if (isWeapon)
         {
             m_PauseDamageText.text = "100%";
@@ -73,6 +76,9 @@ public class EnforceManager : MonoBehaviour
             m_PauseChargeText_2.text = m_PauseChargeText.text;
 
         m_SoulCount.text = UIManager.Instance.m_SoulCount.text;
+
+        if(!m_Anim)
+            m_Anim = m_Player.GetComponent<Animator>();
     }
 
     public void DamageEnforce()

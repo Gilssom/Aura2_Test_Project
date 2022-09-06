@@ -199,8 +199,6 @@ public class ObjData : MonoBehaviour
 
     void DoorDissolve()
     {
-        Debug.Log(Cutoff);
-
         BoxCollider coll = GetComponent<BoxCollider>();
 
         if (coll)

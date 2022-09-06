@@ -60,7 +60,7 @@ public class FadeInOutManager : MonoBehaviour
         m_Start = 1f;
         m_End = 0f;
 
-        StartCoroutine("FadeOutPlay");
+        StartCoroutine(FadeOutPlay());
     }
 
     public void InStartFadeAnim(string SceneName, int SceneNumber)

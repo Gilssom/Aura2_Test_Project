@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     private ChoheeController m_Player;
     private NearItemCheck m_Item;
     private NearNpcCheck m_Npc;
+    private AudioClip m_ButtonSound;
 
     public Text m_NearNameText;
     public Image m_PlayerHealth;
@@ -46,8 +47,6 @@ public class UIManager : MonoBehaviour
     public Image[] m_SFX;
 
     int m_SettingMenuNumber;
-    int m_SFXGage;
-    int m_BGMGage;
     private Sprite m_SettingGageOn;
     private Sprite m_SettingGageOff;
 
@@ -131,11 +130,12 @@ public class UIManager : MonoBehaviour
         m_SkillGage[1] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_Ready");
         m_SkillGage[2] = Resources.Load<Sprite>("7Textures/06_05UITexture/Skill_True");
 
+        m_ButtonSound = Resources.Load<AudioClip>("8SoundResources/06_08SFX/volume_sound");
         m_SettingGageOn = Resources.Load<Sprite>("7Textures/UI/Settings/GageOn");
         m_SettingGageOff = Resources.Load<Sprite>("7Textures/UI/Settings/GageOff");
 
-        m_SFXGage = 4;
-        m_BGMGage = 4;
+        SFXSoundReCheck(SoundManager.Instance.m_SFXGage);
+        BGMSoundReCheck(SoundManager.Instance.m_BGMGage);
     }
 
     void Update()
@@ -152,6 +152,11 @@ public class UIManager : MonoBehaviour
 
         if (!AllGameManager.Instance.isTalkAction && m_TalkImage.anchoredPosition.y == -1000)
             m_TalkPanel.SetActive(false);
+    }
+
+    public void ButtonSound()
+    {
+        SoundManager.Instance.SFXPlay("Button", m_ButtonSound);
     }
 
     void NearInfo()
@@ -305,34 +310,34 @@ public class UIManager : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            if (m_SettingMenuNumber == 1 && m_SFXGage > -1 && m_SFXGage < 5)
+            if (m_SettingMenuNumber == 1 && SoundManager.Instance.m_SFXGage > -1 && SoundManager.Instance.m_SFXGage < 5)
             {
-                m_SFXGage++;
+                SoundManager.Instance.m_SFXGage++;
                 SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
-                SettingGageCtrl(m_SFXGage);
+                SettingGageCtrl(SoundManager.Instance.m_SFXGage);
             }
-            else if (m_SettingMenuNumber == 2 && m_BGMGage > -1 && m_BGMGage < 5)
+            else if (m_SettingMenuNumber == 2 && SoundManager.Instance.m_BGMGage > -1 && SoundManager.Instance.m_BGMGage < 5)
             {
-                m_BGMGage++;
+                SoundManager.Instance.m_BGMGage++;
                 SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
-                SettingGageCtrl(m_BGMGage);
+                SettingGageCtrl(SoundManager.Instance.m_BGMGage);
             }
             else
                 return;
         }
         else if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            if (m_SettingMenuNumber == 1 && m_SFXGage > 0 && m_SFXGage < 6)
+            if (m_SettingMenuNumber == 1 && SoundManager.Instance.m_SFXGage > 0 && SoundManager.Instance.m_SFXGage < 6)
             {
-                m_SFXGage--;
+                SoundManager.Instance.m_SFXGage--;
                 SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
-                SettingGageCtrl(m_SFXGage);
+                SettingGageCtrl(SoundManager.Instance.m_SFXGage);
             }
-            else if (m_SettingMenuNumber == 2 && m_BGMGage > 0 && m_BGMGage < 6)
+            else if (m_SettingMenuNumber == 2 && SoundManager.Instance.m_BGMGage > 0 && SoundManager.Instance.m_BGMGage < 6)
             {
-                m_BGMGage--;
+                SoundManager.Instance.m_BGMGage--;
                 SoundManager.Instance.SFXPlay("Button", AllGameManager.Instance.m_Clip[2]);
-                SettingGageCtrl(m_BGMGage);
+                SettingGageCtrl(SoundManager.Instance.m_BGMGage);
             }
             else
                 return;
@@ -383,6 +388,36 @@ public class UIManager : MonoBehaviour
         }      
     }
 
+    void SFXSoundReCheck(int Gage)
+    {
+        for (int i = Gage; i < 6; i++)
+        {
+            {
+                if (i == 0)
+                    m_SFX[1].sprite = m_SettingGageOff;
+                else if (i == Gage)
+                    m_SFX[i].sprite = m_SettingGageOn;
+                else if (i > Gage)
+                    m_SFX[i].sprite = m_SettingGageOff;
+            }
+        }
+    }
+
+    void BGMSoundReCheck(int Gage)
+    {
+        for (int i = Gage; i < 6; i++)
+        {
+            {
+                if (i == 0)
+                    m_BGM[1].sprite = m_SettingGageOff;
+                else if (i == Gage)
+                    m_BGM[i].sprite = m_SettingGageOn;
+                else if (i > Gage)
+                    m_BGM[i].sprite = m_SettingGageOff;
+            }
+        }
+    }
+
     public void KeyHelpersMouse(int MouseNumber)
     {
         for (int i = 0; i < 3; i++)
@@ -396,33 +431,33 @@ public class UIManager : MonoBehaviour
 
     void SFXSoundCheck()
     {
-        if (m_SFXGage == 0)
+        if (SoundManager.Instance.m_SFXGage == 0)
             SoundManager.Instance.SFXSoundVolume(-80);
-        else if (m_SFXGage == 1)
+        else if (SoundManager.Instance.m_SFXGage == 1)
             SoundManager.Instance.SFXSoundVolume(-20);
-        else if (m_SFXGage == 2)
+        else if (SoundManager.Instance.m_SFXGage == 2)
             SoundManager.Instance.SFXSoundVolume(-10);
-        else if (m_SFXGage == 3)
+        else if (SoundManager.Instance.m_SFXGage == 3)
             SoundManager.Instance.SFXSoundVolume(-5);
-        else if (m_SFXGage == 4)
+        else if (SoundManager.Instance.m_SFXGage == 4)
             SoundManager.Instance.SFXSoundVolume(0);
-        else if (m_SFXGage == 5)
+        else if (SoundManager.Instance.m_SFXGage == 5)
             SoundManager.Instance.SFXSoundVolume(10);
     }
 
     void BGMSoundCheck()
     {
-        if (m_BGMGage == 0)
+        if (SoundManager.Instance.m_BGMGage == 0)
             SoundManager.Instance.BGSoundVolume(-80);
-        else if (m_BGMGage == 1)
+        else if (SoundManager.Instance.m_BGMGage == 1)
             SoundManager.Instance.BGSoundVolume(-20);
-        else if (m_BGMGage == 2)
+        else if (SoundManager.Instance.m_BGMGage == 2)
             SoundManager.Instance.BGSoundVolume(-10);
-        else if (m_BGMGage == 3)
+        else if (SoundManager.Instance.m_BGMGage == 3)
             SoundManager.Instance.BGSoundVolume(-5);
-        else if (m_BGMGage == 4)
+        else if (SoundManager.Instance.m_BGMGage == 4)
             SoundManager.Instance.BGSoundVolume(0);
-        else if (m_BGMGage == 5)
+        else if (SoundManager.Instance.m_BGMGage == 5)
             SoundManager.Instance.BGSoundVolume(10);
     }
 

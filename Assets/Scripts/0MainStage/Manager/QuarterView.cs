@@ -6,6 +6,7 @@ public class QuarterView : MonoBehaviour
 {
     public Transform m_Target;
     public Vector3 m_offset;
+    public GameObject m_Fog;
 
     public bool isZoomOut;
 
@@ -44,5 +45,15 @@ public class QuarterView : MonoBehaviour
     {
         if (!isZoomOut)
             transform.position = m_Target.position + m_offset;
+
+        FogOnOff();
+    }
+
+    void FogOnOff()
+    {
+        if (SoundManager.Instance.m_SceneName == "VillageStage")
+            m_Fog.SetActive(false);
+        else
+            m_Fog.SetActive(true);
     }
 }
