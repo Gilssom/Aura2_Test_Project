@@ -23,6 +23,7 @@ public class ObjData : MonoBehaviour
     public int id;
     public bool isNpc;
     public bool isNeedTalk;
+    public bool isNotSmithy;
     public GameObject m_Exclamation;
 
     // Jangseung properties
@@ -79,6 +80,8 @@ public class ObjData : MonoBehaviour
 
         if (isNpc)
             isNeedTalk = true;
+        if (id == 3000)
+            isNotSmithy = true;
     }
 
     void Update()

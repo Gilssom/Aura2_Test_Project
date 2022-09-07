@@ -10,6 +10,7 @@ public class StartSceneManager : MonoBehaviour
     private AudioClip m_ButtonSound;
 
     public GameObject m_PausePanel;
+    public GameObject m_ContinuePanel;
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;
     public GameObject[] m_KeyHelpersMenus;
@@ -38,7 +39,8 @@ public class StartSceneManager : MonoBehaviour
 
     public void ContinueButton()
     {
-        Debug.Log("이어하기");
+        m_ContinuePanel.SetActive(true);
+        isPause = true;
     }
 
     public void SettingButton()
@@ -63,14 +65,15 @@ public class StartSceneManager : MonoBehaviour
         SettingMenu();
         SFXSoundCheck();
         BGMSoundCheck();
-        PauseFalse();
+        //PauseFalse();
     }
 
-    void PauseFalse()
+    public void PauseFalse()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isPause)
+        if(isPause)
         {
             m_PausePanel.SetActive(false);
+            m_ContinuePanel.SetActive(false);
             isPause = false;
         }
     }

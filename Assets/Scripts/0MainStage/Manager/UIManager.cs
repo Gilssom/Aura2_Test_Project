@@ -16,9 +16,13 @@ public class UIManager : MonoBehaviour
     public Image m_PlayerMask;
     public Image[] m_PlayerSkill;
     public Text m_SoulCount;
+
     public Image m_BloodScreen;
     public Image m_DeathScreen;
+    public Image m_GameOverScreen;
+    public GameObject[] m_GameOverButton;
     public bool m_BloodPlaying;
+
     public GameObject m_PausePanel;
     public GameObject m_ExitPanel;
     public GameObject m_WeaponPanel;
@@ -183,8 +187,8 @@ public class UIManager : MonoBehaviour
     void HealthCtrl()
     {
         int CurHealth = (int)PlayerStats.Instance.Health;
-        if(PlayerStats.Instance.Health < 4)
-            m_PlayerHealth.sprite = m_LifeImage[CurHealth];
+        if(PlayerStats.Instance.Health <= 4 && PlayerStats.Instance.Health >= 1)
+            m_PlayerHealth.sprite = m_LifeImage[CurHealth - 1];
     }
 
     void MaskCtrl()
@@ -493,12 +497,12 @@ public class UIManager : MonoBehaviour
 
             m_GateMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
-        else if (isShop && NpcName == "Station Master")
+        /*else if (isShop && NpcName == "Station Master")
         {
             m_StationPanel.SetActive(true);
 
             m_StationMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
-        }
+        }*/
         else if(!isShop && NpcName == "WeaponNpc")
         {
             m_WeaponMenu.anchoredPosition = Vector3.up * 1000;
@@ -517,18 +521,23 @@ public class UIManager : MonoBehaviour
 
             m_GatePanel.SetActive(false);
         }
-        else if (!isShop && NpcName == "Station Master")
+        /*else if (!isShop && NpcName == "Station Master")
         {
             m_StationMenu.anchoredPosition = Vector3.up * 1000;
 
             m_StationPanel.SetActive(false);
-        }
+        }*/
+    }
+
+    public void SmithyShopFalse(string Npc)
+    {
+        SmithySystem(false, Npc);
+        AllGameManager.Instance.isWeaponShop = false;
     }
 
     public IEnumerator DeathScreen()
     {
         //m_BloodPlaying = true;
-
         Color BScolor = m_DeathScreen.color;
 
         float m_Time = 0f;
@@ -546,6 +555,31 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
+        AllGameManager.Instance.isGameOver = true;
+        StartCoroutine(GameOver());
         //m_BloodPlaying = false;
+    }
+
+    IEnumerator GameOver()
+    {
+        m_DeathScreen.raycastTarget = true;
+
+        Color GameOvercolor = m_GameOverScreen.color;
+
+        float m_Time = 0f;
+
+        while (GameOvercolor.a < 1)
+        {
+            m_Time += Time.deltaTime / 1;
+
+            GameOvercolor.a = Mathf.Lerp(0, 1f, m_Time);
+
+            m_GameOverScreen.color = GameOvercolor;
+
+            yield return null;
+        }
+
+        m_GameOverButton[0].SetActive(true);
+        m_GameOverButton[1].SetActive(true);
     }
 }

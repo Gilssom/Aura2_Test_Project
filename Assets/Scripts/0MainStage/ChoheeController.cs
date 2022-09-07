@@ -97,20 +97,20 @@ public class ChoheeController : MonoBehaviour
     {
         GetInput();
 
-        if (PlayerStats.Instance.Health <= 0)
+        if (PlayerStats.Instance.Health <= 0 && !AllGameManager.Instance.isGameOver)
             Death();
 
-        if (!m_FinalAttack && !isDeath && !isCharge && !isLoading)
+        if (!m_FinalAttack && !isDeath && !isCharge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
             Move();
 
-        if(!isDeath && !isLoading)
+        if(!isDeath && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
         {
             Attack();
             ItemUse();
             NpcInteraction();
         }
 
-        if (Input.GetButtonDown("Jump") && !isDodge && !isLoading)
+        if (Input.GetButtonDown("Jump") && !isDodge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
             Dodge();
 
         if(isLoading)
@@ -416,17 +416,21 @@ public class ChoheeController : MonoBehaviour
             {
                 AllGameManager.Instance.Action();
             }
-            else if(Input.GetKeyDown(KeyCode.E) && !AllGameManager.Instance.isWeaponShop && !Npc.GetComponent<ObjData>().isNeedTalk)
+            else if (Input.GetKeyDown(KeyCode.E) && !Npc.GetComponent<ObjData>().isNeedTalk && Npc.GetComponent<ObjData>().isNotSmithy)
+            {
+                AllGameManager.Instance.Action();
+            }
+            else if(Input.GetKeyDown(KeyCode.E) && !AllGameManager.Instance.isWeaponShop && !Npc.GetComponent<ObjData>().isNeedTalk && !Npc.GetComponent<ObjData>().isNotSmithy)
             {
                 AllGameManager.Instance.Action();
                 UIManager.Instance.SmithySystem(true, Npc.name);
                 AllGameManager.Instance.isWeaponShop = true;
             }
-            else if(Input.GetKeyDown(KeyCode.Escape) && AllGameManager.Instance.isWeaponShop)
-            {
-                UIManager.Instance.SmithySystem(false, Npc.name);
-                AllGameManager.Instance.isWeaponShop = false;
-            }
+            //else if(Input.GetKeyDown(KeyCode.Escape) && AllGameManager.Instance.isWeaponShop)
+            //{
+            //    UIManager.Instance.SmithySystem(false, Npc.name);
+            //    AllGameManager.Instance.isWeaponShop = false;
+            //}
         }
     }
 

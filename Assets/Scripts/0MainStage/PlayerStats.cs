@@ -31,6 +31,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private float soul;
     [SerializeField]
+    private float maxSlashGage;
+    [SerializeField]
     private float SlashGage;
 
     public float Health { get { return health; } }
@@ -38,6 +40,16 @@ public class PlayerStats : MonoBehaviour
     public float MaxTotalHealth { get { return maxTotalHealth; } }
     public float Soul { get { return soul; } }
     public float Slash { get { return SlashGage; } }
+    public float MaxSlash { get { return maxSlashGage; } }
+
+    private void Awake()
+    {
+        health = 4;
+        maxHealth = 4;
+        maxTotalHealth = 4;
+        maxSlashGage = 4;
+        SlashGage = 0;
+    }
 
     public void Heal(float health)
     {

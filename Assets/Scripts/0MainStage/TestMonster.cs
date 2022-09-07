@@ -191,11 +191,11 @@ public class TestMonster : MonoBehaviour
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_CurDmg;
 
-            if (PlayerStats.Instance.Slash >= 4)
+            if (PlayerStats.Instance.Slash >= PlayerStats.Instance.MaxSlash)
             {
                 return;
             }
-            if (PlayerStats.Instance.Slash < 4)
+            if (PlayerStats.Instance.Slash < PlayerStats.Instance.MaxSlash)
             {
                 PlayerStats.Instance.AddSlashGage(1);
             }
@@ -206,11 +206,11 @@ public class TestMonster : MonoBehaviour
             this.transform.DOMove(transform.position + transform.forward * -0.5f, 0.2f);
             m_CurHP -= ChoheeWeapon.Instance.m_ChargeDmg;
 
-            if (PlayerStats.Instance.Slash >= 4)
+            if (PlayerStats.Instance.Slash >= PlayerStats.Instance.MaxSlash)
             {
                 return;
             }
-            if (PlayerStats.Instance.Slash < 4)
+            if (PlayerStats.Instance.Slash < PlayerStats.Instance.MaxSlash)
             {
                 PlayerStats.Instance.AddSlashGage(1);
             }

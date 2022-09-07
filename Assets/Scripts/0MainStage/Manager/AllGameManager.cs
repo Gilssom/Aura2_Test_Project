@@ -17,6 +17,7 @@ public class AllGameManager : MonoBehaviour
 
     public bool isPause;
     public bool isWeaponShop;
+    public bool isGameOver;
 
     public bool isTalkAction;
 
@@ -95,6 +96,11 @@ public class AllGameManager : MonoBehaviour
 
         if (talkData == null)
         {
+            QuestManager.Instance.m_QuestId = 10;
+
+            if (id == 3000 && !objData.isNeedTalk)
+                StationNpcInteraction();
+
             m_TalkIndex = 0;
             isTalkAction = false;
             objData.isNeedTalk = false;
@@ -126,13 +132,42 @@ public class AllGameManager : MonoBehaviour
             if (id == 2000)
                 UIManager.Instance.m_ArmorPanelText.text = RandomtalkData;
             if (id == 3000)
-                UIManager.Instance.m_StationPanelText.text = RandomtalkData;
+            {
+                m_TalkIndex = 2;
+                QuestManager.Instance.m_QuestId = 0;
+                UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
+                UIManager.Instance.m_TalkText.text = RandomtalkData;
+                isTalkAction = true;
+                UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
+                UIManager.Instance.m_TalkImage.DOAnchorPosY(-250, 0.75f).SetEase(Ease.OutQuad);
+                m_TalkIndex++;
+            }
             if (id == 4000)
                 UIManager.Instance.m_GatePanelText.text = RandomtalkData;
         }
         else
         {
 
+        }
+    }
+
+    void StationNpcInteraction()
+    {
+        if (PlayerStats.Instance.Slash >= PlayerStats.Instance.MaxSlash && PlayerStats.Instance.Health >= PlayerStats.Instance.MaxHealth)
+        {
+            return;
+        }
+        if (PlayerStats.Instance.Slash < PlayerStats.Instance.MaxSlash)
+        {
+            float AddSlashGage = PlayerStats.Instance.MaxSlash - PlayerStats.Instance.Slash;
+            PlayerStats.Instance.AddSlashGage(AddSlashGage);
+            StartCoroutine(m_Chohee.EnforceEff(2));
+        }
+        if (PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
+        {
+            float AddHealth = PlayerStats.Instance.MaxHealth - PlayerStats.Instance.Health;
+            PlayerStats.Instance.Heal(AddHealth);
+            StartCoroutine(m_Chohee.EnforceEff(2));
         }
     }
 }
