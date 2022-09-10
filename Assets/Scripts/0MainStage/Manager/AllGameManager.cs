@@ -83,7 +83,7 @@ public class AllGameManager : MonoBehaviour
         if (objData.isNeedTalk)
         {
             UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
-            UIManager.Instance.m_TalkImage.DOAnchorPosY(-250, 0.75f).SetEase(Ease.OutQuad);
+            UIManager.Instance.m_TalkImage.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
     }
 
@@ -104,7 +104,8 @@ public class AllGameManager : MonoBehaviour
             m_TalkIndex = 0;
             isTalkAction = false;
             objData.isNeedTalk = false;
-            UIManager.Instance.m_TalkImage.DOAnchorPosY(-1000, 0.75f).SetEase(Ease.OutQuad);
+            UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
+            UIManager.Instance.m_TalkImage.DOAnchorPosY(-500, 0.75f).SetEase(Ease.OutQuad);
             return;
         }
 
@@ -139,7 +140,7 @@ public class AllGameManager : MonoBehaviour
                 UIManager.Instance.m_TalkText.text = RandomtalkData;
                 isTalkAction = true;
                 UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
-                UIManager.Instance.m_TalkImage.DOAnchorPosY(-250, 0.75f).SetEase(Ease.OutQuad);
+                UIManager.Instance.m_TalkImage.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
                 m_TalkIndex++;
             }
             if (id == 4000)

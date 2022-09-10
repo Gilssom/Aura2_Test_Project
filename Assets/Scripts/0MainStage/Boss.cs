@@ -97,6 +97,14 @@ public class Boss : MonoBehaviour
 
     void Update()
     {
+        HealthCtrl();
+
+        // 공격 테스트용 :: StartCoroutine(BossThink()) 비활성화
+        //TestAttack();
+    }
+
+    void HealthCtrl()
+    {
         if (m_CurHealth <= 9100 && m_CurHealth > 4200)
         {
             m_PhaseNumber = 2;
@@ -112,13 +120,10 @@ public class Boss : MonoBehaviour
         else if (m_CurHealth <= 0)
             Death();
 
-        m_HpBar.value = m_CurHealth;
+        m_HpBar.value = Mathf.Lerp(m_HpBar.value, m_CurHealth, Time.deltaTime * 3f);
 
         float HpPercent = m_CurHealth / 120;
         m_HpPercent.text = HpPercent.ToString("F0") + "%";
-
-        // 공격 테스트용 :: StartCoroutine(BossThink()) 비활성화
-        //TestAttack();
     }
 
     void TestAttack()

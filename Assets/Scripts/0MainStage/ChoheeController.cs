@@ -103,11 +103,15 @@ public class ChoheeController : MonoBehaviour
         if (!m_FinalAttack && !isDeath && !isCharge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
             Move();
 
-        if(!isDeath && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
+        if(!isDeath && !isLoading && !AllGameManager.Instance.isWeaponShop)
+        {
+            NpcInteraction();
+        }
+
+        if (!isDeath && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
         {
             Attack();
             ItemUse();
-            NpcInteraction();
         }
 
         if (Input.GetButtonDown("Jump") && !isDodge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
