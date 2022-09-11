@@ -10,6 +10,8 @@ public class AllGameManager : MonoBehaviour
     private ChoheeController m_Chohee;
     private NearNpcCheck m_NearNpc;
 
+    public GameObject m_PlayCanvas;
+
     public Transform[] m_FieldStartPos;
 
     [SerializeField]
@@ -58,6 +60,11 @@ public class AllGameManager : MonoBehaviour
         m_Player = GameObject.FindWithTag("Player");
         m_NearNpc = m_Player.GetComponent<NearNpcCheck>();
         m_Chohee = m_Player.GetComponent<ChoheeController>();
+    }
+
+    private void Update()
+    {
+        m_PlayCanvas.SetActive(!m_Chohee.isLoading);
     }
 
     public void NextField(string SceneName, int SceneNum)

@@ -22,6 +22,8 @@ public class TestMonster : MonoBehaviour
     private Animator m_Anim;
     private SkinnedMeshRenderer m_SkinmeshRenderer;
     private BoxCollider m_AttackArea;
+    private GameObject m_FireBall;
+    public Transform m_FirePos;
     public AudioClip[] m_clip;
 
     private float MaxCutoff = 1;
@@ -63,7 +65,9 @@ public class TestMonster : MonoBehaviour
         m_NavAgent = GetComponent<NavMeshAgent>();
         m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
         m_SkinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        m_AttackArea = GetComponentInChildren<BoxCollider>();
+
+        if(m_EnemyType != EnemyType.LanternMonster)
+            m_AttackArea = GetComponentInChildren<BoxCollider>();
 
         m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
         m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
@@ -73,6 +77,9 @@ public class TestMonster : MonoBehaviour
         m_DropMask[2] = Resources.Load<GameObject>("5Item/SpeedMask_Item");
         m_DropMask[3] = Resources.Load<GameObject>("5Item/FireMask_Item");
         m_DropMask[4] = Resources.Load<GameObject>("5Item/IceMask_Item");
+
+        if (m_EnemyType == EnemyType.LanternMonster)
+            m_FireBall = Resources.Load<GameObject>("4Monster/Lantern_Monster_08_17/LanternFireBall");
     }
 
     private void Start()
@@ -105,15 +112,16 @@ public class TestMonster : MonoBehaviour
                 if (isSpawnMonster)
                     m_TraceDis = 100;
                 else
-                    m_TraceDis = 7;
+                    m_TraceDis = 10;
 
-                m_AttackDis = 2;
+                m_AttackDis = 7;
                 m_rotSpeed = 3;
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
                 break;
         }
-        m_AttackArea.enabled = false;
+        if(m_AttackArea)
+            m_AttackArea.enabled = false;
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
@@ -321,21 +329,33 @@ public class TestMonster : MonoBehaviour
         switch (m_EnemyType)
         {
             case EnemyType.HellGhost:
+                m_AttackArea.enabled = true;
                 SoundManager.Instance.SFXPlay("Ghost Attack", AllGameManager.Instance.m_Clip[5]);
                 break;
             case EnemyType.FireMonster:
+                m_AttackArea.enabled = true;
                 SoundManager.Instance.SFXPlay("Fire Attack", AllGameManager.Instance.m_Clip[6]);
                 break;
             case EnemyType.LanternMonster:
-                SoundManager.Instance.SFXPlay("Fire Attack", AllGameManager.Instance.m_Clip[6]);
+                SoundManager.Instance.SFXPlay("Fire Attack", AllGameManager.Instance.m_Clip[7]);
+                FireBallAttack();
                 break;
         }
-        m_AttackArea.enabled = true;
     }
     
+    void FireBallAttack()
+    {
+        GameObject intantBullet = Instantiate(m_FireBall, m_FirePos.position, m_FirePos.rotation);
+        Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
+        bulletRigid.velocity = m_FirePos.forward * 8;
+
+        Destroy(intantBullet, 1.5f);
+    }
+
     void AttackEnd()
     {
-        m_AttackArea.enabled = false;
+        if (m_AttackArea)
+            m_AttackArea.enabled = false;
     }
 
     void AttackFalse()
@@ -456,7 +476,6 @@ public class TestMonster : MonoBehaviour
                     CapsuleCollider Lanterncoll = GetComponent<CapsuleCollider>();
 
                     Lanterncoll.enabled = false;
-                    m_AttackArea.enabled = false;
                     m_Rigid.isKinematic = true;
 
                     if(m_FireEffect)

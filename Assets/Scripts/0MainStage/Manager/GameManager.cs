@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_TutorialObject;
 
     public GameObject m_Boss;
+    public PlayableDirector m_BossCinemachine;
     public bool m_FirstBossEnd;
 
     private static GameManager m_instance;
@@ -58,48 +60,37 @@ public class GameManager : MonoBehaviour
             ObjectCtrl(0, false);
         // Third Field Spawn Controll
         // 2 , 4 :: ObjData.cs
-        else if (m_KillCount == 16)
-            ObjectCtrl(3, true);
-        else if (m_KillCount == 23)
+        else if (m_KillCount == 14)
+        {
+            ObjectCtrl(4, true);
             ObjectCtrl(5, true);
+        }
         // Fifth Field
         // 6, 12, 16 :: ObjData.cs
-        else if (m_KillCount == 45)
+        else if (m_KillCount == 35)
             ObjectCtrl(7, true);
-        else if (m_KillCount == 49)
+        else if (m_KillCount == 41)
             ObjectCtrl(8, true);
-        else if (m_KillCount == 52)
-            ObjectCtrl(9, true);
-        else if (m_KillCount == 57)
-            ObjectCtrl(10, true);
         else if (m_KillCount == 61)
             ObjectCtrl(11, true);
-        else if (m_KillCount == 84) // 3-3 Spawn
-            ObjectCtrl(13, true);
-        else if (m_KillCount == 89) // 3-3 Spawn
-            ObjectCtrl(14, true);
-        else if (m_KillCount == 92) // 3-3 Spawn
-            ObjectCtrl(15, true);
-        else if (m_KillCount == 101) // 3-5 Spawn
-            ObjectCtrl(17, true);
-        else if (m_KillCount == 106) // 3-5 Spawn
-            ObjectCtrl(18, true);
-        else if (m_KillCount == 112) // 3-5 Spawn
-            ObjectCtrl(19, true);
+        else if (m_KillCount == 69)
+            ObjectCtrl(12, true);
     }
 
     void DoorObject()
     {
-        if (m_KillCount == 12)
+        if (m_KillCount == 10)
+        {
             m_DoorObject[0].SetActive(true);
-        else if (m_KillCount == 19)
             m_DoorObject[1].SetActive(true);
-        else if (m_KillCount == 41)
+        }
+        else if (m_KillCount == 31)
             m_DoorObject[2].SetActive(true);
-        else if (m_KillCount == 78) // 78 ~ 79
+        else if (m_KillCount == 56)
+        {
             m_DoorObject[3].SetActive(true);
-        else if (m_KillCount == 96) // 96 ~ 97
             m_DoorObject[4].SetActive(true);
+        }
     }
 
     public void ObjectCtrl(int GateNumber, bool Active)
@@ -130,6 +121,8 @@ public class GameManager : MonoBehaviour
 
     public void BossStage()
     {
+        m_BossCinemachine.gameObject.SetActive(true);
+        m_BossCinemachine.Play();
         SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[1]);
         m_Boss.gameObject.SetActive(true);
     }

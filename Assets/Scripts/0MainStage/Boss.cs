@@ -7,6 +7,8 @@ using PathCreation;
 
 public class Boss : MonoBehaviour
 {
+    private ChoheeController m_Player;
+
     [SerializeField]
     private BossFollowPath m_PathSystem;
 
@@ -44,6 +46,7 @@ public class Boss : MonoBehaviour
 
     public GameObject m_HitEffect;
     public GameObject m_BossUI;
+    public GameObject m_BossStartPanel;
     public Slider m_HpBar;
     public Text m_HpPercent;
 
@@ -63,6 +66,7 @@ public class Boss : MonoBehaviour
 
     void Awake()
     {
+        m_Player = GameObject.FindWithTag("Player").GetComponent<ChoheeController>();
         m_Rigid = GetComponent<Rigidbody>();
         m_Anim = GetComponent<Animator>();
         m_Coll = GetComponent<CapsuleCollider>();
@@ -80,18 +84,21 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
-        m_BossUI.SetActive(true);
         m_CurHealth = m_MaxHealth;
-        Invoke("BossThinkStart", 2);
+        //Invoke("BossThinkStart", 2);
+        m_Anim.Play("Scream");
     }
 
-    void BossThinkStart()
+    public void StartBoss()
     {
-        if (m_PhaseNumber == 1)
-        {
-            m_Anim.Play("Scream");
-        }
+        m_BossStartPanel.SetActive(true);
+    }
 
+    public void FightBoss()
+    {
+        m_Player.isLoading = false;
+        m_BossUI.SetActive(true);
+        m_BossStartPanel.SetActive(false);
         StartCoroutine(BossThink());
     }
 

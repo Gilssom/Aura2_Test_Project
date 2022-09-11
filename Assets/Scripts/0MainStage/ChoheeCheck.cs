@@ -55,6 +55,7 @@ public class ChoheeCheck : MonoBehaviour
         }
         if(other.tag == "BossGate")
         {
+            m_Player.isLoading = true;
             GameManager.Instance.BossStage();
             Destroy(other.gameObject);
         }

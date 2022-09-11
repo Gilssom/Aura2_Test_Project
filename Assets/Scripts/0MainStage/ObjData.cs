@@ -109,29 +109,29 @@ public class ObjData : MonoBehaviour
         if (id == 6 && !OnDoor)
             StartCoroutine(DoorDown(m_DownPos, 2));
         if (id == 7 && !OnDoor)
-            StartCoroutine(DoorDown(m_DownPos, 4));
+            StartCoroutine(DoorDown(m_DownPos, 3));
 
         // Forth ~ Seventh Field
         if (id == 5 && OnFire >= 6)
             FenceDissolve();
-        if (id == 8 && Kill == 27)
+        if (id == 8 && Kill == 20)
             FenceDissolve();
-        if (id == 9 && Kill == 35)
+        if (id == 9 && Kill == 27)
             FenceDissolve();
-        if (id == 10 && Kill == 67)
+        if (id == 10 && Kill == 49)
             FenceDissolve();
-        if (id == 11 && Kill == 71)
+        if (id == 11 && Kill == 52)
             FenceDissolve();
-        if (id == 12 && Kill == 119)
+        if (id == 12 && Kill == 81)
             FenceDissolve();
         if (id == 13 && !OnDoor)
             StartCoroutine(DoorDown(m_DownPos, 6));
         if (id == 14 && FieldObjectController.Instance.m_FireOffCount == 2)
             FenceDissolve();
         if (id == 15 && !OnDoor) // 3-2 Spawn
-            StartCoroutine(DoorDown(m_DownPos, 12));
+            StartCoroutine(DoorDown(m_DownPos, 9));
         if (id == 16 && !OnDoor) // 3-4 Spawn
-            StartCoroutine(DoorDown(m_DownPos, 16));
+            StartCoroutine(DoorDown(m_DownPos, 10));
         if (id == 17 && GameManager.Instance.m_FirstBossEnd && !StopDissolve)
             DoorDissolve();
     }
