@@ -42,7 +42,7 @@ public class LoadingSceneManager : MonoBehaviour
                 progressBar.fillAmount = Mathf.Lerp(0.3f, 1f, timer);
                 if (progressBar.fillAmount >= 1f)
                 {
-                    FadeInOutManager.Instance.OutStartFadeAnim();
+                    FadeInOutManager.Instance.OutStartFadeAnim(nextScene);
                     op.allowSceneActivation = true;
                     yield break;
                 }

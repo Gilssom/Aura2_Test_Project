@@ -50,7 +50,8 @@ public class Boss : MonoBehaviour
     public Slider m_HpBar;
     public Text m_HpPercent;
 
-    public GameObject m_BombObject;
+    public GameObject m_MovingLight;
+    public GameObject[] m_BombObject;
 
     [SerializeField]
     private int m_TurnAttackNumber;
@@ -92,6 +93,7 @@ public class Boss : MonoBehaviour
     public void StartBoss()
     {
         m_BossStartPanel.SetActive(true);
+        SoundManager.Instance.SFXPlay("Start", m_SoundEffect[7]);
     }
 
     public void FightBoss()
@@ -289,6 +291,7 @@ public class Boss : MonoBehaviour
         m_Anim.SetBool("Right Tornado Attack", true);
         m_TornadoArea.enabled = true;
         m_PathSystem.enabled = true;
+        m_MovingLight.SetActive(true);
     }
 
     public void AttackSound(int AttackNumber)
@@ -300,6 +303,7 @@ public class Boss : MonoBehaviour
     {
         m_Anim.SetBool("Right Tornado Attack", false);
         m_TornadoArea.enabled = false;
+        m_MovingLight.SetActive(false);
         StartCoroutine(BossThink());
     }
 
@@ -324,16 +328,17 @@ public class Boss : MonoBehaviour
 
     IEnumerator BossLongDisAttack()
     {
-        SoundManager.Instance.SFXPlay("Attack", m_SoundEffect[2]);
+        SoundManager.Instance.SFXPlay("Long Attack", m_SoundEffect[2]);
         m_Anim.SetBool("Long Attack", true);
         Vector3 Pos = this.transform.position;
         int AttackNumbers = Random.Range(10, 15);
 
         for (int i = 0; i < AttackNumbers; i++)
         {
+            int RandomColor = Random.Range(0, 4);
             float RandomTFX = Random.Range(-10f, 10f);
             float RandomTFZ = Random.Range(-10f, 10f);
-            Instantiate(m_BombObject, new Vector3(Pos.x + RandomTFX, Pos.y + 20, Pos.z + RandomTFZ), Quaternion.identity);           
+            Instantiate(m_BombObject[RandomColor], new Vector3(Pos.x + RandomTFX, Pos.y + 20, Pos.z + RandomTFZ), Quaternion.identity);           
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -345,10 +350,12 @@ public class Boss : MonoBehaviour
     public void Attack(int AttackNumber)
     {
         if(AttackNumber != 5)
-            SoundManager.Instance.SFXPlay("Attack", m_SoundEffect[3]);
+            SoundManager.Instance.SFXPlay("Normal Attack", m_SoundEffect[3]);
 
         if(AttackNumber < 4)
+        {
             m_AttackArea[AttackNumber].enabled = true;
+        }
         else
         {
             m_AttackArea[0].enabled = true;
@@ -361,7 +368,9 @@ public class Boss : MonoBehaviour
     public void AttackFalse(int AttackNumber)
     {
         if(AttackNumber < 4)
+        {
             m_AttackArea[AttackNumber].enabled = false;
+        }
         else
         {
             m_AttackArea[0].enabled = false;

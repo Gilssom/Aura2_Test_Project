@@ -481,18 +481,24 @@ public class UIManager : MonoBehaviour
     {
         if(isShop && NpcName == "WeaponNpc")
         {
+            SoundManager.Instance.SFXPlay("Open Shop", AllGameManager.Instance.m_Clip[8]);
+
             m_WeaponPanel.SetActive(true);
 
             m_WeaponMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
         else if (isShop && NpcName == "ArmorNpc")
         {
+            SoundManager.Instance.SFXPlay("Open Shop", AllGameManager.Instance.m_Clip[8]);
+
             m_ArmorPanel.SetActive(true);
 
             m_ArmorMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
         else if (isShop && NpcName == "Gate Keeper")
         {
+            SoundManager.Instance.SFXPlay("Open Shop", AllGameManager.Instance.m_Clip[8]);
+
             m_GatePanel.SetActive(true);
 
             m_GateMenu.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);

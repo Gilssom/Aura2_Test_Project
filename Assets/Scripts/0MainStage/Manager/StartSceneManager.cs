@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class StartSceneManager : MonoBehaviour
 {
     [SerializeField]
     private AudioClip m_ButtonSound;
 
+    public GameObject m_TitleChohee;
     public GameObject m_PausePanel;
     public GameObject m_ContinuePanel;
     public GameObject[] m_PauseMenus;
@@ -30,11 +32,14 @@ public class StartSceneManager : MonoBehaviour
 
         m_SettingGageOn = Resources.Load<Sprite>("7Textures/UI/Settings/GageOn");
         m_SettingGageOff = Resources.Load<Sprite>("7Textures/UI/Settings/GageOff");
+
+        m_TitleChohee.transform.DOLocalMoveY(44, 5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void StartStage()
     {
-        FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
+        //FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
+        FadeInOutManager.Instance.InStartFadeAnim("CutScene", 0);
     }
 
     public void ContinueButton()

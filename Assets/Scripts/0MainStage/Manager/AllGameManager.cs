@@ -169,12 +169,14 @@ public class AllGameManager : MonoBehaviour
         {
             float AddSlashGage = PlayerStats.Instance.MaxSlash - PlayerStats.Instance.Slash;
             PlayerStats.Instance.AddSlashGage(AddSlashGage);
+            SoundManager.Instance.SFXPlay("Heal", m_Clip[9]);
             StartCoroutine(m_Chohee.EnforceEff(2));
         }
         if (PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
         {
             float AddHealth = PlayerStats.Instance.MaxHealth - PlayerStats.Instance.Health;
             PlayerStats.Instance.Heal(AddHealth);
+            SoundManager.Instance.SFXPlay("Heal", m_Clip[9]);
             StartCoroutine(m_Chohee.EnforceEff(2));
         }
     }

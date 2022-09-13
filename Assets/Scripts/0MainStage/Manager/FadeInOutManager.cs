@@ -50,7 +50,7 @@ public class FadeInOutManager : MonoBehaviour
         m_FadeBG = GameObject.Find("FadeBG").GetComponent<Image>();
     }
 
-    public void OutStartFadeAnim()
+    public void OutStartFadeAnim(string NextScene)
     {
         if (isPlaying == true)
         {
@@ -60,7 +60,7 @@ public class FadeInOutManager : MonoBehaviour
         m_Start = 1f;
         m_End = 0f;
 
-        StartCoroutine(FadeOutPlay());
+        StartCoroutine(FadeOutPlay(NextScene));
     }
 
     public void InStartFadeAnim(string SceneName, int SceneNumber)
@@ -76,7 +76,7 @@ public class FadeInOutManager : MonoBehaviour
         StartCoroutine(FadeInPlay(SceneName, SceneNumber));
     }
 
-    IEnumerator FadeOutPlay()
+    IEnumerator FadeOutPlay(string NowScene)
     {
         isPlaying = true;
 
@@ -99,7 +99,8 @@ public class FadeInOutManager : MonoBehaviour
 
         isPlaying = false;
 
-        AllGameManager.Instance.SceneChange();
+        if(NowScene != "CutScene")
+            AllGameManager.Instance.SceneChange();
     }
 
     IEnumerator FadeInPlay(string SceneName, int SceneNumber)

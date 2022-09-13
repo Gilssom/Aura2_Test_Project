@@ -441,6 +441,7 @@ public class ChoheeController : MonoBehaviour
     public IEnumerator EnforceEff(int ColorNumber)
     {
         m_EnforceEffectVFX[ColorNumber].Play();
+        SoundManager.Instance.SFXPlay("Heal", AllGameManager.Instance.m_Clip[9]);
         yield return new WaitForSeconds(0.5f);
         m_EnforceEffectVFX[ColorNumber].Stop();
     }
