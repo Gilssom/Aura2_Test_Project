@@ -217,7 +217,7 @@ public class ObjData : MonoBehaviour
         {
             StopDissolve = true;
             Speed = 0;
-            GameManager.Instance.ObjectCtrl(20, true);
+            GameManager.Instance.ObjectCtrl(13, true);
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12541674, g: 0.09634754, b: 0.17011005, a: 1}
+  m_IndirectSpecularColor: {r: 0.12559322, g: 0.096519135, b: 0.1702875, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16633,6 +16633,8 @@ MonoBehaviour:
   m_TalkImage: {fileID: 2132292411}
   m_TalkText: {fileID: 1342238928}
   m_TalkNpcNameText: {fileID: 196714990}
+  m_TalkNpcNameImage: {fileID: 0}
+  m_CurTalkNpcImage: []
   m_PauseMenus:
   - {fileID: 762461627}
   - {fileID: 1854786751}
@@ -19812,7 +19814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8945603263886832014, guid: b03f638f30926e348a867d95c9085afa, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8945603263886832014, guid: b03f638f30926e348a867d95c9085afa, type: 3}
       propertyPath: m_LocalPosition.x

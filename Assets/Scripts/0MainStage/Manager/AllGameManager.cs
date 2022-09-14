@@ -121,11 +121,14 @@ public class AllGameManager : MonoBehaviour
             UIManager.Instance.m_TalkText.text = talkData;
 
             if (m_NearNpc.m_NearNpc.name == "WeaponNpc")
-                UIManager.Instance.m_TalkNpcNameText.text = "대장장이";
+                UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[0];
+            //UIManager.Instance.m_TalkNpcNameText.text = "대장장이";
             else if (m_NearNpc.m_NearNpc.name == "ArmorNpc")
-                UIManager.Instance.m_TalkNpcNameText.text = "재봉사";
+                UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[1];
+            //UIManager.Instance.m_TalkNpcNameText.text = "재봉사";
             else if (m_NearNpc.m_NearNpc.name == "Station Master")
-                UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
+                UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[2];
+            //UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
             else if (m_NearNpc.m_NearNpc.name == "Gate Keeper")
                 UIManager.Instance.m_TalkNpcNameText.text = "문지기";
 
@@ -143,7 +146,7 @@ public class AllGameManager : MonoBehaviour
             {
                 m_TalkIndex = 2;
                 QuestManager.Instance.m_QuestId = 0;
-                UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
+                UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[2];
                 UIManager.Instance.m_TalkText.text = RandomtalkData;
                 isTalkAction = true;
                 UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);

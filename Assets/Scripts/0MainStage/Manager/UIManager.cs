@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
     public RectTransform m_TalkImage;
     public Text m_TalkText;
     public Text m_TalkNpcNameText;
+    public Image m_TalkNpcNameImage;
+    public Sprite[] m_CurTalkNpcImage;
 
     public GameObject[] m_PauseMenus;
     public GameObject[] m_PauseIcon;

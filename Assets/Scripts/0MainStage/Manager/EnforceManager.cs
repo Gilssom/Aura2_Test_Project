@@ -113,6 +113,7 @@ public class EnforceManager : MonoBehaviour
                 m_DamageUpGradeImage.sprite = m_UpGradeImage[2];
             }
             ChoheeWeapon.Instance.WeaponDamageUpdate();
+            SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[10]);
         }
         else
             Debug.Log("강화 할 수 없습니다.");
@@ -149,6 +150,7 @@ public class EnforceManager : MonoBehaviour
                 m_UpGradeButton[1].SetActive(false);
                 m_SpeedUpGradeImage.sprite = m_UpGradeImage[5];
             }
+            SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[10]);
         }
         else
             Debug.Log("강화 할 수 없습니다.");
@@ -182,6 +184,7 @@ public class EnforceManager : MonoBehaviour
                 m_UpGradeButton[2].SetActive(false);
                 m_DressUpGradeImage.sprite = m_UpGradeImage[8];
             }
+            SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[11]);
         }
         else
             Debug.Log("강화 할 수 없습니다.");
@@ -218,6 +221,7 @@ public class EnforceManager : MonoBehaviour
                 m_UpGradeButton[3].SetActive(false);
                 m_BootsUpGradeImage.sprite = m_UpGradeImage[11];
             }
+            SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[11]);
         }
         else
             Debug.Log("강화 할 수 없습니다.");
