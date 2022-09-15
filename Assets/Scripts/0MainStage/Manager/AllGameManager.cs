@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,7 @@ public class AllGameManager : MonoBehaviour
     private ChoheeController m_Chohee;
     private NearNpcCheck m_NearNpc;
 
+    public TypingEffect m_Text;
     public GameObject m_PlayCanvas;
 
     public Transform[] m_FieldStartPos;
@@ -89,6 +91,7 @@ public class AllGameManager : MonoBehaviour
 
         if (objData.isNeedTalk)
         {
+
             UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
             UIManager.Instance.m_TalkImage.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
         }
@@ -119,18 +122,14 @@ public class AllGameManager : MonoBehaviour
         if (isNpc && objData.isNeedTalk)
         {
             UIManager.Instance.m_TalkText.text = talkData;
+            //m_Text.SetMsg(talkData.Split(':')[0]);
 
             if (m_NearNpc.m_NearNpc.name == "WeaponNpc")
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[0];
-            //UIManager.Instance.m_TalkNpcNameText.text = "대장장이";
             else if (m_NearNpc.m_NearNpc.name == "ArmorNpc")
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[1];
-            //UIManager.Instance.m_TalkNpcNameText.text = "재봉사";
             else if (m_NearNpc.m_NearNpc.name == "Station Master")
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[2];
-            //UIManager.Instance.m_TalkNpcNameText.text = "역원 주인";
-            else if (m_NearNpc.m_NearNpc.name == "Gate Keeper")
-                UIManager.Instance.m_TalkNpcNameText.text = "문지기";
 
             isTalkAction = true;
             m_TalkIndex++;
@@ -148,17 +147,18 @@ public class AllGameManager : MonoBehaviour
                 QuestManager.Instance.m_QuestId = 0;
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[2];
                 UIManager.Instance.m_TalkText.text = RandomtalkData;
+                //m_Text.SetMsg(RandomtalkData.Split(':')[0]);
                 isTalkAction = true;
                 UIManager.Instance.m_TalkPanel.SetActive(isTalkAction);
                 UIManager.Instance.m_TalkImage.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
                 m_TalkIndex++;
             }
-            if (id == 4000)
-                UIManager.Instance.m_GatePanelText.text = RandomtalkData;
+            //if (id == 4000)
+                //UIManager.Instance.m_GatePanelText.text = RandomtalkData;
         }
         else
         {
-
+            //m_Text.SetMsg(talkData);
         }
     }
 

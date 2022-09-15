@@ -73,5 +73,11 @@ public class ChoheeCheck : MonoBehaviour
             m_Player.isLoading = true;
             FadeInOutManager.Instance.InStartFadeAnim("MainStage", 2);
         }
+
+        if(other.tag == "GateTrigger")
+        {
+            UIManager.Instance.SmithySystem(true, "Gate Keeper");
+            AllGameManager.Instance.isWeaponShop = true;
+        }
     }
 }
