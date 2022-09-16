@@ -16,47 +16,63 @@ public class CutSceneManager : MonoBehaviour
 
     public int m_CurCutNumber = 0;
     public Image[] m_CutImage;
+    public Text[] m_CutText;
+    public Image m_BGPanel;
+    public Image m_WhitePanel;
+
+    private void Start()
+    {
+        StartCoroutine(InStartFadeAnim(m_CurCutNumber));
+    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber < 4)
-        {
-            OutStartFadeAnim(m_CurCutNumber);
-        }
-        else if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber == 4)
-        {
-            FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
-        }
+        //if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber < 4)
+        //{
+        //    OutStartFadeAnim(m_CurCutNumber);
+        //}
+        //else if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber == 4)
+        //{
+        //    FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
+        //}
     }
 
-    public void OutStartFadeAnim(int CutNumber)
+    IEnumerator OutStartFadeAnim(int CutNumber)
     {
         if (isPlaying == true)
         {
-            return;
+            yield return null;
         }
 
         m_Start = 1f;
         m_End = 0f;
 
         StartCoroutine(FadeOutPlay(CutNumber));
+
+        yield return null;
     }
 
-    public void InStartFadeAnim(int CutNumber)
+    IEnumerator InStartFadeAnim(int CutNumber)
     {
-        m_CutImage[CutNumber].gameObject.SetActive(true);
+        if(m_CurCutNumber == 0)
+            yield return new WaitForSeconds(1f);
+
+        Debug.Log("Start");
+        //m_CutImage[CutNumber].gameObject.SetActive(true);
 
         m_Start = 0f;
         m_End = 1f;
 
         StartCoroutine(FadeInPlay(CutNumber));
+
+        yield return null;
     }
 
     IEnumerator FadeOutPlay(int CutNumber)
     {
         isPlaying = true;
-
-        Color fadecolor = m_CutImage[CutNumber].color;
+        
+        Color fadecolor = m_CutText[CutNumber].color;
 
         m_Time = 0f;
 
@@ -64,26 +80,36 @@ public class CutSceneManager : MonoBehaviour
 
         while (fadecolor.a > 0f)
         {
-            m_Time += Time.deltaTime / m_FadeTime;
+            m_Time += Time.deltaTime / 2;
 
             fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
 
-            m_CutImage[CutNumber].color = fadecolor;
+            m_CutText[CutNumber].color = fadecolor;
 
             yield return null;
         }
 
-        m_CutImage[CutNumber].gameObject.SetActive(false);
+        //m_CutImage[CutNumber].gameObject.SetActive(false);
+        isPlaying = false;
         m_CurCutNumber++;
 
-        InStartFadeAnim(m_CurCutNumber);
+        if(m_CurCutNumber < 3)
+            StartCoroutine(OutStartFadeAnim(m_CurCutNumber));
+        else if(m_CurCutNumber == 3)
+            StartCoroutine(OutStartFadeBG());
+
+
+        //InStartFadeAnim(m_CurCutNumber);
+        //OutStartFadeAnim(3);
     }
 
     IEnumerator FadeInPlay(int CutNumber)
     {
         isPlaying = true;
 
-        Color fadecolor = m_CutImage[CutNumber].color;
+        //Color fadecolor = m_CutImage[CutNumber].color;
+     
+        Color fadecolor = m_CutText[CutNumber].color;
 
         m_Time = 0f;
 
@@ -91,15 +117,110 @@ public class CutSceneManager : MonoBehaviour
 
         while (fadecolor.a < 1f)
         {
-            m_Time += Time.deltaTime / m_FadeTime;
+            m_Time += Time.deltaTime / 4;
 
             fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
 
-            m_CutImage[CutNumber].color = fadecolor;
+            m_CutText[CutNumber].color = fadecolor;
 
             yield return null;
         }
 
         isPlaying = false;
+        m_CurCutNumber++;
+
+        if (m_CurCutNumber < 3)
+            StartCoroutine(InStartFadeAnim(m_CurCutNumber));
+        else if(m_CurCutNumber == 3)
+        {
+            m_CurCutNumber = 0;
+            StartCoroutine(OutStartFadeAnim(0));
+        }
+    }
+
+    // Fade BackGround
+
+    IEnumerator OutStartFadeBG()
+    {
+        if (isPlaying == true)
+        {
+            yield return null;
+        }
+
+        m_Start = 1f;
+        m_End = 0f;
+
+        StartCoroutine(FadeOutPlayBG());
+
+        yield return null;
+    }
+
+    IEnumerator FadeOutPlayBG()
+    {
+        isPlaying = true;
+
+        Color fadecolor = m_BGPanel.color;
+
+        m_Time = 0f;
+
+        fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
+
+        while (fadecolor.a > 0f)
+        {
+            m_Time += Time.deltaTime / 4;
+
+            fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
+
+            m_BGPanel.color = fadecolor;
+
+            yield return null;
+        }
+
+        isPlaying = false;
+        m_BGPanel.gameObject.SetActive(false);
+        StartCoroutine(InStartFadeBG());
+    }
+
+    IEnumerator InStartFadeBG()
+    {
+        yield return new WaitForSeconds(5f);
+
+        Debug.Log("Start");
+        //m_CutImage[CutNumber].gameObject.SetActive(true);
+
+        m_Start = 0f;
+        m_End = 1f;
+
+        StartCoroutine(FadeInPlayBG());
+
+        yield return null;
+    }
+
+    IEnumerator FadeInPlayBG()
+    {
+        isPlaying = true;
+
+        //Color fadecolor = m_CutImage[CutNumber].color;
+
+        Color fadecolor = m_WhitePanel.color;
+
+        m_Time = 0f;
+
+        fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
+
+        while (fadecolor.a < 1f)
+        {
+            m_Time += Time.deltaTime / 3;
+
+            fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
+
+            m_WhitePanel.color = fadecolor;
+
+            yield return null;
+        }
+
+        isPlaying = false;
+
+        //FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
     }
 }
