@@ -178,7 +178,7 @@ public class UIManager : MonoBehaviour
             else if (m_Item.m_NearItem.name == "NormalMask_Item")
                 m_NearNameText.text = "양반 탈 획득하기" + "<color=#FFE400>" + " (E)" + "</color>";
         }
-        else if (m_Npc.m_NearNpc && !AllGameManager.Instance.isTalkAction)
+        else if (m_Npc.m_NearNpc && !AllGameManager.Instance.isTalkAction && !AllGameManager.Instance.isWeaponShop)
         {
             if(m_Npc.m_NearNpc.name == "Station Master")
                 m_NearNameText.text = "역원 주인과 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
@@ -186,6 +186,8 @@ public class UIManager : MonoBehaviour
                 m_NearNameText.text = "대장장이와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
             else if(m_Npc.m_NearNpc.name == "ArmorNpc")
                 m_NearNameText.text = "재봉사와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
+            else if (m_Npc.m_NearNpc.name == "Gate Keeper")
+                m_NearNameText.text = "문지기와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
         }
         else
             m_NearNameText.text = null;
@@ -504,7 +506,7 @@ public class UIManager : MonoBehaviour
         }
         else if (isShop && NpcName == "Gate Keeper")
         {
-            SoundManager.Instance.SFXPlay("Open Shop", AllGameManager.Instance.m_Clip[8]);
+            SoundManager.Instance.SFXPlay("Gate Open", AllGameManager.Instance.m_Clip[13]);
 
             m_GatePanel.SetActive(true);
 
@@ -544,6 +546,7 @@ public class UIManager : MonoBehaviour
 
     public void SmithyShopFalse(string Npc)
     {
+        SoundManager.Instance.SFXPlay("Close Shop", AllGameManager.Instance.m_Clip[12]);
         SmithySystem(false, Npc);
         AllGameManager.Instance.isWeaponShop = false;
         m_Player.isLoading = false;

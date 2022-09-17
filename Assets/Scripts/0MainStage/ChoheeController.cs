@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.VFX;
 
@@ -91,6 +92,22 @@ public class ChoheeController : MonoBehaviour
 
         m_EnforceEffectVFX[0].Stop();
         m_EnforceEffectVFX[1].Stop();
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "StartScene")
+            m_Animator.Play("StartScene");
+        else if (scene.name == "CutScene")
+        {
+            m_Animator.Play("Idle");
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 
     void Update()
@@ -432,6 +449,7 @@ public class ChoheeController : MonoBehaviour
             else if(Input.GetKeyDown(KeyCode.E) && !AllGameManager.Instance.isWeaponShop && !Npc.GetComponent<ObjData>().isNeedTalk && !Npc.GetComponent<ObjData>().isNotSmithy)
             {
                 AllGameManager.Instance.Action();
+                MoveStop();
                 UIManager.Instance.SmithySystem(true, Npc.name);
                 AllGameManager.Instance.isWeaponShop = true;
             }

@@ -48,6 +48,33 @@ public class FadeInOutManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         m_FadeBG = GameObject.Find("FadeBG").GetComponent<Image>();
+        StartCoroutine(GameStartFade());
+    }
+
+    IEnumerator GameStartFade()
+    {
+        yield return new WaitForSeconds(1);
+
+        isPlaying = true;
+
+        Color fadecolor = m_FadeBG.color;
+
+        m_Time = 0f;
+
+        fadecolor.a = Mathf.Lerp(1, 0, m_Time);
+
+        while (fadecolor.a > 0f)
+        {
+            m_Time += Time.deltaTime / 4;
+
+            fadecolor.a = Mathf.Lerp(1, 0, m_Time);
+
+            m_FadeBG.color = fadecolor;
+
+            yield return null;
+        }
+
+        isPlaying = false;
     }
 
     public void OutStartFadeAnim(string NextScene)

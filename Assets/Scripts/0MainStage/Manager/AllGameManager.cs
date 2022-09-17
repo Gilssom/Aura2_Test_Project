@@ -130,6 +130,8 @@ public class AllGameManager : MonoBehaviour
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[1];
             else if (m_NearNpc.m_NearNpc.name == "Station Master")
                 UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[2];
+            else if (m_NearNpc.m_NearNpc.name == "Gate Keeper")
+                UIManager.Instance.m_TalkNpcNameImage.sprite = UIManager.Instance.m_CurTalkNpcImage[3];
 
             isTalkAction = true;
             m_TalkIndex++;
@@ -153,8 +155,8 @@ public class AllGameManager : MonoBehaviour
                 UIManager.Instance.m_TalkImage.DOAnchorPosY(0, 0.75f).SetEase(Ease.OutQuad);
                 m_TalkIndex++;
             }
-            //if (id == 4000)
-                //UIManager.Instance.m_GatePanelText.text = RandomtalkData;
+            if (id == 4000)
+                UIManager.Instance.m_GatePanelText.text = RandomtalkData;
         }
         else
         {

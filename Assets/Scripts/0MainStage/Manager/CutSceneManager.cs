@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class CutSceneManager : MonoBehaviour
 {
+    public GameObject m_BlackPlayer;
+    public GameObject m_Cinemachine;
+
     public float m_FadeTime = 2f;
 
     float m_Start;
@@ -23,6 +26,8 @@ public class CutSceneManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(InStartFadeAnim(m_CurCutNumber));
+        Invoke("BGPlay", 7.33f);
+        Invoke("BGStop", 28.33f);
     }
 
     private void Update()
@@ -35,6 +40,16 @@ public class CutSceneManager : MonoBehaviour
         //{
         //    FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
         //}
+    }
+
+    void BGPlay()
+    {
+        SoundManager.Instance.BgSoundPlay(SoundManager.Instance.m_BgList[4]);
+    }
+
+    void BGStop()
+    {
+        SoundManager.Instance.m_BgSound.Stop();
     }
 
     IEnumerator OutStartFadeAnim(int CutNumber)
@@ -96,7 +111,11 @@ public class CutSceneManager : MonoBehaviour
         if(m_CurCutNumber < 3)
             StartCoroutine(OutStartFadeAnim(m_CurCutNumber));
         else if(m_CurCutNumber == 3)
+        {
+            m_BlackPlayer.SetActive(true);
+            m_Cinemachine.SetActive(true);
             StartCoroutine(OutStartFadeBG());
+        }
 
 
         //InStartFadeAnim(m_CurCutNumber);
@@ -167,7 +186,7 @@ public class CutSceneManager : MonoBehaviour
 
         while (fadecolor.a > 0f)
         {
-            m_Time += Time.deltaTime / 4;
+            m_Time += Time.deltaTime / 2;
 
             fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
 
@@ -181,9 +200,9 @@ public class CutSceneManager : MonoBehaviour
         StartCoroutine(InStartFadeBG());
     }
 
-    IEnumerator InStartFadeBG()
+    public IEnumerator InStartFadeBG()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6.33f);
 
         Debug.Log("Start");
         //m_CutImage[CutNumber].gameObject.SetActive(true);
@@ -210,7 +229,7 @@ public class CutSceneManager : MonoBehaviour
 
         while (fadecolor.a < 1f)
         {
-            m_Time += Time.deltaTime / 3;
+            m_Time += Time.deltaTime / 1;
 
             fadecolor.a = Mathf.Lerp(m_Start, m_End, m_Time);
 

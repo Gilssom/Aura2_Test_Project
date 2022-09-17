@@ -38,8 +38,8 @@ public class StartSceneManager : MonoBehaviour
 
         //m_TitleChohee.transform.DOLocalMoveY(44, 5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 
-        m_FireMask.transform.DOMoveY(-0.69f, 3f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
-        m_IceMask.transform.DOMoveY(-0.71f, 3f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+        m_FireMask.transform.DOMoveY(-0.7f, 3f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+        m_IceMask.transform.DOMoveY(-0.55f, 4f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void StartStage()
