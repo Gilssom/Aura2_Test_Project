@@ -20,6 +20,9 @@ public class StartSceneManager : MonoBehaviour
     public Image[] m_BGM;
     public Image[] m_SFX;
 
+    public GameObject m_FireMask;
+    public GameObject m_IceMask;
+
     public bool isPause;
 
     int m_SettingMenuNumber;
@@ -33,7 +36,10 @@ public class StartSceneManager : MonoBehaviour
         m_SettingGageOn = Resources.Load<Sprite>("7Textures/UI/Settings/GageOn");
         m_SettingGageOff = Resources.Load<Sprite>("7Textures/UI/Settings/GageOff");
 
-        m_TitleChohee.transform.DOLocalMoveY(44, 5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+        //m_TitleChohee.transform.DOLocalMoveY(44, 5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+
+        m_FireMask.transform.DOMoveY(-0.69f, 3f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+        m_IceMask.transform.DOMoveY(-0.71f, 3f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void StartStage()

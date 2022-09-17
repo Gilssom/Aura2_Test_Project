@@ -247,7 +247,7 @@ RectTransform:
   m_GameObject: {fileID: 59442190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1}
   m_Children:
   - {fileID: 1519796707}
   - {fileID: 1718543817}
@@ -537,7 +537,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &179793155
 RectTransform:
@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -736,8 +736,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0aa2c1d4ca28c3943978e989c65d7273, type: 3}
-    m_FontSize: 32
+    m_Font: {fileID: 12800000, guid: c5c0d1c1d260ba145a9038b8e109b9b0, type: 3}
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -747,7 +747,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.22
+    m_LineSpacing: 1.55
   m_Text: "\uADF8\uB7EC\uB358 \uC5B4\uB290\uB0A0,\n\uC5B4\uB5A4 \uC774\uC720\uC778\uC9C0
     \uC778\uAC04\uB3C4\uC640 \uC9C0\uC625\uB3C4 \uC0AC\uC774\uC5D0 \uADE0\uC5F4\uC774\n\uC0DD\uACA8
     \uC778\uAC04\uB3C4\uC5D0 \uC9C0\uC625\uADC0\uB4E4\uC774 \uB4E4\uB053\uAE30 \uC2DC\uC791\uD588\uB2E4"
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -941,8 +941,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0aa2c1d4ca28c3943978e989c65d7273, type: 3}
-    m_FontSize: 32
+    m_Font: {fileID: 12800000, guid: c5c0d1c1d260ba145a9038b8e109b9b0, type: 3}
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -952,7 +952,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.8
+    m_LineSpacing: 2.47
   m_Text: "\uC138\uC0C1\uC5D0\uB294 3\uAC00\uC9C0 \uC138\uC0C1,\n\uCC9C\uC0C1\uB3C4
     \uC778\uAC04\uB3C4 \uC9C0\uC625\uB3C4\uAC00 \uC870\uD654\uB97C \uC774\uB8E8\uACE0
     \uC788\uC5C8\uB2E4"
@@ -1710,7 +1710,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 1
-    maxNumParticles: 10000
+    maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -5743,7 +5743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529912848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15, y: 1.31, z: -4.39}
+  m_LocalPosition: {x: -1.13, y: 2.48, z: -7.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5840,8 +5840,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 851789211773505644, guid: 5821dc50c247fdd4e8d83e79786cd834, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5821dc50c247fdd4e8d83e79786cd834, type: 3}
 --- !u!1 &1009280310
 GameObject:
@@ -5987,7 +5986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5995,8 +5994,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0aa2c1d4ca28c3943978e989c65d7273, type: 3}
-    m_FontSize: 32
+    m_Font: {fileID: 12800000, guid: c5c0d1c1d260ba145a9038b8e109b9b0, type: 3}
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -6006,7 +6005,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.22
+    m_LineSpacing: 1.55
   m_Text: "\uADF8\uB807\uAC8C \uD63C\uB780\uC2A4\uB7EC\uC6B4 \uC138\uC0C1\uC5D0\uC11C\n\uC9C0\uC625\uADC0\uC5D0\uAC8C
     \uAC00\uC871\uC744 \uC783\uC740 \uC18C\uB140\uC5D0\uAC8C \uC2E0\uBE44\uD55C \uAC80\uC774\n\uB0B4\uB824\uC624\uB294\uB370..."
 --- !u!222 &1031214122

@@ -78,6 +78,7 @@ public class ChoheeCheck : MonoBehaviour
         {
             UIManager.Instance.SmithySystem(true, "Gate Keeper");
             AllGameManager.Instance.isWeaponShop = true;
+            m_Player.MoveStop();
         }
     }
 }

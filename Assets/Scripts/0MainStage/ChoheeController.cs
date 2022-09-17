@@ -119,8 +119,7 @@ public class ChoheeController : MonoBehaviour
 
         if(isLoading)
         {
-            m_Animator.SetBool("isRun", false);
-            m_FootSFX.Stop();
+            MoveStop();
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -186,6 +185,12 @@ public class ChoheeController : MonoBehaviour
         }
         else
             m_FootSFX.Stop();
+    }
+
+    public void MoveStop()
+    {
+        m_Animator.SetBool("isRun", false);
+        m_FootSFX.Stop();
     }
 
     void Dodge()

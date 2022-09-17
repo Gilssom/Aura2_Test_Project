@@ -178,9 +178,14 @@ public class UIManager : MonoBehaviour
             else if (m_Item.m_NearItem.name == "NormalMask_Item")
                 m_NearNameText.text = "양반 탈 획득하기" + "<color=#FFE400>" + " (E)" + "</color>";
         }
-        else if (m_Npc.m_NearNpc)
+        else if (m_Npc.m_NearNpc && !AllGameManager.Instance.isTalkAction)
         {
-            m_NearNameText.text = m_Npc.m_NearNpc.name + "와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
+            if(m_Npc.m_NearNpc.name == "Station Master")
+                m_NearNameText.text = "역원 주인과 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
+            else if (m_Npc.m_NearNpc.name == "WeaponNpc")
+                m_NearNameText.text = "대장장이와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
+            else if(m_Npc.m_NearNpc.name == "ArmorNpc")
+                m_NearNameText.text = "재봉사와 대화하기" + "<color=#FFE400>" + " (E)" + "</color>";
         }
         else
             m_NearNameText.text = null;
@@ -541,6 +546,7 @@ public class UIManager : MonoBehaviour
     {
         SmithySystem(false, Npc);
         AllGameManager.Instance.isWeaponShop = false;
+        m_Player.isLoading = false;
     }
 
     public IEnumerator DeathScreen()

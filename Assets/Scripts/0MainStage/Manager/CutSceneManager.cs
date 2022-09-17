@@ -221,6 +221,6 @@ public class CutSceneManager : MonoBehaviour
 
         isPlaying = false;
 
-        //FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
+        FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
     }
 }
