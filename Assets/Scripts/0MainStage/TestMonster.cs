@@ -114,7 +114,7 @@ public class TestMonster : MonoBehaviour
                 else
                     m_TraceDis = 10;
 
-                m_AttackDis = 7;
+                m_AttackDis = 6;
                 m_rotSpeed = 3;
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
@@ -262,9 +262,9 @@ public class TestMonster : MonoBehaviour
             float Dis = Vector3.Distance(m_Player.transform.position, this.transform.position);
             if (Dis <= m_AttackDis)
                 m_CurState = CurState.attack;
-            else if (Dis <= m_TraceDis && !isAttack)
+            else if (Dis <= m_TraceDis)
                 m_CurState = CurState.trace;
-            else
+            else if(m_TraceDis < Dis)
                 m_CurState = CurState.idle;
         }
     }
@@ -276,11 +276,9 @@ public class TestMonster : MonoBehaviour
             switch (m_CurState)
             {
                 case CurState.idle:
-                    if (m_EnemyType == EnemyType.HellGhost)
-                    {
+                    if (m_EnemyType != EnemyType.FireMonster)
                         m_Anim.SetBool("isRun", false);
-                        m_Anim.SetBool("isAttack", false);
-                    }
+                    m_Anim.SetBool("isAttack", false);
 
                     while (m_CurState == CurState.idle && !isSpawnMonster && m_EnemyType == EnemyType.FireMonster)
                     {
@@ -300,7 +298,7 @@ public class TestMonster : MonoBehaviour
                     m_NavAgent.Resume();
                     LookPlayer();
                     m_Anim.SetBool("isAttack", false);
-                    if (m_EnemyType == EnemyType.HellGhost)
+                    if (m_EnemyType != EnemyType.FireMonster)
                         m_Anim.SetBool("isRun", true);
                     break;
                 case CurState.attack:
@@ -308,10 +306,8 @@ public class TestMonster : MonoBehaviour
                     m_NavAgent.speed = 0;
                     m_Rigid.isKinematic = false;
                     LookPlayer();
-                    if (m_EnemyType == EnemyType.HellGhost)
-                    {
+                    if (m_EnemyType != EnemyType.FireMonster)
                         m_Anim.SetBool("isRun", false);
-                    }
                     m_Anim.SetBool("isAttack", true);
                     break;
                 case CurState.death:
@@ -341,6 +337,9 @@ public class TestMonster : MonoBehaviour
                 FireBallAttack();
                 break;
         }
+
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.CheckStateForAction());
     }
     
     void FireBallAttack()
@@ -365,12 +364,16 @@ public class TestMonster : MonoBehaviour
 
     void WeaponHitEff()
     {
-        if(m_EnemyType == EnemyType.HellGhost)
+        if(m_EnemyType != EnemyType.FireMonster)
             m_Anim.SetTrigger("DoHurt");
         Vector3 Pos = this.transform.position;
         GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
         Effect.transform.SetParent(null, false);
         Destroy(Effect, 1);
+
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.CheckStateForAction());
+
     }
 
     void Death()

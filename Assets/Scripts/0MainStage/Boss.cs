@@ -78,7 +78,6 @@ public class Boss : MonoBehaviour
 
         m_MaxHealth = 12000;
         m_HpBar.maxValue = m_MaxHealth;
-        m_HpBar.minValue = 9100;
         m_PhaseNumber = 1;
         m_TurnAttackNumber = 0;
     }
@@ -114,19 +113,11 @@ public class Boss : MonoBehaviour
 
     void HealthCtrl()
     {
-        if (m_CurHealth <= 9100 && m_CurHealth > 4200)
-        {
+        if (m_CurHealth > 4200 && m_CurHealth < 9100)
             m_PhaseNumber = 2;
-            m_HpBar.maxValue = 9100;
-            m_HpBar.minValue = 4200;
-        }
-        else if (m_CurHealth <= 4200 && m_CurHealth > 0)
-        {
+        else if (m_CurHealth <= 4200)
             m_PhaseNumber = 3;
-            m_HpBar.maxValue = 4200;
-            m_HpBar.minValue = 0;
-        }
-        else if (m_CurHealth <= 0)
+        if (m_CurHealth <= 0)
             Death();
 
         m_HpBar.value = Mathf.Lerp(m_HpBar.value, m_CurHealth, Time.deltaTime * 3f);

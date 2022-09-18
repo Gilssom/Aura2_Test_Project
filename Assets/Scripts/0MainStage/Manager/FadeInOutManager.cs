@@ -55,8 +55,6 @@ public class FadeInOutManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        isPlaying = true;
-
         Color fadecolor = m_FadeBG.color;
 
         m_Time = 0f;

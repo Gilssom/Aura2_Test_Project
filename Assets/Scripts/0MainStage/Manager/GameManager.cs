@@ -105,12 +105,14 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SkyDownGate()
     {
-        Vector3 GatePos = new Vector3(81.06154f, 18.84901f, 67.98146f);
+        Debug.Log("Double Check");
 
+        Vector3 GatePos = new Vector3(81.06154f, 18.84901f, 67.98146f);
         SoundManager.Instance.SFXPlay("DoorSFX", AllGameManager.Instance.m_Clip[0]);
+
         yield return new WaitForSeconds(0.6f);
         m_CountObject[1].transform.DOMove(GatePos, 0.1f);
-        
+
         yield return null;
     }
 

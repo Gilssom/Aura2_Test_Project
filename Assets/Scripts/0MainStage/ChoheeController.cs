@@ -132,7 +132,7 @@ public class ChoheeController : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump") && !isDodge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
-            Dodge();
+            StartCoroutine(Dodge());
 
         if(isLoading)
         {
@@ -148,11 +148,6 @@ public class ChoheeController : MonoBehaviour
         if(other.tag == "Monster" && !isAttack)
         {
             HitDamage();
-        }
-
-        if(other.tag == "FirstGate")
-        {
-            GameManager.Instance.ObjectCtrl(1, true);
         }
     }
 
@@ -210,7 +205,7 @@ public class ChoheeController : MonoBehaviour
         m_FootSFX.Stop();
     }
 
-    void Dodge()
+    IEnumerator Dodge()
     {
         if (moveVec != Vector3.zero && !isDodge) // ! = bool 형태의 반대(=false)
         {
@@ -219,21 +214,21 @@ public class ChoheeController : MonoBehaviour
             SoundManager.Instance.SFXPlay("Charge Attack", m_clip[4]);
             isDodge = true;
 
-            Invoke("DodgeOut", 0.7f); // 시간차 호출
-        }
-    }
+            yield return new WaitForSeconds(0.7f);
 
-    void DodgeOut()
-    {
-        Speed *= 0.5f;
-        isDodge = false;
+            Speed *= 0.5f;
+            isDodge = false;
+        }
     }
 
     void HitDamage()
     {
         PlayerStats.Instance.TakeDamage(0.25f);
         m_Weapon.WeaponTypeChange("Hit");
-        m_Animator.SetTrigger("DoHit");
+
+        if(!isDodge)
+            m_Animator.SetTrigger("DoHit");
+
         StartCoroutine(UIManager.Instance.BloodScreen(0.5f));
         m_Camera.transform.DOShakePosition(0.2f, 0.3f, 8, 90, false, true);        
     }
@@ -441,10 +436,12 @@ public class ChoheeController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E) && Npc.GetComponent<ObjData>().isNeedTalk)
             {
                 AllGameManager.Instance.Action();
+                MoveStop();
             }
             else if (Input.GetKeyDown(KeyCode.E) && !Npc.GetComponent<ObjData>().isNeedTalk && Npc.GetComponent<ObjData>().isNotSmithy)
             {
                 AllGameManager.Instance.Action();
+                MoveStop();
             }
             else if(Input.GetKeyDown(KeyCode.E) && !AllGameManager.Instance.isWeaponShop && !Npc.GetComponent<ObjData>().isNeedTalk && !Npc.GetComponent<ObjData>().isNotSmithy)
             {

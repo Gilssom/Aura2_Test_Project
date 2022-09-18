@@ -53,7 +53,12 @@ public class ChoheeCheck : MonoBehaviour
             GameManager.Instance.Tutorial(2);
             Destroy(other.gameObject);
         }
-        if(other.tag == "BossGate")
+        if (other.tag == "FirstGate")
+        {
+            GameManager.Instance.ObjectCtrl(1, true);
+            other.gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
+        if (other.tag == "BossGate")
         {
             m_Player.isLoading = true;
             GameManager.Instance.BossStage();

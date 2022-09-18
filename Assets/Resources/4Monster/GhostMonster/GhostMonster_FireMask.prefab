@@ -1949,10 +1949,13 @@ MonoBehaviour:
   m_CurState: 0
   isSpawnMonster: 0
   m_HaveMaskNum: 0
+  m_FirePos: {fileID: 0}
   m_clip: []
   m_TraceDis: 0
+  m_MaxHP: 0
+  m_CurHP: 0
   m_HitEffect: {fileID: 6244133246584083714, guid: c03d7347ce37f4e40bf8fd80841c7f5b, type: 3}
-  m_FireEffect: {fileID: 0}
+  m_FireEffect: {fileID: 3424026902054390046}
   m_DropMask:
   - {fileID: 0}
   - {fileID: 0}
@@ -2228,6 +2231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59edf36fe48fe0542978ed0d042d7ec8, type: 3}
+--- !u!1 &3424026902054390046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7915376065595721709, guid: 59edf36fe48fe0542978ed0d042d7ec8, type: 3}
+  m_PrefabInstance: {fileID: 4782126587437059827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2251765294860823127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6729053293849896100, guid: 59edf36fe48fe0542978ed0d042d7ec8, type: 3}
