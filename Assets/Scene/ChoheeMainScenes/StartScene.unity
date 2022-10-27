@@ -4380,6 +4380,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093242979}
   m_CullTransparentMesh: 1
+--- !u!1 &1104526039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104526041}
+  - component: {fileID: 1104526040}
+  m_Layer: 0
+  m_Name: ObjectPooling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1104526040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104526039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3509d0599efa70f4d83e6f12cde2f6aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ObjectInfos:
+  - m_ObjectName: SlashEffect
+    m_Prefab: {fileID: 3495455136348662776, guid: f7185732f747e26479bde0fa64ab2dfb, type: 3}
+    m_Count: 4
+  - m_ObjectName: HitEffect
+    m_Prefab: {fileID: 6244133246584083714, guid: c03d7347ce37f4e40bf8fd80841c7f5b, type: 3}
+    m_Count: 20
+  - m_ObjectName: Boss Red Bomb
+    m_Prefab: {fileID: 2222045560286253911, guid: 293198fb73125a341b0415114a953523, type: 3}
+    m_Count: 8
+  - m_ObjectName: Boss Blue Bomb
+    m_Prefab: {fileID: 8118038636962015928, guid: 98df72d69ddd4f345a015b63368b29c8, type: 3}
+    m_Count: 8
+  - m_ObjectName: Boss Yellow Bomb
+    m_Prefab: {fileID: 4168421973160307232, guid: bf7ce961cac7c7342889c85269c0a213, type: 3}
+    m_Count: 8
+  - m_ObjectName: Boss White Bomb
+    m_Prefab: {fileID: 7292721737862205130, guid: e945432b3d11d4349ac364a73554b65f, type: 3}
+    m_Count: 8
+  - m_ObjectName: Drop Soul
+    m_Prefab: {fileID: 9147400453072234775, guid: 23118679ec837664e8e91b6cbdbbe81b, type: 3}
+    m_Count: 40
+  - m_ObjectName: Drop Heal
+    m_Prefab: {fileID: 8622707085261542367, guid: 110302c44a13a2f43a9e521e5c57d02a, type: 3}
+    m_Count: 10
+  m_PoolParent: {fileID: 1104526041}
+--- !u!4 &1104526041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104526039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90.8002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1116459323
 PrefabInstance:
   m_ObjectHideFlags: 0

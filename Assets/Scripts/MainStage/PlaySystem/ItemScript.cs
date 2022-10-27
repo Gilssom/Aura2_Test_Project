@@ -6,18 +6,15 @@ using DG.Tweening;
 public class ItemScript : MonoBehaviour
 {
     private Transform m_Player;
-
     public enum Type { Health, Soul };
-
     public Type type;
+    public int PoolNumber;
 
-    Vector3 m_CurPos;
     bool isMagnet;
 
     void Awake()
     {
         m_Player = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        m_CurPos = transform.position;
         isMagnet = false;
     }
 
@@ -25,8 +22,8 @@ public class ItemScript : MonoBehaviour
     {
         if(!isMagnet)
         {
-            Vector3 v = m_CurPos;
-            v.y += 0.5f * Mathf.Sin(Time.time * 1);
+            Vector3 v = transform.position;
+            v.y += 0.005f * Mathf.Sin(Time.time * 1);
             transform.position = v;
         }
 
@@ -50,5 +47,11 @@ public class ItemScript : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void ObjectReturn()
+    {
+        ObjectPoolManager.instance.m_ObjectPoolList[PoolNumber].Enqueue(gameObject);
+        gameObject.SetActive(false);
     }
 }

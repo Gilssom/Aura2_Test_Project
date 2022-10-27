@@ -41,9 +41,6 @@ public class Boss : MonoBehaviour
 
     private bool isDeath = false;
 
-    private GameObject m_DropSoul;
-    private GameObject m_DropHeal;
-
     public GameObject m_HitEffect;
     public GameObject m_BossUI;
     public GameObject m_BossStartPanel;
@@ -51,7 +48,6 @@ public class Boss : MonoBehaviour
     public Text m_HpPercent;
 
     public GameObject m_MovingLight;
-    public GameObject[] m_BombObject;
 
     [SerializeField]
     private int m_TurnAttackNumber;
@@ -73,8 +69,6 @@ public class Boss : MonoBehaviour
         m_Coll = GetComponent<CapsuleCollider>();
         m_PathSystem = GetComponent<BossFollowPath>();
         m_SkinmeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
-        m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
 
         m_MaxHealth = 12000;
         m_HpBar.maxValue = m_MaxHealth;
@@ -85,7 +79,6 @@ public class Boss : MonoBehaviour
     void Start()
     {
         m_CurHealth = m_MaxHealth;
-        //Invoke("BossThinkStart", 2);
         m_Anim.Play("Scream");
     }
 
@@ -190,9 +183,13 @@ public class Boss : MonoBehaviour
     void WeaponHitEff()
     {
         Vector3 Pos = this.transform.position;
-        GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
-        Effect.transform.SetParent(null, false);
-        Destroy(Effect, 1);
+
+        GameObject HitEffect = ObjectPoolManager.instance.m_ObjectPoolList[1].Dequeue();
+        HitEffect.transform.position = new Vector3(Pos.x, Pos.y + 1f, Pos.z);
+        HitEffect.transform.rotation = this.transform.rotation;
+        HitEffect.SetActive(true);
+
+        StartCoroutine(ObjectPoolManager.instance.DestroyObj(1, 1, HitEffect));
     }
 
     public IEnumerator BossThink()
@@ -326,10 +323,17 @@ public class Boss : MonoBehaviour
 
         for (int i = 0; i < AttackNumbers; i++)
         {
-            int RandomColor = Random.Range(0, 4);
+            int RandomColor = Random.Range(2, 6);
             float RandomTFX = Random.Range(-10f, 10f);
             float RandomTFZ = Random.Range(-10f, 10f);
-            Instantiate(m_BombObject[RandomColor], new Vector3(Pos.x + RandomTFX, Pos.y + 20, Pos.z + RandomTFZ), Quaternion.identity);           
+
+            GameObject BombObject = ObjectPoolManager.instance.m_ObjectPoolList[RandomColor].Dequeue();
+
+            BombObject.SetActive(true);
+
+            BombObject.transform.position = new Vector3(Pos.x + RandomTFX, Pos.y + 20, Pos.z + RandomTFZ);
+            BombObject.transform.rotation = Quaternion.identity;
+
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -380,7 +384,6 @@ public class Boss : MonoBehaviour
     {
         if (!isDeath)
             SoundManager.Instance.SFXPlay("Death", m_SoundEffect[6]);
-        //Destroy(m_HpBar.gameObject);
         isDeath = true;
         m_HpBar.gameObject.SetActive(false);
         CancelInvoke();
@@ -405,12 +408,21 @@ public class Boss : MonoBehaviour
             {
                 float RandomTFX = Random.Range(-8, 8);
                 float RandomTFZ = Random.Range(-8, 8);
-                Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTFX, Pos.y + 0.5f, Pos.z + RandomTFZ), Quaternion.identity);
+
+                GameObject SoulItem = ObjectPoolManager.instance.m_ObjectPoolList[6].Dequeue();
+                SoulItem.SetActive(true);
+                SoulItem.transform.position = new Vector3(Pos.x + RandomTFX, Pos.y + 0.5f, Pos.z + RandomTFZ);
+                SoulItem.transform.rotation = Quaternion.identity;
             }
 
             int HealthDrop = Random.Range(0, 100);
             if (HealthDrop <= 100 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
-                Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
+            {
+                GameObject HealItem = ObjectPoolManager.instance.m_ObjectPoolList[7].Dequeue();
+                HealItem.SetActive(true);
+                HealItem.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
+                HealItem.transform.rotation = Quaternion.identity;
+            }
         }
 
         Cutoff += Speed;

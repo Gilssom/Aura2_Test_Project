@@ -36,7 +36,6 @@ public class ChoheeController : MonoBehaviour
     Vector3 moveVec;
     float HAxis;
     float VAxis;
-    float Wheel;
 
     /// <summary>
     /// 0 = Normal Effect
@@ -63,7 +62,6 @@ public class ChoheeController : MonoBehaviour
     public GameObject scanObject;
 
     public AttackEffect[] m_AttackEffect;
-    public GameObject m_SlashEffect;
     public Transform m_SlashPos;
     public VisualEffect[] m_EnforceEffectVFX;
 
@@ -297,9 +295,15 @@ public class ChoheeController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1) && isCharge)
         {
-            GameObject intantBullet = Instantiate(m_SlashEffect, m_SlashPos.position, m_SlashPos.rotation);
-            Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
+            GameObject SlashEffect = ObjectPoolManager.instance.m_ObjectPoolList[0].Dequeue();
+            SlashEffect.SetActive(true);
+
+            SlashEffect.transform.position = m_SlashPos.position;
+            SlashEffect.transform.rotation = m_SlashPos.rotation;
+            Rigidbody bulletRigid = SlashEffect.GetComponent<Rigidbody>();
             bulletRigid.velocity = m_SlashPos.forward * 20;
+
+            ObjectPoolManager.instance.StartCoroutine(ObjectPoolManager.instance.DestroyObj(1.5f, 0, SlashEffect));
 
             m_Animator.SetTrigger("DoSlashStart");
             m_Animator.ResetTrigger("DoSlashAttack");
@@ -309,7 +313,6 @@ public class ChoheeController : MonoBehaviour
             isCharge = false;
             QuarterView.Instance.isZoomOut = false;
             PlayerStats.Instance.AddSlashGage(-1);
-            Destroy(intantBullet, 1.5f);
         }
 
         if (Input.GetMouseButtonDown(2) && !isAttack && !isCharge)
@@ -450,11 +453,6 @@ public class ChoheeController : MonoBehaviour
                 UIManager.Instance.SmithySystem(true, Npc.name);
                 AllGameManager.Instance.isWeaponShop = true;
             }
-            //else if(Input.GetKeyDown(KeyCode.Escape) && AllGameManager.Instance.isWeaponShop)
-            //{
-            //    UIManager.Instance.SmithySystem(false, Npc.name);
-            //    AllGameManager.Instance.isWeaponShop = false;
-            //}
         }
     }
 
@@ -467,7 +465,6 @@ public class ChoheeController : MonoBehaviour
 
     void Death()
     {
-        //StopAllCoroutines();
         StartCoroutine(UIManager.Instance.DeathScreen());
         m_Animator.SetTrigger("DoDeath");
         isDeath = true;

@@ -55,7 +55,7 @@ namespace UnityEngine.UI
 
         protected LetterSpacing() { }
 
-#if UNITY_2021_1
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             spacing = m_spacing;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossBomb : MonoBehaviour
 {
+    public int PoolNumber;
+
     public GameObject m_Effect;
     public AudioClip m_BombSound;
 
@@ -20,7 +22,8 @@ public class BossBomb : MonoBehaviour
         {
             SoundManager.Instance.SFXPlay("Bomb Sound", m_BombSound);
             Instantiate(m_Effect, new Vector3(Pos.x, Pos.y + 6.68f, Pos.z), Quaternion.identity);
-            Destroy(this.gameObject);
+
+            ObjectPoolManager.instance.StartCoroutine(ObjectPoolManager.instance.DestroyObj(1.5f, PoolNumber, gameObject));
         }
     }
 }

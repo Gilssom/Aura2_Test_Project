@@ -89,10 +89,10 @@ public class SoundManager : MonoBehaviour
 
     public void BgSoundPlay(AudioClip clip)
     {
-        /*m_BgSound.outputAudioMixerGroup = m_Mixer.FindMatchingGroups("BGSound")[0];
+        m_BgSound.outputAudioMixerGroup = m_Mixer.FindMatchingGroups("BGSound")[0];
         m_BgSound.clip = clip;
         m_BgSound.loop = true;
         m_BgSound.volume = 0.1f;
-        m_BgSound.Play();*/
+        m_BgSound.Play();
     }
 }

@@ -26,13 +26,13 @@ public class ChoheeCheck : MonoBehaviour
                     if (PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
                     {
                         PlayerStats.Instance.Heal(1);
-                        Destroy(other.gameObject);
+                        item.ObjectReturn();
                     }
                     break;
                 case ItemScript.Type.Soul:
                     SoundManager.Instance.SFXPlay("Soul acquire", AllGameManager.Instance.m_Clip[4]);
                     PlayerStats.Instance.Addsoul();
-                    Destroy(other.gameObject);
+                    item.ObjectReturn();
                     break;
             }
             //SoundManager.instance.SFXPlay("ItemGet", clip);

@@ -11,7 +11,8 @@ public class FireBall : MonoBehaviour
         if (other.tag == "Player" || other.tag == "Floor")
         {
             Instantiate(m_Effect, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            ObjectPoolManager.instance.m_ObjectPoolList[9].Enqueue(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

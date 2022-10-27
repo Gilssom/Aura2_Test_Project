@@ -22,12 +22,10 @@ public class TestMonster : MonoBehaviour
     private Animator m_Anim;
     private SkinnedMeshRenderer m_SkinmeshRenderer;
     private BoxCollider m_AttackArea;
-    private GameObject m_FireBall;
     public Transform m_FirePos;
     public AudioClip[] m_clip;
 
     private float MaxCutoff = 1;
-    private float MinCutoff = 0;
     private float Cutoff = default;
     private float Speed = 0.005f;
     [SerializeField]
@@ -44,17 +42,18 @@ public class TestMonster : MonoBehaviour
     [SerializeField]
     private float m_CurHP;
 
-    public GameObject m_HitEffect;
     public GameObject m_FireEffect;
-    private GameObject m_DropSoul;
-    private GameObject m_DropHeal;
     /// <summary>
     /// 1 = Normal
     /// 2 = Speed
     /// 3 = Fire
     /// 4 = Ice
     /// </summary>
-     
+    /// 
+    private int m_MinDrop;
+    private int m_MaxDrop;
+    Vector3 curPos;
+
     [SerializeField]
     private GameObject[] m_DropMask;
 
@@ -69,17 +68,11 @@ public class TestMonster : MonoBehaviour
         if(m_EnemyType != EnemyType.LanternMonster)
             m_AttackArea = GetComponentInChildren<BoxCollider>();
 
-        m_DropSoul = Resources.Load<GameObject>("5Item/PurpleItem_Soul");
-        m_DropHeal = Resources.Load<GameObject>("5Item/RedItem_HP");
-
         m_DropMask[0] = null;
         m_DropMask[1] = Resources.Load<GameObject>("5Item/NormalMask_Item");
         m_DropMask[2] = Resources.Load<GameObject>("5Item/SpeedMask_Item");
         m_DropMask[3] = Resources.Load<GameObject>("5Item/FireMask_Item");
         m_DropMask[4] = Resources.Load<GameObject>("5Item/IceMask_Item");
-
-        if (m_EnemyType == EnemyType.LanternMonster)
-            m_FireBall = Resources.Load<GameObject>("4Monster/Lantern_Monster_08_17/LanternFireBall");
     }
 
     private void Start()
@@ -96,6 +89,9 @@ public class TestMonster : MonoBehaviour
                 m_rotSpeed = 3;
                 m_moveSpeed = 2;
                 m_MaxHP = 600;
+
+                m_MinDrop = 1;
+                m_MaxDrop = 3;
                 break;
             case EnemyType.FireMonster:
                 if (isSpawnMonster)
@@ -107,6 +103,9 @@ public class TestMonster : MonoBehaviour
                 m_rotSpeed = 3;
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
+
+                m_MinDrop = 1;
+                m_MaxDrop = 3;
                 break;
             case EnemyType.LanternMonster:
                 if (isSpawnMonster)
@@ -118,6 +117,9 @@ public class TestMonster : MonoBehaviour
                 m_rotSpeed = 3;
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
+
+                m_MinDrop = 2;
+                m_MaxDrop = 4;
                 break;
         }
         if(m_AttackArea)
@@ -344,11 +346,13 @@ public class TestMonster : MonoBehaviour
     
     void FireBallAttack()
     {
-        GameObject intantBullet = Instantiate(m_FireBall, m_FirePos.position, m_FirePos.rotation);
-        Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
-        bulletRigid.velocity = m_FirePos.forward * 8;
+        GameObject FireBall = ObjectPoolManager.instance.m_ObjectPoolList[0].Dequeue();
+        FireBall.SetActive(true);
 
-        Destroy(intantBullet, 1.5f);
+        FireBall.transform.position = m_FirePos.position;
+        FireBall.transform.rotation = m_FirePos.rotation;
+        Rigidbody BallRigid = FireBall.GetComponent<Rigidbody>();
+        BallRigid.velocity = m_FirePos.forward * 20;
     }
 
     void AttackEnd()
@@ -367,9 +371,13 @@ public class TestMonster : MonoBehaviour
         if(m_EnemyType != EnemyType.FireMonster)
             m_Anim.SetTrigger("DoHurt");
         Vector3 Pos = this.transform.position;
-        GameObject Effect = Instantiate(m_HitEffect, new Vector3(Pos.x, Pos.y + 1f, Pos.z), this.transform.rotation);
-        Effect.transform.SetParent(null, false);
-        Destroy(Effect, 1);
+
+        GameObject HitEffect = ObjectPoolManager.instance.m_ObjectPoolList[1].Dequeue();
+        HitEffect.transform.position = new Vector3(Pos.x, Pos.y + 1f, Pos.z);
+        HitEffect.transform.rotation = this.transform.rotation;
+        HitEffect.SetActive(true);
+
+        ObjectPoolManager.instance.StartCoroutine(ObjectPoolManager.instance.DestroyObj(1, 1, HitEffect));
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
@@ -378,11 +386,13 @@ public class TestMonster : MonoBehaviour
 
     void Death()
     {
-        Vector3 Pos = this.transform.position;
-
         isDeath = true;
         StopAllCoroutines();
         m_NavAgent.enabled = false;
+        m_Rigid.isKinematic = true;
+
+        if (m_FireEffect)
+            m_FireEffect.SetActive(false);
 
         switch (m_EnemyType)
         {
@@ -391,36 +401,6 @@ public class TestMonster : MonoBehaviour
 
                 Ghostcoll.enabled = false;
                 m_AttackArea.enabled = false;
-                m_Rigid.isKinematic = true;
-
-                if (m_FireEffect)
-                    m_FireEffect.SetActive(false);
-
-                if (Cutoff >= MaxCutoff)
-                {
-                    Destroy(this.gameObject);
-                    GameManager.Instance.m_KillCount += 1;
-
-                    int MaxItems = Random.Range(1, 3);
-                    for (int i = 0; i < MaxItems; i++)
-                    {
-                        float RandomTF = Random.Range(0.5f, 3);
-                        Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
-                    }
-
-                    int HealthDrop = Random.Range(0, 100);
-                    if (HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
-                        Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
-
-                    if (m_HaveMaskNum != 0)
-                    {
-                        string ItemName = m_DropMask[m_HaveMaskNum].name;
-
-                        GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum],
-                            new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
-                        Mask.name = ItemName;
-                    }
-                }
 
                 Cutoff += Speed;
                 if (Cutoff != MaxCutoff)
@@ -436,35 +416,6 @@ public class TestMonster : MonoBehaviour
 
                     Firecoll.enabled = false;
                     m_AttackArea.enabled = false;
-                    m_Rigid.isKinematic = true;
-
-                    m_FireEffect.SetActive(false);
-
-                    if (Cutoff >= MaxCutoff)
-                    {
-                        Destroy(this.gameObject);
-                        GameManager.Instance.m_KillCount += 1;
-
-                        int MaxItems = Random.Range(1, 3);
-                        for (int i = 0; i < MaxItems; i++)
-                        {
-                            float RandomTF = Random.Range(0.5f, 3);
-                            Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
-                        }
-
-                        int HealthDrop = Random.Range(0, 100);
-                        if(HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
-                            Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
-
-                        if(m_HaveMaskNum != 0)
-                        {
-                            string ItemName = m_DropMask[m_HaveMaskNum].name;
-
-                            GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum], 
-                                new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
-                            Mask.name = ItemName;
-                        }
-                    }
 
                     Cutoff += Speed;
                     if (Cutoff != MaxCutoff)
@@ -477,38 +428,7 @@ public class TestMonster : MonoBehaviour
                 if (isDeath)
                 {
                     CapsuleCollider Lanterncoll = GetComponent<CapsuleCollider>();
-
                     Lanterncoll.enabled = false;
-                    m_Rigid.isKinematic = true;
-
-                    if(m_FireEffect)
-                        m_FireEffect.SetActive(false);
-
-                    if (Cutoff >= MaxCutoff)
-                    {
-                        Destroy(this.gameObject);
-                        GameManager.Instance.m_KillCount += 1;
-
-                        int MaxItems = Random.Range(2, 4);
-                        for (int i = 0; i < MaxItems; i++)
-                        {
-                            float RandomTF = Random.Range(0.5f, 3);
-                            Instantiate(m_DropSoul, new Vector3(Pos.x + RandomTF, Pos.y + 0.5f, Pos.z + RandomTF), Quaternion.identity);
-                        }
-
-                        int HealthDrop = Random.Range(0, 100);
-                        if (HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
-                            Instantiate(m_DropHeal, new Vector3(Pos.x, Pos.y + 0.5f, Pos.z), Quaternion.identity);
-
-                        if (m_HaveMaskNum != 0)
-                        {
-                            string ItemName = m_DropMask[m_HaveMaskNum].name;
-
-                            GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum],
-                                new Vector3(Pos.x, Pos.y + 0.2f, Pos.z), Quaternion.Euler(0, 0, 180));
-                            Mask.name = ItemName;
-                        }
-                    }
 
                     Cutoff += Speed;
                     if (Cutoff != MaxCutoff)
@@ -519,6 +439,47 @@ public class TestMonster : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        DeathEvent();
+    }
+
+    void DeathEvent()
+    {
+        curPos = this.transform.position;
+
+        if (Cutoff >= MaxCutoff)
+        {
+            Destroy(this.gameObject);
+            GameManager.Instance.m_KillCount += 1;
+
+            int ItemCount = Random.Range(m_MinDrop, m_MaxDrop);
+            for (int i = 0; i < ItemCount; i++)
+            {
+                float RandomTF = Random.Range(0.5f, 3);
+                GameObject SoulItem = ObjectPoolManager.instance.m_ObjectPoolList[6].Dequeue();
+                SoulItem.SetActive(true);
+                SoulItem.transform.position = new Vector3(curPos.x + RandomTF, curPos.y + 0.5f, curPos.z + RandomTF);
+                SoulItem.transform.rotation = Quaternion.identity;
+            }
+
+            int HealthDrop = Random.Range(0, 100);
+            if (HealthDrop <= 10 && PlayerStats.Instance.Health < PlayerStats.Instance.MaxHealth)
+            {
+                GameObject HealItem = ObjectPoolManager.instance.m_ObjectPoolList[7].Dequeue();
+                HealItem.SetActive(true);
+                HealItem.transform.position = new Vector3(curPos.x, curPos.y + 0.5f, curPos.z);
+                HealItem.transform.rotation = Quaternion.identity;
+            }
+
+            if (m_HaveMaskNum != 0)
+            {
+                string ItemName = m_DropMask[m_HaveMaskNum].name;
+
+                GameObject Mask = Instantiate(m_DropMask[m_HaveMaskNum],
+                    new Vector3(curPos.x, curPos.y + 0.2f, curPos.z), Quaternion.Euler(0, 0, 180));
+                Mask.name = ItemName;
+            }
         }
     }
 }
