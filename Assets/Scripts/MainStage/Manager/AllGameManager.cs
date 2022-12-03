@@ -71,7 +71,7 @@ public class AllGameManager : MonoBehaviour
 
     public void NextField(string SceneName, int SceneNum)
     {
-        Debug.Log(SceneNum + " = SceneNumber");
+        //Debug.Log(SceneNum + " = SceneNumber");
         LoadingSceneManager.LoadScene(SceneName);
         m_Player.transform.position = m_FieldStartPos[SceneNum].position;
         m_Player.transform.rotation = m_FieldStartPos[SceneNum].rotation;

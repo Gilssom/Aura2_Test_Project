@@ -4430,10 +4430,13 @@ MonoBehaviour:
     m_Count: 8
   - m_ObjectName: Drop Soul
     m_Prefab: {fileID: 9147400453072234775, guid: 23118679ec837664e8e91b6cbdbbe81b, type: 3}
-    m_Count: 40
+    m_Count: 75
   - m_ObjectName: Drop Heal
     m_Prefab: {fileID: 8622707085261542367, guid: 110302c44a13a2f43a9e521e5c57d02a, type: 3}
     m_Count: 10
+  - m_ObjectName: Fire Ball
+    m_Prefab: {fileID: 5404574521798883743, guid: 08e22611b4bc844418d440c62bb7e4ab, type: 3}
+    m_Count: 25
   m_PoolParent: {fileID: 1104526041}
 --- !u!4 &1104526041
 Transform:
@@ -5531,7 +5534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

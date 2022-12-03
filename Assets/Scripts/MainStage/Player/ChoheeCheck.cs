@@ -6,6 +6,9 @@ public class ChoheeCheck : MonoBehaviour
 {
     private ChoheeController m_Player;
 
+    [SerializeField]
+    int m_CurCheckPoint = 0;
+
     private void Awake()
     {
         m_Player = this.GetComponent<ChoheeController>();
@@ -38,6 +41,24 @@ public class ChoheeCheck : MonoBehaviour
             //SoundManager.instance.SFXPlay("ItemGet", clip);
         }
 
+        if(other.tag == "CheckPoint")
+        {
+            if(m_Player.isChecking[m_CurCheckPoint] == false)
+            {
+                m_Player.m_Checkpoint[m_CurCheckPoint] = other.gameObject;
+                m_CurCheckPoint++;
+                other.gameObject.SetActive(false);
+            }
+
+            for (int i = 0; i < m_Player.m_Checkpoint.Length; i++)
+            {
+                if(m_Player.m_Checkpoint[i] == other.gameObject)
+                {
+                    m_Player.isChecking[i] = true;
+                }
+            }
+        }
+
         if(other.tag == "FirstTutorial")
         {
             GameManager.Instance.Tutorial(0);
@@ -65,11 +86,13 @@ public class ChoheeCheck : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if(other.tag == "VillagePortal")
+        if(other.tag == "VillagePortal") // 조형제 보스 처치 하고 스테이지 종료 시점
         {
             //GameManager.Instance.NextField(1);
-            m_Player.isLoading = true;
-            FadeInOutManager.Instance.InStartFadeAnim("VillageStage" , 1);
+            //m_Player.isLoading = true;
+            //FadeInOutManager.Instance.InStartFadeAnim("VillageStage" , 1);
+            m_Player.isGameEnd = true;
+            UIManager.Instance.TestGameOver();
         }
 
         if (other.tag == "StagePortal")

@@ -55,7 +55,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < m_BgList.Length; i++)
         {
-            Debug.Log(arg0.name);
+            //Debug.Log(arg0.name);
             m_SceneName = arg0.name;
             if (arg0.name == m_BgList[i].name)
                 BgSoundPlay(m_BgList[i]);

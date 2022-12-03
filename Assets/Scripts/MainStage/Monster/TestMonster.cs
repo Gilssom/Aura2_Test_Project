@@ -113,7 +113,7 @@ public class TestMonster : MonoBehaviour
                 else
                     m_TraceDis = 10;
 
-                m_AttackDis = 6;
+                m_AttackDis = 8;
                 m_rotSpeed = 3;
                 m_moveSpeed = 3;
                 m_MaxHP = 200;
@@ -346,13 +346,13 @@ public class TestMonster : MonoBehaviour
     
     void FireBallAttack()
     {
-        GameObject FireBall = ObjectPoolManager.instance.m_ObjectPoolList[0].Dequeue();
+        GameObject FireBall = ObjectPoolManager.instance.m_ObjectPoolList[8].Dequeue();
         FireBall.SetActive(true);
 
         FireBall.transform.position = m_FirePos.position;
         FireBall.transform.rotation = m_FirePos.rotation;
         Rigidbody BallRigid = FireBall.GetComponent<Rigidbody>();
-        BallRigid.velocity = m_FirePos.forward * 20;
+        BallRigid.velocity = m_FirePos.forward * 13;
     }
 
     void AttackEnd()

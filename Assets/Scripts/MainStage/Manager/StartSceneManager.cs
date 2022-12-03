@@ -63,7 +63,8 @@ public class StartSceneManager : MonoBehaviour
 
     public void GameExitButton()
     {
-        Debug.Log("게임 종료");
+        //Application.OpenURL("https://youtu.be/SoN3IVONKro");
+        Application.Quit();
     }
 
     public void ButtonSound()

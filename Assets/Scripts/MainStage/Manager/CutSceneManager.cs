@@ -17,11 +17,17 @@ public class CutSceneManager : MonoBehaviour
     [SerializeField]
     bool isPlaying = false;
 
+    [SerializeField]
+    bool isContinue = false;
+
     public int m_CurCutNumber = 0;
     public Image[] m_CutImage;
     public Text[] m_CutText;
     public Image m_BGPanel;
     public Image m_WhitePanel;
+
+    public GameObject m_ContinuePanel;
+    public GameObject m_ContinueText;
 
     private void Start()
     {
@@ -32,14 +38,24 @@ public class CutSceneManager : MonoBehaviour
 
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber < 4)
-        //{
-        //    OutStartFadeAnim(m_CurCutNumber);
-        //}
-        //else if(Input.GetKeyDown(KeyCode.E) && !isPlaying && m_CurCutNumber == 4)
-        //{
-        //    FadeInOutManager.Instance.InStartFadeAnim("VillageStage", 0);
-        //}
+        Continue();
+    }
+
+    void Continue()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isContinue)
+            {
+                isContinue = true;
+                m_ContinueText.SetActive(true);
+            }
+            else
+            {
+                m_ContinueText.SetActive(false);
+                StartCoroutine(FadeInPlayBG());
+            }
+        }
     }
 
     void BGPlay()
@@ -72,7 +88,7 @@ public class CutSceneManager : MonoBehaviour
         if(m_CurCutNumber == 0)
             yield return new WaitForSeconds(1f);
 
-        Debug.Log("Start");
+        //Debug.Log("Start");
         //m_CutImage[CutNumber].gameObject.SetActive(true);
 
         m_Start = 0f;
@@ -145,6 +161,9 @@ public class CutSceneManager : MonoBehaviour
             yield return null;
         }
 
+        if (m_CurCutNumber == 0)
+            m_ContinuePanel.SetActive(true);
+
         isPlaying = false;
         m_CurCutNumber++;
 
@@ -204,7 +223,7 @@ public class CutSceneManager : MonoBehaviour
     {
         yield return new WaitForSeconds(6.33f);
 
-        Debug.Log("Start");
+        //Debug.Log("Start");
         //m_CutImage[CutNumber].gameObject.SetActive(true);
 
         m_Start = 0f;

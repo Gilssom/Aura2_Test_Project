@@ -56,25 +56,29 @@ public class GameManager : MonoBehaviour
 
     void CountObject()
     {
-        if (m_KillCount == 6)
-            ObjectCtrl(0, false);
+        /*if (m_KillCount >= 69)
+            ObjectCtrl(12, true);*/
+        if (m_KillCount >= 48)  // 원래 61킬 
+            ObjectCtrl(11, true);
+
+        /*else if (m_KillCount >= 41)
+            ObjectCtrl(8, true);*/
+
+        // Fifth Field
+        // 6, 12, 16 :: ObjData.cs
+        else if (m_KillCount >= 29) // 원래 35킬
+            ObjectCtrl(7, true);
+
         // Third Field Spawn Controll
         // 2 , 4 :: ObjData.cs
-        else if (m_KillCount == 14)
+        /*else if (m_KillCount >= 14)
         {
             ObjectCtrl(4, true);
             ObjectCtrl(5, true);
-        }
-        // Fifth Field
-        // 6, 12, 16 :: ObjData.cs
-        else if (m_KillCount == 35)
-            ObjectCtrl(7, true);
-        else if (m_KillCount == 41)
-            ObjectCtrl(8, true);
-        else if (m_KillCount == 61)
-            ObjectCtrl(11, true);
-        else if (m_KillCount == 69)
-            ObjectCtrl(12, true);
+        }*/
+
+        else if (m_KillCount >= 6)
+            ObjectCtrl(0, false);
     }
 
     void DoorObject()
@@ -84,9 +88,9 @@ public class GameManager : MonoBehaviour
             m_DoorObject[0].SetActive(true);
             m_DoorObject[1].SetActive(true);
         }
-        else if (m_KillCount == 31)
+        else if (m_KillCount == 25) // 원래 31킬
             m_DoorObject[2].SetActive(true);
-        else if (m_KillCount == 56)
+        else if (m_KillCount == 42) // 원래 56킬
         {
             m_DoorObject[3].SetActive(true);
             m_DoorObject[4].SetActive(true);
@@ -105,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SkyDownGate()
     {
-        Debug.Log("Double Check");
+        //Debug.Log("Double Check");
 
         Vector3 GatePos = new Vector3(81.06154f, 18.84901f, 67.98146f);
         SoundManager.Instance.SFXPlay("DoorSFX", AllGameManager.Instance.m_Clip[0]);

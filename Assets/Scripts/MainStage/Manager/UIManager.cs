@@ -477,7 +477,14 @@ public class UIManager : MonoBehaviour
     public void ExitButtonCtrl(int Number)
     {
         if (Number == 0)
-            Debug.Log("Game Exit");
+        {
+            //Debug.Log("Game Exit");
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            //Application.OpenURL("https://youtu.be/SoN3IVONKro");
+            Application.Quit();
+        }
         else if (Number == 1)
         {
             Time.timeScale = 1f;
@@ -575,6 +582,12 @@ public class UIManager : MonoBehaviour
         AllGameManager.Instance.isGameOver = true;
         StartCoroutine(GameOver());
         //m_BloodPlaying = false;
+    }
+
+    // 조형제 전시회 게임 종료
+    public void TestGameOver()
+    {
+        m_PauseMenus[3].SetActive(true);
     }
 
     IEnumerator GameOver()

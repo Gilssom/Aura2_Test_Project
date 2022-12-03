@@ -115,8 +115,8 @@ public class EnforceManager : MonoBehaviour
             ChoheeWeapon.Instance.WeaponDamageUpdate();
             SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[10]);
         }
-        else
-            Debug.Log("강화 할 수 없습니다.");
+        //else
+        //    Debug.Log("강화 할 수 없습니다.");
     }
 
     public void ChargeEnforce()
@@ -152,8 +152,8 @@ public class EnforceManager : MonoBehaviour
             }
             SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[10]);
         }
-        else
-            Debug.Log("강화 할 수 없습니다.");
+        //else
+        //    Debug.Log("강화 할 수 없습니다.");
     }
 
     public void DressEnforce()
@@ -186,8 +186,8 @@ public class EnforceManager : MonoBehaviour
             }
             SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[11]);
         }
-        else
-            Debug.Log("강화 할 수 없습니다.");
+        //else
+        //    Debug.Log("강화 할 수 없습니다.");
     }
 
     public void BootsEnforce()
@@ -223,7 +223,7 @@ public class EnforceManager : MonoBehaviour
             }
             SoundManager.Instance.SFXPlay("WeaponUpSound", AllGameManager.Instance.m_Clip[11]);
         }
-        else
-            Debug.Log("강화 할 수 없습니다.");
+        //else
+        //    Debug.Log("강화 할 수 없습니다.");
     }
 }

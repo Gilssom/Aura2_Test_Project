@@ -115,20 +115,23 @@ public class ObjData : MonoBehaviour
             StartCoroutine(DoorDown(m_DownPos, 3));
 
         // Forth ~ Seventh Field
-        if (id == 5 && OnFire >= 6)
+        if (id == 5 && Kill >= 56) // 보스 전 횃불
             FenceDissolve();
-        if (id == 8 && Kill == 20)
+        if (id == 8 && Kill >= 14) // 조형제 수정 ( 원래 20 킬 )
             FenceDissolve();
-        if (id == 9 && Kill == 27)
+        if (id == 9 && Kill >= 21) // 원래 27킬
             FenceDissolve();
-        if (id == 10 && Kill == 49)
+        if (id == 10 && Kill >= 35) // 원래 49킬
             FenceDissolve();
-        if (id == 11 && Kill == 52)
+        if (id == 11 && Kill >= 38) // 원래 52킬
             FenceDissolve();
-        if (id == 12 && Kill == 80)
+        if (id == 12 && Kill >= 56) // 원래 80킬
             FenceDissolve();
         if (id == 13 && !OnDoor)
+        {
             StartCoroutine(DoorDown(m_DownPos, 6));
+            SoundManager.Instance.SFXPlay("DoorSFX", AllGameManager.Instance.m_Clip[0]);
+        }
         if (id == 14 && FieldObjectController.Instance.m_FireOffCount == 2)
             FenceDissolve();
         if (id == 15 && !OnDoor) // 3-2 Spawn

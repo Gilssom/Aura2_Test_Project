@@ -205,11 +205,11 @@ public class Boss : MonoBehaviour
             {
                 case 0:
                     BossNormalAttack();
-                    Debug.Log("페이즈 1 : 일반공격");
+                    //Debug.Log("페이즈 1 : 일반공격");
                     break;
                 case 1:
                     BossRotateAttack();
-                    Debug.Log("페이즈 1 : 회전공격");
+                    //Debug.Log("페이즈 1 : 회전공격");
                     break;
             }
         }
@@ -220,15 +220,15 @@ public class Boss : MonoBehaviour
             {
                 case 0:
                     BossNormalAttack();
-                    Debug.Log("페이즈 2 : 일반공격");
+                    //Debug.Log("페이즈 2 : 일반공격");
                     break;
                 case 1:
                     BossRotateAttack();
-                    Debug.Log("페이즈 2 : 회전공격");
+                    //Debug.Log("페이즈 2 : 회전공격");
                     break;
                 case 2:
                     BossMovingAttack();
-                    Debug.Log("페이즈 2 : 이동공격");
+                    //Debug.Log("페이즈 2 : 이동공격");
                     break;
             }
         }
@@ -239,15 +239,15 @@ public class Boss : MonoBehaviour
             {
                 case 0:
                     BossNormalAttack();
-                    Debug.Log("페이즈 3 : 일반공격");
+                    //Debug.Log("페이즈 3 : 일반공격");
                     break;
                 case 1:
                     BossRotateAttack();
-                    Debug.Log("페이즈 3 : 회전공격");
+                    //Debug.Log("페이즈 3 : 회전공격");
                     break;
                 case 2:
                     StartCoroutine(BossLongDisAttack());
-                    Debug.Log("페이즈 3 : 폭탄발사");
+                    //Debug.Log("페이즈 3 : 폭탄발사");
                     break;
             }
         }

@@ -48,7 +48,7 @@ public class FadeInOutManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         m_FadeBG = GameObject.Find("FadeBG").GetComponent<Image>();
-        StartCoroutine(GameStartFade());
+        //StartCoroutine(GameStartFade());
     }
 
     IEnumerator GameStartFade()

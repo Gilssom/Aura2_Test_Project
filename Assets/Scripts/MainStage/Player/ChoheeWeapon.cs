@@ -112,7 +112,7 @@ public class ChoheeWeapon : MonoBehaviour
         {
             SoundManager.Instance.SFXPlay("Mask Equid", AllGameManager.Instance.m_Clip[3]);
             m_MaskType = "Speed";
-            m_Player.Speed = 6;
+            m_Player.Speed = 7;
             m_Player.m_WeaponCurType = 0;
             m_Number = 0;
             m_CurDmg = m_NorDmg;

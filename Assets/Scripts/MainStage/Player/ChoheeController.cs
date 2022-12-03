@@ -65,6 +65,12 @@ public class ChoheeController : MonoBehaviour
     public Transform m_SlashPos;
     public VisualEffect[] m_EnforceEffectVFX;
 
+    public GameObject[] m_Checkpoint;
+    public bool[] isChecking;
+
+    // 조형제 전용
+    public bool isGameEnd = false;
+
     void Awake()
     {
         m_Animator = GetComponent<Animator>();
@@ -90,6 +96,9 @@ public class ChoheeController : MonoBehaviour
 
         m_EnforceEffectVFX[0].Stop();
         m_EnforceEffectVFX[1].Stop();
+
+        isChecking = new bool[10];
+        m_Checkpoint = new GameObject[10];
     }
 
     void OnEnable()
@@ -112,10 +121,16 @@ public class ChoheeController : MonoBehaviour
     {
         GetInput();
 
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReSpawn();
+        }
+
         if (PlayerStats.Instance.Health <= 0 && !AllGameManager.Instance.isGameOver)
             Death();
 
-        if (!m_FinalAttack && !isDeath && !isCharge && !isLoading && !AllGameManager.Instance.isWeaponShop && !AllGameManager.Instance.isTalkAction)
+        if (!m_FinalAttack && !isDeath && !isCharge && !isLoading && !AllGameManager.Instance.isWeaponShop 
+            && !AllGameManager.Instance.isTalkAction && !isGameEnd)
             Move();
 
         if(!isDeath && !isLoading && !AllGameManager.Instance.isWeaponShop)
@@ -146,6 +161,11 @@ public class ChoheeController : MonoBehaviour
         if(other.tag == "Monster" && !isAttack)
         {
             HitDamage();
+        }
+
+        if(other.tag == "StageOut")
+        {
+            ReSpawn();
         }
     }
 
@@ -221,7 +241,8 @@ public class ChoheeController : MonoBehaviour
 
     void HitDamage()
     {
-        PlayerStats.Instance.TakeDamage(0.25f);
+        // 조형제 시연 플레이어 체력 차감 안되게 설정
+        PlayerStats.Instance.TakeDamage(0.2f);
         m_Weapon.WeaponTypeChange("Hit");
 
         if(!isDodge)
@@ -428,6 +449,42 @@ public class ChoheeController : MonoBehaviour
                 Destroy(Item);
             }
         }
+    }
+
+    // 조형제 버그 리스폰
+    void ReSpawn()
+    {
+        if(SceneManager.GetActiveScene().name == "VillageStage")
+        {
+            transform.position = new Vector3(4, 2.2f, -24.1f);
+        }
+        else if(SceneManager.GetActiveScene().name == "MainStage")
+        {
+            if (isChecking[0] == false)
+            {
+                transform.position = m_Checkpoint[0].transform.position;
+                transform.rotation = m_Checkpoint[0].transform.rotation;
+                return;
+            }
+            else if (isChecking[isChecking.Length - 1] == true)
+            {
+                transform.position = m_Checkpoint[m_Checkpoint.Length - 1].transform.position;
+                transform.rotation = m_Checkpoint[m_Checkpoint.Length - 1].transform.rotation;
+                return;
+            }
+            else
+            {
+                for (int i = 1; i < isChecking.Length; i++)
+                {
+                    if (isChecking[i] == false)
+                    {
+                        transform.position = m_Checkpoint[i - 1].transform.position;
+                        transform.rotation = m_Checkpoint[i - 1].transform.rotation;
+                        return;
+                    }
+                }
+            }
+        }   
     }
 
     void NpcInteraction()
